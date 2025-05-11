@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '@/pages/auth/LoginPage';
-import DashboardHome from '@/pages/dashboard/DashBoardHome';
+import DashboardHome from '@/pages/dashboard/DashboardHome';
 
 const AppRoutes = () => {
   return (

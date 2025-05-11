@@ -18,7 +18,7 @@ const Sidebar = () => {
                 <Link to="/home" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <LayoutDashboard size={18} /> Resumen General
                 </Link>
-                <Link to="/dashboard/historial" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/historial" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Clock size={18} /> Historial
                 </Link>
             </nav>
@@ -28,16 +28,16 @@ const Sidebar = () => {
             <div className="text-gray-400 text-sm uppercase mb-2 font-bold">WORK</div>
             <hr className="p-2 border-gray-400" />
             <nav className="flex flex-col space-y-4">
-                <Link to="/dashboard/mis-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/mis-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <FolderOpen size={18} /> Mis Casos
                 </Link>
-                <Link to="/dashboard/novedades" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/novedades" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Megaphone size={18} /> Novedades
                 </Link>
-                <Link to="/dashboard/asignar-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/asignar-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <BookOpenCheck size={18} /> Asignar Casos
                 </Link>
-                <Link to="/dashboard/seguimientos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/seguimientos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Replace size={18} /> Seguimientos
                 </Link>
             </nav>
@@ -47,7 +47,7 @@ const Sidebar = () => {
             <div className="text-gray-400 text-sm uppercase mb-2 font-bold">Settings</div>
             <hr className="p-2 border-gray-400" />
             <nav className="flex flex-col space-y-4">
-                <Link to="/dashboard/gestionar-usuarios" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/gestionar-usuarios" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <UserCog size={18} /> Gestionar Usuarios
                 </Link>
                 <Link to="/login" className="flex items-center gap-2 text-red-400 hover:text-red-300 font-medium text-gray-200">
