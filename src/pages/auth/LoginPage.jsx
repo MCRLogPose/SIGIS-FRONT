@@ -1,6 +1,6 @@
 import React from 'react'
-import sigisLogo from '/images_login/logo_sigis.png'
-import googleLogo from '/images_login/logo_google.png'
+import sygisLogo from '@/assets/logos/logo_sygis.png'
+import googleLogo from '@/assets/logos/logo_google.png'
 
 const LoginPage = () => {
     return (
@@ -9,11 +9,11 @@ const LoginPage = () => {
 
                 <div className="text-center mb-8">
                     <img
-                        src={sigisLogo}
+                        src={sygisLogo}
                         alt="SIGIS Logo"
-                        className="w-[100px] h-auto mx-auto rounded-xl shadow-md"
+                        className="w-[100px] h-auto mx-auto rounded-xl shadow-md transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                     />
-                    <span className="mt-4 text-2xl font-bold text-white">SIGIS</span>
+                    <span className="mt-4 text-2xl font-bold text-white">SYGIS</span>
                 </div>
 
                 <form>
