@@ -3,6 +3,7 @@ import LoginPage from '@/pages/auth/LoginPage';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
 import ViewIncidentReports from '@/pages/incidents/ViewIncidentReports';
 import CreateIncident from '@/pages/incidents/CreateIncident';
+import RecordIncidents from '@/pages/incidents/RecordIncident';
 
 const AppRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
       <Route path="/home" element={<DashboardHome />} />
       <Route path="/home/view-incident-reports" element={<ViewIncidentReports />} />
       <Route path="/home/create-incident" element={<CreateIncident />} />
+      <Route path="/home/record" element={<RecordIncidents />} />
     </Routes>
   );
 };
