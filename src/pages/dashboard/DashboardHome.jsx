@@ -1,15 +1,15 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
 import DashboardCard from '@/components/DashboardCard';
-import { Pickaxe, Clock, FolderOpen, Megaphone, UserCog, BookOpenCheck, Replace, UserPen } from 'lucide-react';
-import bg_DashboardOptions from '@/assets/bg_dashboard/bg-dashboard-options.png';
+import { Pickaxe, Clock, FolderOpen, Megaphone, UserCog, BookOpenCheck, Replace, UserPen, Archive } from 'lucide-react';
+import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png';
 
 const DashBoardHome = () => {
     const cards = [
         {
             title: 'Nueva Incidencia',
-            to: '/home/nueva-incidencia',
+            to: '/home/create-report',
             icon: Pickaxe,
-            buttonText: 'Crear Nueva Incidencia'
+            buttonText: 'Crear'
         },
         {
             title: 'Ver Historial',
@@ -40,19 +40,25 @@ const DashBoardHome = () => {
             to: '/home/seguimientos',
             icon: Replace,
             buttonText: 'Ir'
+        },
+        {
+            title: 'Reportes',
+            to: '/home/incident-reportes',
+            icon: Archive,
+            buttonText: 'Ir'
         }
     ];
 
     const cardsConfig = [
         {
             title: 'Gestionar Usuarios',
-            to: '/home/gestionar-usuarios',
+            to: '/home/manage-users',
             icon: UserCog,
             buttonText: 'Ir'
         },
         {
             title: 'Editar Perfil',
-            to: '/home/editar-perfil',
+            to: '/home/edit-profile',
             icon: UserPen,
             buttonText: 'Ir'
         }
@@ -60,9 +66,12 @@ const DashBoardHome = () => {
 
     return (
         <DashboardLayout>
-            <h1 className="text-3xl font-bold">ACTIVIDADES</h1>
-            <p className="text-m font-bold mb-2 text-gray-700">Resumen de las actividades principales</p>
-            <hr className="p-2 border-gray-700 mb-4" />
+            <div className='ml-13 mb-8'>
+                <h1 className="text-3xl font-bold">ACTIVIDADES</h1>
+                <p className="text-m font-bold mb-2 text-gray-700">Resumen de las actividades principales</p>
+                <hr className="p-2 border-gray-700 mb-4 mr-14" />
+            </div>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {cards.map((card, idx) => (
@@ -72,17 +81,19 @@ const DashBoardHome = () => {
                         to={card.to}
                         icon={card.icon}
                         buttonText={card.buttonText}
-                        image={bg_DashboardOptions}
+                        image={ImageDashboardOptions}
                     />
                 ))}
             </div>
 
             <br className="my-8" />
-            <h1 className="text-3xl font-bold">ACTIVIDADES</h1>
-            <p className="text-m font-bold mb-2 text-gray-700">Resumen de las actividades principales</p>
-            <hr className="p-2 border-gray-700 mb-4" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div className='ml-13 mb-8'>
+                <h1 className="text-3xl font-bold">ACTIVIDADES</h1>
+                <p className="text-m font-bold mb-2 text-gray-700">Resumen de las actividades principales</p>
+                <hr className="p-2 border-gray-700 mb-4 mr-14" />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {cardsConfig.map((card, idx) => (
                     <DashboardCard
@@ -91,7 +102,7 @@ const DashBoardHome = () => {
                         to={card.to}
                         icon={card.icon}
                         buttonText={card.buttonText}
-                        image={bg_DashboardOptions}
+                        image={ImageDashboardOptions}
                     />
                 ))}
             </div>

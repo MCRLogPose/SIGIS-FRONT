@@ -1,6 +1,6 @@
 import React from 'react'
-import sygisLogo from '@/assets/logos/logo_sygis.png'
-import googleLogo from '@/assets/logos/logo_google.png'
+import SygisLogo from '@/assets/logos/logo-sygis.png'
+import GoogleLogo from '@/assets/logos/logo-google.png'
 
 const LoginPage = () => {
     return (
@@ -9,7 +9,7 @@ const LoginPage = () => {
 
                 <div className="text-center mb-8">
                     <img
-                        src={sygisLogo}
+                        src={SygisLogo}
                         alt="SIGIS Logo"
                         className="w-[100px] h-auto mx-auto rounded-xl shadow-md transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                     />
@@ -56,7 +56,7 @@ const LoginPage = () => {
 
                     <button className="relative w-full bg-white text-gray-700 py-3 rounded flex items-center justify-center shadow-sm hover:shadow-md transition cursor-pointer">
                         <span className="absolute left-4">
-                            <img src={googleLogo} alt="Google Logo" className="w-6 h-6" />
+                            <img src={GoogleLogo} alt="Google Logo" className="w-6 h-6" />
                         </span>
                         <span className="text-base font-medium">Google</span>
                     </button>

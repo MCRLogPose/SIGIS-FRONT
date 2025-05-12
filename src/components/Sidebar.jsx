@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, FolderOpen, Clock, Megaphone, LogOut, UserCog, BookOpenCheck, Replace } from 'lucide-react';
-import logoSygis from '@/assets/logos/logo_sygis.png';
+import { LayoutDashboard, FolderOpen, Clock, Megaphone, LogOut, UserCog, BookOpenCheck, Replace, Archive } from 'lucide-react';
+import LogoSygis from '@/assets/logos/logo-sygis.png';
 
 const Sidebar = () => {
     return (
-        <aside className="w-64 h-screen bg-gray-800 text-white flex flex-col p-6">
+        <aside className="w-64 h-screen bg-gray-800 text-white flex flex-col p-6 overflow-y-auto">
             {/* Logo and App Name */}
             <div className="flex flex-col items-center mb-8">
-                <img src={logoSygis} alt="Logo SIGIS" className="w-16 h-16" />
+                <img src={LogoSygis} alt="Logo SIGIS" className="w-16 h-16" />
                 <span className="text-xl font-bold mt-2">SIGIS APP</span>
             </div>
 
@@ -18,7 +18,10 @@ const Sidebar = () => {
                 <Link to="/home" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <LayoutDashboard size={18} /> Resumen General
                 </Link>
-                <Link to="/home/historial" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/incident-reports" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                    <Archive size={18} /> Reportes
+                </Link>
+                <Link to="/home/record" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Clock size={18} /> Historial
                 </Link>
             </nav>
@@ -31,13 +34,13 @@ const Sidebar = () => {
                 <Link to="/home/mis-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <FolderOpen size={18} /> Mis Casos
                 </Link>
-                <Link to="/home/novedades" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/news" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Megaphone size={18} /> Novedades
                 </Link>
-                <Link to="/home/asignar-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/assing-cases" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <BookOpenCheck size={18} /> Asignar Casos
                 </Link>
-                <Link to="/home/seguimientos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/tracing" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Replace size={18} /> Seguimientos
                 </Link>
             </nav>
@@ -47,7 +50,7 @@ const Sidebar = () => {
             <div className="text-gray-400 text-sm uppercase mb-2 font-bold">Settings</div>
             <hr className="p-2 border-gray-400" />
             <nav className="flex flex-col space-y-4">
-                <Link to="/home/gestionar-usuarios" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/manage-users" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <UserCog size={18} /> Gestionar Usuarios
                 </Link>
                 <Link to="/login" className="flex items-center gap-2 text-red-400 hover:text-red-300 font-medium text-gray-200">
