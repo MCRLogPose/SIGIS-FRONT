@@ -7,43 +7,43 @@ const DashBoardHome = () => {
     const cards = [
         {
             title: 'Nueva Incidencia',
-            to: '/home/create-report',
+            to: '/home/create-incident',
             icon: Pickaxe,
             buttonText: 'Crear'
         },
         {
             title: 'Ver Historial',
-            to: '/home/historial',
+            to: '/home/record',
             icon: Clock,
             buttonText: 'Ir'
         },
         {
             title: 'Mis Casos',
-            to: '/home/mis-casos',
+            to: '/home/my-cases',
             icon: FolderOpen,
             buttonText: 'Ir'
         },
         {
             title: 'Novedades',
-            to: '/home/novedades',
+            to: '/home/news',
             icon: Megaphone,
             buttonText: 'Ir'
         },
         {
             title: 'Asignar Casos',
-            to: '/home/asignar-casos',
+            to: '/home/assing-cases',
             icon: BookOpenCheck,
             buttonText: 'Ir'
         },
         {
             title: 'Seguimientos',
-            to: '/home/seguimientos',
+            to: '/home/tracing',
             icon: Replace,
             buttonText: 'Ir'
         },
         {
-            title: 'Reportes',
-            to: '/home/incident-reportes',
+            title: 'Reportes de Incidencias',
+            to: '/home/view-incident-reports',
             icon: Archive,
             buttonText: 'Ir'
         }

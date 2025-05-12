@@ -18,7 +18,7 @@ const Sidebar = () => {
                 <Link to="/home" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <LayoutDashboard size={18} /> Resumen General
                 </Link>
-                <Link to="/home/incident-reports" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/view-incident-reports" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Archive size={18} /> Reportes
                 </Link>
                 <Link to="/home/record" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
@@ -31,7 +31,7 @@ const Sidebar = () => {
             <div className="text-gray-400 text-sm uppercase mb-2 font-bold">WORK</div>
             <hr className="p-2 border-gray-400" />
             <nav className="flex flex-col space-y-4">
-                <Link to="/home/mis-casos" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/my-cases" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <FolderOpen size={18} /> Mis Casos
                 </Link>
                 <Link to="/home/news" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">

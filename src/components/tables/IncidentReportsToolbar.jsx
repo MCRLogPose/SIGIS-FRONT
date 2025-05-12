@@ -1,5 +1,6 @@
 import React from 'react'
-import { Plus, Download, Search, FilePlus } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Download, Search, FilePlus, ChartNoAxesGantt } from 'lucide-react'
 
 const IncidentReportsToolbar = () => {
   return (
@@ -15,11 +16,14 @@ const IncidentReportsToolbar = () => {
         </button>
       </div>
       <div className="flex items-center gap-3">
-        <button className="flex items-center bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-500 text-sm cursor-pointer">
+        <Link to="/home/create-incident" className="flex items-center bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-500 text-sm cursor-pointer">
           <FilePlus size={16} className="mr-1" /> Nuevo
-        </button>
+        </Link>
         <button className="p-2 hover:bg-gray-100 rounded cursor-pointer">
           <Download size={18} />
+        </button>
+        <button className="p-2 hover:bg-gray-100 rounded cursor-pointer">
+          <ChartNoAxesGantt size={18} />
         </button>
       </div>
 
