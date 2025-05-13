@@ -4,15 +4,15 @@ import IncidentListCards from '@/components/IncidentListCards'
 
 const imageUrl = [ImageDashboardOptions]
 
-const ActiveIncidents = () => {
+const MyCases = () => {
     return (
         <IncidentListCards
-            title="MI HISTORIAL"
-            description="Historial de casos realizados culminados."
-            type="culminado"
+            title="MIS CASOS"
+            description="Historial de casos realizados en vigencia y sin resolver."
+            type="activo"
             imageUrl={imageUrl}
         />  
     );
 }
 
-export default ActiveIncidents
+export default MyCases
