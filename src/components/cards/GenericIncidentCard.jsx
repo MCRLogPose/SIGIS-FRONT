@@ -1,7 +1,7 @@
 
-import { ArrowRight, BadgeCheck, BadgeX, Calendar, PersonStanding } from 'lucide-react'
+import { ArrowRight, BadgeCheck, BadgeX, Calendar, ContactRound, MapPin, PersonStanding } from 'lucide-react'
 
-const DelegateIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore }) => {
+const GenericIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore }) => {
   return (
     <div className="bg-white shadow-sm flex overflow-hidden">
       <img src={incident.imageUrl} alt="Incidente" className="w-50 h-50 object-cover rounded-l-2xl" />
@@ -13,7 +13,11 @@ const DelegateIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore 
 
         <div className='flex items-center gap-4 mt-2 text-sm text-gray-500'>
           <div className='flex items-center gap-1'><Calendar />{incident.date} </div>
-          <div className='flex items-center gap-1'><PersonStanding />{incident.administrator} </div>
+          <div className='flex items-center gap-1'><MapPin />{incident.location} </div>
+        </div>
+        <div className='flex items-center gap-4 mt-2 text-sm text-gray-500'>
+          <div className='flex items-center gap-1'><ContactRound />{incident.reporter} </div>
+          <div className='flex items-center gap-1'><PersonStanding />{incident.category} </div>
         </div>
 
 
@@ -33,4 +37,4 @@ const DelegateIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore 
   )
 }
 
-export default DelegateIncidentCard
+export default GenericIncidentCard

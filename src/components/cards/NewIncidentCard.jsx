@@ -1,4 +1,5 @@
-import { BadgeCheck } from "lucide-react"
+import { ArrowRight, BadgeCheck } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const NewIncidentCard = ({ incident, imageUrl }) => {
     return (
@@ -15,6 +16,9 @@ const NewIncidentCard = ({ incident, imageUrl }) => {
               📍 {incident.location}
             </span>
           </div>
+          <Link className="mt-2 w-full text-black text-sm py-1 rounded cursor-pointer flex items-center justify-center gap-2">
+            <ArrowRight /> VER MÀS
+          </Link>
           <button className="mt-2 w-full bg-gray-700 text-white text-sm py-1 rounded hover:bg-gray-800 cursor-pointer flex items-center justify-center gap-2">
             <BadgeCheck /> ACEPTAR
           </button>

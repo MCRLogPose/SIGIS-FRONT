@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import NewIncidentCard from '@/components/cards/NewIncidentCard'
-import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import AssignmentIncidentCard from '@/components/cards/AssignmentIncidentCard'
 import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
+import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
+import useResponsiveCardLimit from '@/hooks/useResponsiveCardLimit'
+import { useToggleListExpand } from '@/hooks/useToggleListExpand'
+import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 const NewsPage = () => {
     const [newIncidents, setNewIncidents] = useState([])
     const [genericIncidents, setGenericIncidents] = useState([])
+
+    const gridContainerRef = useRef(null)
+    const maxCards = useResponsiveCardLimit(gridContainerRef)
+    const { isExpanded, visibleItems, toggleExpand } = useToggleListExpand(newIncidents, maxCards)
+
+    const visibleIncidents = isExpanded ? visibleItems : visibleItems.slice(0, maxCards)
 
     useEffect(() => {
         // Simulación de datos
@@ -17,9 +25,18 @@ const NewsPage = () => {
                 title: 'Silla rota A00304',
                 description: 'Se registra una computadora en mal estado',
                 date: '06 / 01 / 2021',
-                location: 'A00304',
+                location: 'A0304',
                 imageUrl: ImageDashboardOptions
             },
+            {
+                id: 2,
+                title: 'Silla rota A00304',
+                description: 'Se registra una computadora en mal estado',
+                date: '06 / 01 / 2021',
+                location: 'A0304',
+                imageUrl: ImageDashboardOptions
+            },
+            
             // más casos...
         ])
 
@@ -30,6 +47,9 @@ const NewsPage = () => {
                 description: 'Se reparo el caño, sin embargo se dispone de material para culminarlo',
                 date: '06 / 01 / 2021',
                 administrator: 'Juan Segarra',
+                location: 'A0302',
+                category: 'SEGURIDAD',
+                reporter: 'U222231',
                 imageUrl: ImageDashboardOptions
             },
             // más casos...
@@ -42,15 +62,18 @@ const NewsPage = () => {
                 <section>
                     <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias generadas por los usuarios</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {newIncidents.map((incident) => (
-                            <NewIncidentCard
-                                key={incident.id}
-                                incident={incident}
-                                imageUrl={ImageDashboardOptions}
-                            />
+                    <div
+                        ref={gridContainerRef}
+                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6"
+                    >
+                        {visibleIncidents.map((incident) => (
+                            <NewIncidentCard key={incident.id} incident={incident} imageUrl={incident.imageUrl} />
                         ))}
                     </div>
+
+                    <ShowMoreButton onClick={toggleExpand} isExpanded={isExpanded} />
+
+
                 </section>
 
                 <section>

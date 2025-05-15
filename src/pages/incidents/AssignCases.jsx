@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import UpdatedIncidentCard from '@/components/cards/UpdatedIncidentCard'
 import TablePaginator from '@/components/tables/TablePaginator'
 import GenericTable from '@/components/tables/GenericTable'
 import TableToolbar from '@/components/tables/TableToolbar'
 import { usePagination } from '@/hooks/usePagination'
-import DelegateIncidentCard from '@/components/cards/DelegateIncidentCard'
 import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
 
 const AssignCases = () => {
@@ -20,6 +18,9 @@ const AssignCases = () => {
                 description: 'Se reparo el caño, sin embargo se dispone de material para culminarlo',
                 date: '06 / 01 / 2021',
                 administrator: 'Juan Segarra',
+                location: 'A0302',
+                category: 'SEGURIDAD',
+                reporter: 'U222231',
                 imageUrl: ImageDashboardOptions
             },
             // más casos...
