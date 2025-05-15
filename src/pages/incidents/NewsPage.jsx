@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import NewIncidentCard from '@/components/cards/NewIncidentCard'
-import UpdatedIncidentCard from '@/components/cards/UpdatedIncidentCard'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
+import AssignmentIncidentCard from '@/components/cards/AssignmentIncidentCard'
 
 const NewsPage = () => {
     const [newIncidents, setNewIncidents] = useState([])
-    const [updatedIncidents, setUpdatedIncidents] = useState([])
+    const [assignmentIncidents, setAssignmentIncidents] = useState([])
 
     useEffect(() => {
         // Simulación de datos
@@ -22,7 +22,7 @@ const NewsPage = () => {
             // más casos...
         ])
 
-        setUpdatedIncidents([
+        setAssignmentIncidents([
             {
                 id: 2,
                 title: 'Caño roto, baño de hombres',
@@ -40,7 +40,7 @@ const NewsPage = () => {
             <div className="p-6 space-y-8">
                 <section>
                     <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
+                    <p className="text-sm text-gray-500 mb-4">Incidencias generadas por los usuarios</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {newIncidents.map((incident) => (
                             <NewIncidentCard
@@ -53,12 +53,12 @@ const NewsPage = () => {
                 </section>
 
                 <section>
-                    <h2 className="text-2xl font-bold">ACTUALIZACIONES DE CASOS ACTIVOS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Solicitudes de asignacion por parte de los administradores</p>
+                    <h2 className="text-2xl font-bold">ASIGNACIONES DE INCIDENCIAS</h2>
+                    <p className="text-sm text-gray-500 mb-4">Incidencias asignadas por los administradores</p>
                     <div className="space-y-4">
-                        {updatedIncidents.map((incident, idx) => (
-                            <UpdatedIncidentCard
-                                key={idx}
+                        {assignmentIncidents.map((incident) => (
+                            <AssignmentIncidentCard
+                                key={incident.id}
                                 incident={incident}
                                 imageUrl={incident.imageUrl}
                             />

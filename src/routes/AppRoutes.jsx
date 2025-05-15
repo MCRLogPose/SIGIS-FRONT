@@ -6,6 +6,9 @@ import CreateIncident from '@/pages/incidents/CreateIncident';
 import RecordIncidents from '@/pages/incidents/RecordIncident';
 import MyCases from '@/pages/incidents/MyCases';
 import NewsPage from '@/pages/incidents/NewsPage';
+import TracingPage from '@/pages/incidents/TracingPage';
+import AssignCases from '@/pages/incidents/AssignCases';
+import ManegeAccounts from '@/pages/accounts/ManageAccounts';
 
 const AppRoutes = () => {
   
@@ -19,7 +22,9 @@ const AppRoutes = () => {
       <Route path="/home/record" element={<RecordIncidents />} />
       <Route path="/home/my-cases" element={<MyCases />} />
       <Route path="/home/news" element={<NewsPage />} />
-      
+      <Route path="/home/tracing" element={<TracingPage />} />
+      <Route path="/home/assing-cases" element={<AssignCases />} />
+      <Route path="/home/manage-users" element={<ManegeAccounts />} />
     </Routes>
   );
 };

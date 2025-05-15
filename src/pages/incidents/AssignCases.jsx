@@ -28,8 +28,8 @@ const TracingPage = () => {
         <DashboardLayout>
             <div className="p-6 space-y-8">
                 <section>
-                    <h2 className="text-2xl font-bold">ACTUALIZACIONES DE CASOS ACTIVOS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Solicitudes de asignacion por parte de los administradores</p>
+                    <h2 className="text-2xl font-bold">INCIDENCIAS CON MAYOR PRIORIDAD - POR ASIGNAR</h2>
+                    <p className="text-sm text-gray-500 mb-4">Incidencias por asignar a operarios de alta prioridad</p>
                     <div className="space-y-4">
                         {updateIncidents.map((incident) => (
                             <UpdatedIncidentCard
@@ -42,8 +42,8 @@ const TracingPage = () => {
                 </section>
 
                 <section>
-                    <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
+                    <h2 className="text-2xl font-bold">INCIDENCIAS GENERALES - POR DELEGAR</h2>
+                    <p className="text-sm text-gray-500 mb-4">Incidencias por asignar, vista general</p>
                     <div>
                         <IncidentReportsToolbar />
                         <IncidentReportsTable />

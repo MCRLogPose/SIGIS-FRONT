@@ -1,5 +1,5 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
-import DashboardCard from '@/components/DashboardCard';
+import DashboardCard from '@/components/cards/DashboardCard';
 import { Pickaxe, Clock, FolderOpen, Megaphone, UserCog, BookOpenCheck, Replace, UserPen, Archive } from 'lucide-react';
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png';
 
