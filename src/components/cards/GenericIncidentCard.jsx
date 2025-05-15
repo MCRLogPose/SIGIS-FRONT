@@ -1,7 +1,7 @@
 
-import { ArrowRight, BadgeAlert, BadgeCheck, BadgeX, Calendar, PersonStanding } from 'lucide-react'
+import { ArrowRight, BadgeCheck, BadgeX, Calendar, PersonStanding } from 'lucide-react'
 
-const UpdatedIncidentCard = ({ incident }) => {
+const DelegateIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore }) => {
   return (
     <div className="bg-white shadow-sm flex overflow-hidden">
       <img src={incident.imageUrl} alt="Incidente" className="w-50 h-50 object-cover rounded-l-2xl" />
@@ -18,14 +18,14 @@ const UpdatedIncidentCard = ({ incident }) => {
 
 
         <div className='flex items-center gap-4 mt-2 text-sm text-gray-500'>
-          <button className='bg-gray-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
-              <BadgeAlert />MANTENER
-          </button>
           <button className='bg-green-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
-              <BadgeCheck />CULMINAR
+              <BadgeCheck />{buttonTitle1}
+          </button>
+          <button className='bg-red-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
+               <BadgeX />{buttonTitle2}
           </button>
           <button className='bg-gray-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
-              <ArrowRight />Ver màs
+              <ArrowRight to={toSeeMore}/>Ver màs
           </button>
         </div>
       </div>
@@ -33,4 +33,4 @@ const UpdatedIncidentCard = ({ incident }) => {
   )
 }
 
-export default UpdatedIncidentCard
+export default DelegateIncidentCard

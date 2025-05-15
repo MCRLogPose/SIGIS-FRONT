@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import IncidentCard from '@/components/IncidentCard'
+import IncidentCard from '@/components/cards/IncidentCard'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import IncidentReportsToolbar from '@/components/tables/IncidentReportsToolbar'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'

@@ -3,10 +3,11 @@ import DashboardLayout from '@/layouts/DashboardLayout'
 import NewIncidentCard from '@/components/cards/NewIncidentCard'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
 import AssignmentIncidentCard from '@/components/cards/AssignmentIncidentCard'
+import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
 
 const NewsPage = () => {
     const [newIncidents, setNewIncidents] = useState([])
-    const [assignmentIncidents, setAssignmentIncidents] = useState([])
+    const [genericIncidents, setGenericIncidents] = useState([])
 
     useEffect(() => {
         // Simulación de datos
@@ -22,7 +23,7 @@ const NewsPage = () => {
             // más casos...
         ])
 
-        setAssignmentIncidents([
+        setGenericIncidents([
             {
                 id: 2,
                 title: 'Caño roto, baño de hombres',
@@ -56,11 +57,13 @@ const NewsPage = () => {
                     <h2 className="text-2xl font-bold">ASIGNACIONES DE INCIDENCIAS</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias asignadas por los administradores</p>
                     <div className="space-y-4">
-                        {assignmentIncidents.map((incident) => (
-                            <AssignmentIncidentCard
+                        {genericIncidents.map((incident) => (
+                            <GenericIncidentCard
                                 key={incident.id}
                                 incident={incident}
                                 imageUrl={incident.imageUrl}
+                                buttonTitle1="ACEPTAR"
+                                buttonTitle2="RECHAZAR"
                             />
                         ))}
                     </div>

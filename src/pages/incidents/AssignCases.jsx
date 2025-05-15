@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import NewIncidentCard from '@/components/cards/NewIncidentCard'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
 import UpdatedIncidentCard from '@/components/cards/UpdatedIncidentCard'
-import IncidentReportsTable from '@/components/tables/IncidentReportsTable';
-import IncidentReportsToolbar from '@/components/tables/IncidentReportsToolbar';
-import TablePaginator from '@/components/tables/TablePaginator';
+import TablePaginator from '@/components/tables/TablePaginator'
+import GenericTable from '@/components/tables/GenericTable'
+import TableToolbar from '@/components/tables/TableToolbar'
+import { usePagination } from '@/hooks/usePagination'
+import DelegateIncidentCard from '@/components/cards/DelegateIncidentCard'
+import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
 
-const TracingPage = () => {
-    const [updateIncidents, setUpdateIncidents] = useState([])
+const AssignCases = () => {
+    const [genericIncidents, setGenericIncidents] = useState([])
 
     useEffect(() => {
-        setUpdateIncidents([
+        setGenericIncidents([
             {
-                id: 2,
+                id: 1,
                 title: 'Caño roto, baño de hombres',
                 description: 'Se reparo el caño, sin embargo se dispone de material para culminarlo',
                 date: '06 / 01 / 2021',
@@ -24,6 +26,44 @@ const TracingPage = () => {
         ])
     }, [])
 
+    const columns = [
+        { key: 'id', label: 'ID' },
+        { key: 'title', label: 'Titulo' },
+        { key: 'description', label: 'Descripción' },
+        { key: 'location', label: 'Ubicación' },
+        { key: 'issueDate', label: 'Fecha de Emisión' },
+
+        {
+            key: 'status', label: 'Estado', render: (value) => (
+                <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ACTIVA' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    {value}
+                </span>
+            )
+        },
+        { key: 'category', label: 'Categoría' },
+        { key: 'reporter', label: 'Reportador' },
+        // más columnas según la vista
+    ]
+
+    const data = [
+        { id: '00001', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
+        { id: '00002', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222222' },
+        { id: '00003', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
+        { id: '00004', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M223321' },
+        { id: '00005', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
+        { id: '00006', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },      // gory: 'SEGURIDAD', operators: 'Miguel12' },
+        // más filas...
+    ]
+
+    const [rowsPerPage, setRowsPerPage] = useState(5)
+
+    const {
+        currentPage,
+        totalPages,
+        paginatedData,
+        setCurrentPage
+    } = usePagination(data, rowsPerPage)
+
     return (
         <DashboardLayout>
             <div className="p-6 space-y-8">
@@ -31,11 +71,14 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS CON MAYOR PRIORIDAD - POR ASIGNAR</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por asignar a operarios de alta prioridad</p>
                     <div className="space-y-4">
-                        {updateIncidents.map((incident) => (
-                            <UpdatedIncidentCard
+                        {genericIncidents.map((incident) => (
+                            <GenericIncidentCard
                                 key={incident.id}
                                 incident={incident}
                                 imageUrl={incident.imageUrl}
+                                buttonTitle1="DELEGAR"
+                                buttonTitle2="RECHAZAR"
+
                             />
                         ))}
                     </div>
@@ -45,9 +88,15 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS GENERALES - POR DELEGAR</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por asignar, vista general</p>
                     <div>
-                        <IncidentReportsToolbar />
-                        <IncidentReportsTable />
-                        <TablePaginator currentPage={1} totalPages={10} onPageChange={(page) => console.log(page)} />
+                        <TableToolbar />
+                        <GenericTable columns={columns} data={paginatedData} />
+                        <TablePaginator
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                            rowsPerPage={rowsPerPage}
+                            onRowsPerPageChange={setRowsPerPage}
+                        />
                     </div>
                 </section>
             </div>
@@ -55,4 +104,4 @@ const TracingPage = () => {
     )
 }
 
-export default TracingPage
+export default AssignCases

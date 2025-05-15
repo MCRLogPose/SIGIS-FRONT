@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import NewIncidentCard from '@/components/cards/NewIncidentCard'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import UpdatedIncidentCard from '@/components/cards/UpdatedIncidentCard'
-import IncidentReportsTable from '@/components/tables/IncidentReportsTable';
-import IncidentReportsToolbar from '@/components/tables/IncidentReportsToolbar';
 import TablePaginator from '@/components/tables/TablePaginator';
+import GenericTable from '@/components/tables/GenericTable'
+import { usePagination } from '@/hooks/usePagination'
+import TableToolbar from '@/components/tables/TableToolbar'
+import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
 
 const TracingPage = () => {
-    const [updateIncidents, setUpdateIncidents] = useState([])
+    const [genericIncidents, setGenericIncidents] = useState([])
 
     useEffect(() => {
-        setUpdateIncidents([
+        setGenericIncidents([
             {
                 id: 2,
                 title: 'Caño roto, baño de hombres',
@@ -24,6 +24,47 @@ const TracingPage = () => {
         ])
     }, [])
 
+    const columns = [
+        { key: 'id', label: 'ID' },
+        { key: 'title', label: 'Titulo' },
+        { key: 'location', label: 'Ubicación' },
+        { key: 'issueDate', label: 'Fecha de Emisión' },
+        { key: 'acceptanceDate', label: 'Fecha de Aceptación' },
+        { key: 'completionDate', label: 'Fecha de Finalizaciòn' },
+        { key: 'observation', label: 'Observación' },
+
+        {
+            key: 'status', label: 'Estado', render: (value) => (
+                <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ACTIVA' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    {value}
+                </span>
+            )
+        },
+        { key: 'category', label: 'Categoría' },
+        { key: 'operators', label: 'Operarios' },
+        // más columnas según la vista
+    ]
+
+    const data = [
+        { id: '00001', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00002', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00003', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00004', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00005', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet',status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00006', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        //
+        // más filas...
+    ]
+
+    const [rowsPerPage, setRowsPerPage] = useState(5)
+
+    const {
+        currentPage,
+        totalPages,
+        paginatedData,
+        setCurrentPage
+    } = usePagination(data, rowsPerPage)
+
     return (
         <DashboardLayout>
             <div className="p-6 space-y-8">
@@ -31,11 +72,13 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">ACTUALIZACIONES DE CASOS ACTIVOS</h2>
                     <p className="text-sm text-gray-500 mb-4">Solicitudes de asignacion por parte de los administradores</p>
                     <div className="space-y-4">
-                        {updateIncidents.map((incident) => (
-                            <UpdatedIncidentCard
+                        {genericIncidents.map((incident) => (
+                            <GenericIncidentCard
                                 key={incident.id}
                                 incident={incident}
                                 imageUrl={incident.imageUrl}
+                                buttonTitle1="APROBAR"
+                                buttonTitle2="MANTENER"
                             />
                         ))}
                     </div>
@@ -45,9 +88,15 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
                     <div>
-                        <IncidentReportsToolbar />
-                        <IncidentReportsTable />
-                        <TablePaginator currentPage={1} totalPages={10} onPageChange={(page) => console.log(page)} />
+                        <TableToolbar />
+                        <GenericTable columns={columns} data={paginatedData} />
+                        <TablePaginator
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                            rowsPerPage={rowsPerPage}
+                            onRowsPerPageChange={setRowsPerPage}
+                        />
                     </div>
                 </section>
             </div>
