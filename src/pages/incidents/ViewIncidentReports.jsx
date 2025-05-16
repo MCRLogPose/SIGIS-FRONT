@@ -5,6 +5,7 @@ import TablePaginator from '@/components/tables/TablePaginator';
 import GenericTable from '@/components/tables/GenericTable';
 import { usePagination } from '@/hooks/usePagination';
 
+
 const ViewIncidentReports = () => {
     const columns = [
         { key: 'id', label: 'ID' },

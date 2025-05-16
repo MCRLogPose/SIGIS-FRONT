@@ -3,12 +3,25 @@ import DashboardLayout from '@/layouts/DashboardLayout'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
 import TablePaginator from '@/components/tables/TablePaginator';
 import GenericTable from '@/components/tables/GenericTable'
-import { usePagination } from '@/hooks/usePagination'
 import TableToolbar from '@/components/tables/TableToolbar'
+import { usePagination } from '@/hooks/usePagination'
 import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
+import { useToggleListExpand } from '@/hooks/useToggleListExpand'
+import ShowMoreButton from '@/components/buttons/ShowMoreButton'
+
 
 const TracingPage = () => {
     const [genericIncidents, setGenericIncidents] = useState([])
+
+    const {
+            isExpanded: isGenericExpanded,
+            visibleItems: visibleGenericItems,
+            toggleExpand: toggleGenericExpand
+        } = useToggleListExpand(genericIncidents, 2)
+        const visibleGenericIncidents = isGenericExpanded
+            ? visibleGenericItems
+            : visibleGenericItems.slice(0, 2)
+    
 
     useEffect(() => {
         setGenericIncidents([
@@ -75,7 +88,7 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">ACTUALIZACIONES DE CASOS ACTIVOS</h2>
                     <p className="text-sm text-gray-500 mb-4">Solicitudes de asignacion por parte de los administradores</p>
                     <div className="space-y-4">
-                        {genericIncidents.map((incident) => (
+                        {visibleGenericIncidents.map((incident) => (
                             <GenericIncidentCard
                                 key={incident.id}
                                 incident={incident}
@@ -85,6 +98,7 @@ const TracingPage = () => {
                             />
                         ))}
                     </div>
+                    <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />
                 </section>
 
                 <section>

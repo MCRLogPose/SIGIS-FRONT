@@ -6,9 +6,21 @@ import GenericTable from '@/components/tables/GenericTable'
 import TableToolbar from '@/components/tables/TableToolbar'
 import { usePagination } from '@/hooks/usePagination'
 import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
+import { useToggleListExpand } from '@/hooks/useToggleListExpand'
+import ShowMoreButton from '@/components/buttons/ShowMoreButton'
+
 
 const AssignCases = () => {
     const [genericIncidents, setGenericIncidents] = useState([])
+
+    const {
+        isExpanded: isGenericExpanded,
+        visibleItems: visibleGenericItems,
+        toggleExpand: toggleGenericExpand
+    } = useToggleListExpand(genericIncidents, 2)
+    const visibleGenericIncidents = isGenericExpanded
+        ? visibleGenericItems
+        : visibleGenericItems.slice(0, 2)
 
     useEffect(() => {
         setGenericIncidents([
@@ -47,12 +59,12 @@ const AssignCases = () => {
     ]
 
     const data = [
-        { id: '00001', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
-        { id: '00002', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222222' },
-        { id: '00003', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
-        { id: '00004', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M223321' },
-        { id: '00005', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
-        { id: '00006', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022',  status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },      // gory: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00001', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
+        { id: '00002', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222222' },
+        { id: '00003', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
+        { id: '00004', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M223321' },
+        { id: '00005', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },
+        { id: '00006', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', status: 'PENDIENTE', category: 'SEGURIDAD', reporter: 'M222221' },      // gory: 'SEGURIDAD', operators: 'Miguel12' },
         // más filas...
     ]
 
@@ -72,16 +84,16 @@ const AssignCases = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS CON MAYOR PRIORIDAD - POR ASIGNAR</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por asignar a operarios de alta prioridad</p>
                     <div className="space-y-4">
-                        {genericIncidents.map((incident) => (
+                        {visibleGenericIncidents.map((incident) => (
                             <GenericIncidentCard
                                 key={incident.id}
                                 incident={incident}
                                 imageUrl={incident.imageUrl}
                                 buttonTitle1="DELEGAR"
                                 buttonTitle2="RECHAZAR"
-
                             />
                         ))}
+                        <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />
                     </div>
                 </section>
 

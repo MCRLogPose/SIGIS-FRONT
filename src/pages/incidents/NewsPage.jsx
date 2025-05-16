@@ -17,6 +17,15 @@ const NewsPage = () => {
 
     const visibleIncidents = isExpanded ? visibleItems : visibleItems.slice(0, maxCards)
 
+    const {
+        isExpanded: isGenericExpanded,
+        visibleItems: visibleGenericItems,
+        toggleExpand: toggleGenericExpand
+    } = useToggleListExpand(genericIncidents, 3)
+    const visibleGenericIncidents = isGenericExpanded
+        ? visibleGenericItems
+        : visibleGenericItems.slice(0, 3)
+
     useEffect(() => {
         // Simulación de datos
         setNewIncidents([
@@ -36,7 +45,7 @@ const NewsPage = () => {
                 location: 'A0304',
                 imageUrl: ImageDashboardOptions
             },
-            
+
             // más casos...
         ])
 
@@ -80,7 +89,7 @@ const NewsPage = () => {
                     <h2 className="text-2xl font-bold">ASIGNACIONES DE INCIDENCIAS</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias asignadas por los administradores</p>
                     <div className="space-y-4">
-                        {genericIncidents.map((incident) => (
+                        {visibleGenericIncidents.map((incident) => (
                             <GenericIncidentCard
                                 key={incident.id}
                                 incident={incident}
@@ -89,6 +98,7 @@ const NewsPage = () => {
                                 buttonTitle2="RECHAZAR"
                             />
                         ))}
+                        <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />
                     </div>
                 </section>
             </div>
