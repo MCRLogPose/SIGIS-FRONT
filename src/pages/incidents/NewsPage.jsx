@@ -8,6 +8,7 @@ import { useToggleListExpand } from '@/hooks/useToggleListExpand'
 import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 const NewsPage = () => {
+    const pathSeeMore = '/home/incident-detail/:id'
     const [newIncidents, setNewIncidents] = useState([])
     const [genericIncidents, setGenericIncidents] = useState([])
 
@@ -76,7 +77,11 @@ const NewsPage = () => {
                         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6"
                     >
                         {visibleIncidents.map((incident) => (
-                            <NewIncidentCard key={incident.id} incident={incident} imageUrl={incident.imageUrl} />
+                            <NewIncidentCard
+                                key={incident.id}
+                                incident={incident}
+                                imageUrl={incident.imageUrl}
+                                toSeeMore={pathSeeMore.replace(':id', incident.id)} />
                         ))}
                     </div>
 
@@ -96,6 +101,7 @@ const NewsPage = () => {
                                 imageUrl={incident.imageUrl}
                                 buttonTitle1="ACEPTAR"
                                 buttonTitle2="RECHAZAR"
+                                toSeeMore={pathSeeMore.replace(':id', incident.id)}
                             />
                         ))}
                         <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />

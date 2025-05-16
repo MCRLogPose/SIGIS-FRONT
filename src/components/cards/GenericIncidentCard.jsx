@@ -1,5 +1,6 @@
 
 import { ArrowRight, BadgeCheck, BadgeX, Calendar, ContactRound, MapPin, PersonStanding } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const GenericIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore }) => {
   return (
@@ -28,9 +29,9 @@ const GenericIncidentCard = ({ incident, buttonTitle1, buttonTitle2, toSeeMore }
           <button className='bg-red-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
                <BadgeX />{buttonTitle2}
           </button>
-          <button className='bg-gray-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
-              <ArrowRight to={toSeeMore}/>Ver màs
-          </button>
+          <Link to={toSeeMore} className='bg-gray-700 text-white px-4 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer'>
+              <ArrowRight />Ver màs
+          </Link>
         </div>
       </div>
     </div>

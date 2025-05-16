@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, FolderOpen, Clock, Megaphone, LogOut, UserCog, BookOpenCheck, Replace, Archive } from 'lucide-react';
+import { LayoutDashboard, FolderOpen, Clock, Megaphone, LogOut, UserCog, BookOpenCheck, Replace, Archive, User } from 'lucide-react';
 import LogoSygis from '@/assets/logos/logo-sygis.png';
 
 const Sidebar = () => {
@@ -57,6 +57,12 @@ const Sidebar = () => {
                     <LogOut size={18} /> Salir
                 </Link>
             </nav>
+
+            <br className="my-10" />
+            <div className="flex flex-col items-center mb-8 rounded-lg p-4">
+                <User size={50} />
+                <span className="text-s font-medium mt-2">U22229593</span>
+            </div>
         </aside>
     );
 };

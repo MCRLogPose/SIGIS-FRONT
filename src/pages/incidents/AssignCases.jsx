@@ -12,6 +12,7 @@ import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 const AssignCases = () => {
     const pathCreate = '/home/create-incident'
+    const pathSeeMore = '/home/incident-detail/:id'
     const [genericIncidents, setGenericIncidents] = useState([])
 
     const {
@@ -92,6 +93,7 @@ const AssignCases = () => {
                                 imageUrl={incident.imageUrl}
                                 buttonTitle1="DELEGAR"
                                 buttonTitle2="RECHAZAR"
+                                toSeeMore={pathSeeMore.replace(':id', incident.id)}
                             />
                         ))}
                         <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />

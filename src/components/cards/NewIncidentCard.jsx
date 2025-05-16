@@ -1,7 +1,7 @@
 import { ArrowRight, BadgeCheck } from "lucide-react"
 import { Link } from "react-router-dom"
 
-const NewIncidentCard = ({ incident, imageUrl }) => {
+const NewIncidentCard = ({ incident, imageUrl, toSeeMore }) => {
     return (
       <div className="bg-white shadow-md rounded-xl overflow-hidden">
         <div className="w-full h-40 overflow-hidden">
@@ -16,7 +16,7 @@ const NewIncidentCard = ({ incident, imageUrl }) => {
               📍 {incident.location}
             </span>
           </div>
-          <Link className="mt-2 w-full text-black text-sm py-1 rounded cursor-pointer flex items-center justify-center gap-2">
+          <Link to={toSeeMore} className="mt-2 w-full text-black text-sm py-1 rounded cursor-pointer flex items-center justify-center gap-2">
             <ArrowRight /> VER MÀS
           </Link>
           <button className="mt-2 w-full bg-gray-700 text-white text-sm py-1 rounded hover:bg-gray-800 cursor-pointer flex items-center justify-center gap-2">

@@ -12,6 +12,7 @@ import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 const TracingPage = () => {
     const pathCreate = '/home/create-incident'
+    const pathSeeMore = '/home/incident-detail/:id'
     const [genericIncidents, setGenericIncidents] = useState([])
 
     const {
@@ -96,6 +97,7 @@ const TracingPage = () => {
                                 imageUrl={incident.imageUrl}
                                 buttonTitle1="APROBAR"
                                 buttonTitle2="MANTENER"
+                                toSeeMore={pathSeeMore.replace(':id', incident.id)}
                             />
                         ))}
                     </div>

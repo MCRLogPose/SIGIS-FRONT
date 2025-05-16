@@ -6,6 +6,7 @@ import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.pn
 
 const IncidentListCards = ({ title, description, type }) => {
     const pathCreate = '/home/create-incident'
+    const pathSeeMore = '/home/incident-detail/:id'
     const [incidents, setIncidents] = useState([])
 
     useEffect(() => {
@@ -49,9 +50,9 @@ const IncidentListCards = ({ title, description, type }) => {
                 <TableToolbar toCreate={pathCreate}/>
 
                 <div className="flex flex-col gap-6 mt-4">
-                    {incidents.map((incident, idx) => (
+                    {incidents.map((incident) => (
                         <IncidentCard 
-                            key={idx}
+                            key={incident.id}
                             title={incident.title}
                             description={incident.description}
                             date={incident.date}
@@ -59,6 +60,7 @@ const IncidentListCards = ({ title, description, type }) => {
                             pavilion={incident.pavilion}
                             floor={incident.floor}
                             imageUrl={incident.imageUrl}
+                            toSeeMore={pathSeeMore.replace(':id', incident.id)}
                         />
                     ))}
                 </div>
