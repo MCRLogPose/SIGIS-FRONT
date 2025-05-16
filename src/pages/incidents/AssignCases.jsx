@@ -11,6 +11,7 @@ import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 
 const AssignCases = () => {
+    const pathCreate = '/home/create-incident'
     const [genericIncidents, setGenericIncidents] = useState([])
 
     const {
@@ -101,7 +102,7 @@ const AssignCases = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS GENERALES - POR DELEGAR</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por asignar, vista general</p>
                     <div>
-                        <TableToolbar />
+                        <TableToolbar toCreate={pathCreate}/>
                         <GenericTable columns={columns} data={paginatedData} />
                         <TablePaginator
                             currentPage={currentPage}

@@ -11,6 +11,7 @@ import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 
 const TracingPage = () => {
+    const pathCreate = '/home/create-incident'
     const [genericIncidents, setGenericIncidents] = useState([])
 
     const {
@@ -105,7 +106,7 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
                     <div>
-                        <TableToolbar />
+                        <TableToolbar toCreate={pathCreate} />
                         <GenericTable columns={columns} data={paginatedData} />
                         <TablePaginator
                             currentPage={currentPage}

@@ -7,6 +7,7 @@ import { usePagination } from '@/hooks/usePagination';
 
 
 const ViewIncidentReports = () => {
+    const pathCreate = '/home/create-incident'
     const columns = [
         { key: 'id', label: 'ID' },
         { key: 'title', label: 'Titulo' },
@@ -53,7 +54,7 @@ const ViewIncidentReports = () => {
                 <p className="text-sm text-gray-500 mb-6">Casos o incidencias cuyo estado ya es culminado</p>
 
                 <div className="shadow-lg max-w">
-                    <TableToolbar />
+                    <TableToolbar toCreate={pathCreate}/>
                     <GenericTable columns={columns} data={paginatedData} />
                     <TablePaginator
                         currentPage={currentPage}
