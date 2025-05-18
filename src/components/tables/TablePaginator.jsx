@@ -15,7 +15,7 @@ const TablePaginator = ({
   }
 
   return (
-    <div className="flex items-center justify-between mt-4 text-sm text-gray-600">
+    <div className="flex items-center justify-between mt-4 text-sm text-black">
       <div>
         Rows per page:
         <select

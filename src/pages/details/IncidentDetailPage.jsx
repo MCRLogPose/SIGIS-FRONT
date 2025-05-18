@@ -1,39 +1,57 @@
 import React from 'react'
-import DashboardLayout from '@/layouts/DashboardLayout'
 import { useParams } from 'react-router-dom'
 import IncidentDetailSection from '@/components/details/IncidentDetailSection'
+import DashboardLayout from '@/layouts/DashboardLayout'
+import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
 
-// Simula obtener una incidencia por ID (luego se cambiará a fetch)
+// Dummy de prueba
 const dummyIncidents = [
     {
         id: 2,
         title: 'Silla rota',
-        description: '...',
+        description: 'Se reporta silla inestable en aula A001',
         location: 'A001',
+        floor: '1',
+        building: 'A',
+        reference: 'Cerca de la ventana',
         reporter: 'U22222',
-        date: '2024-10-10',
-        imageUrl: '',
-        // Solo si es asignada
-        administrator: 'Juan',
-        operator: 'Carlos',
+        phone: '987654321',
+        category: 'MOBILIARIO',
+        imageUrl: ImageDashboardOptions,
+        administrator: 'Juan Torres',
+        operator: 'Carlos Pérez',
+        status: 'Asignado',
+        emissionDate: '2024-10-10',
+        acceptanceDate: '2024-10-11',
+        updateDate: '2024-10-13',
+        endDate: '2024-10-14',
         assignedDate: '2024-10-12',
+        updates: [
+            { date: '2024-10-12', user: 'Juan Torres', comment: 'Incidencia asignada a Carlos Pérez' },
+            { date: '2024-10-13', user: 'Carlos Pérez', comment: 'Reparación en curso' },
+        ],
+        operators: [
+            {
+                id: '0001',
+                name: 'Carlos',
+                fullName: 'Carlos Pérez',
+                username: 'OP1234',
+                specialty: 'Reparación'
+            }
+        ]
     },
-    // ...
+    // Puedes agregar más objetos aquí para simular diferentes casos
 ]
 
 const IncidentDetailPage = () => {
     const { id } = useParams()
     const incident = dummyIncidents.find((i) => i.id === parseInt(id))
 
-    if (!incident) return <p>Incidencia no encontrada</p>
+    if (!incident) return <p className="p-4 text-red-500">Incidencia no encontrada</p>
 
     return (
         <DashboardLayout>
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-                <div className="bg-white shadow-md rounded-lg w-full max-w-3xl">
-                    <IncidentDetailSection incident={incident} />
-                </div>
-            </div>
+            <IncidentDetailSection incident={incident} />
         </DashboardLayout>
     )
 }
