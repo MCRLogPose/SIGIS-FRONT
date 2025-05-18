@@ -18,7 +18,7 @@ const DetailCharacteristics = ({ incident }) => {
     } = incident
 
     return (
-        <div className="p-4 space-y-2 text-sm text-white bg-blue-950 rounded-xl">
+        <div className="p-4 space-y-2 text-sm">
             <h2 className="text-lg font-semibold mb-2">Características</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>ID: {id?.toString().padStart(5, '0')}</div>

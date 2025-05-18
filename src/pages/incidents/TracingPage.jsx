@@ -16,14 +16,14 @@ const TracingPage = () => {
     const [genericIncidents, setGenericIncidents] = useState([])
 
     const {
-            isExpanded: isGenericExpanded,
-            visibleItems: visibleGenericItems,
-            toggleExpand: toggleGenericExpand
-        } = useToggleListExpand(genericIncidents, 2)
-        const visibleGenericIncidents = isGenericExpanded
-            ? visibleGenericItems
-            : visibleGenericItems.slice(0, 2)
-    
+        isExpanded: isGenericExpanded,
+        visibleItems: visibleGenericItems,
+        toggleExpand: toggleGenericExpand
+    } = useToggleListExpand(genericIncidents, 2)
+    const visibleGenericIncidents = isGenericExpanded
+        ? visibleGenericItems
+        : visibleGenericItems.slice(0, 2)
+
 
     useEffect(() => {
         setGenericIncidents([
@@ -68,7 +68,7 @@ const TracingPage = () => {
         { id: '00002', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
         { id: '00003', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
         { id: '00004', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        { id: '00005', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet',status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
+        { id: '00005', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
         { id: '00006', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
         //
         // más filas...

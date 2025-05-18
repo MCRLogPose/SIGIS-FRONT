@@ -14,7 +14,7 @@ const DetailOperators = ({ operators }) => {
         { key: 'specialty', label: 'Especialidad' },
     ]
 
-    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [rowsPerPage, setRowsPerPage] = useState(3)
 
     const {
         currentPage,
@@ -23,8 +23,8 @@ const DetailOperators = ({ operators }) => {
         setCurrentPage
     } = usePagination(operators, rowsPerPage)
     return (
-        <div className="bg-blue-950 text-black rounded-xl p-4">
-            <h2 className="text-lg font-semibold mb-4 text-white">Técnicos asignados</h2>
+        <div>
+            <h2 className="text-lg font-semibold mb-4">Técnicos asignados</h2>
             <GenericTable columns={columns} data={operatorsData || []} />
             <TablePaginator
                 currentPage={currentPage}

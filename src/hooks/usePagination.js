@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 
-export const usePagination = (data = [], rowsPerPage = 5) => {
+export const usePagination = (data = [], rowsPerPage = 3) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {

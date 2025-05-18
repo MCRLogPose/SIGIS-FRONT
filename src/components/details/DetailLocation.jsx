@@ -2,7 +2,7 @@ import React from 'react'
 
 const DetailLocation = ({ location, floor, building, reference }) => {
     return (
-        <div className="bg-blue-950 text-white rounded-xl p-4">
+        <div>
             <h2 className="text-lg font-semibold mb-2 text-center">Ubicación</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div><strong>UBICACIÓN:</strong> {location}</div>

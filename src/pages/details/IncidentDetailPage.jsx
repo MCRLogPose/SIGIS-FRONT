@@ -20,7 +20,7 @@ const dummyIncidents = [
         imageUrl: ImageDashboardOptions,
         administrator: 'Juan Torres',
         operator: 'Carlos Pérez',
-        status: 'Asignado',
+        status: 'EN PROCESO',
         emissionDate: '2024-10-10',
         acceptanceDate: '2024-10-11',
         updateDate: '2024-10-13',
@@ -29,6 +29,9 @@ const dummyIncidents = [
         updates: [
             { date: '2024-10-12', user: 'Juan Torres', comment: 'Incidencia asignada a Carlos Pérez' },
             { date: '2024-10-13', user: 'Carlos Pérez', comment: 'Reparación en curso' },
+            { date: '2024-10-14', user: 'Carlos Pérez', comment: 'Reparación completada' },
+            { date: '2024-10-15', user: 'Juan Torres', comment: 'Incidencia cerrada' },
+
         ],
         operators: [
             {
@@ -37,7 +40,28 @@ const dummyIncidents = [
                 fullName: 'Carlos Pérez',
                 username: 'OP1234',
                 specialty: 'Reparación'
-            }
+            },
+            {
+                id: '0002',
+                name: 'Ana',
+                fullName: 'Ana Gómez',
+                username: 'OP5678',
+                specialty: 'Mantenimiento'
+            },
+            {
+                id: '0003',
+                name: 'Luis',
+                fullName: 'Luis Martínez',
+                username: 'OP9101',
+                specialty: 'Electricidad'
+            },
+            {
+                id: '0004',
+                name: 'María',
+                fullName: 'María López',
+                username: 'OP1121',
+                specialty: 'Plomería'
+            },
         ]
     },
     // Puedes agregar más objetos aquí para simular diferentes casos

@@ -3,7 +3,7 @@ const GenericTable = ({ columns, data }) => {
     return (
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="min-w-full text-sm text-left">
-          <thead className="bg-gray-100 border-b">
+          <thead className="bg-gray-600 border-b text-white">
             <tr>
               {columns.map((col) => (
                 <th key={col.key} className="px-4 py-3">

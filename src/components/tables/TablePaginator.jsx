@@ -15,7 +15,7 @@ const TablePaginator = ({
   }
 
   return (
-    <div className="flex items-center justify-between mt-4 text-sm text-black">
+    <div className="flex items-center justify-between mt-4 text-sm text-white bg-gray-600 p-4 rounded-xl">
       <div>
         Rows per page:
         <select
@@ -23,6 +23,7 @@ const TablePaginator = ({
           value={rowsPerPage}
           onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
         >
+          <option value={3}>3</option>
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={25}>25</option>

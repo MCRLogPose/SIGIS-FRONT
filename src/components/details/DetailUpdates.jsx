@@ -1,14 +1,23 @@
-import React from 'react'
+// File: src/components/details/DetailUpdates.jsx
+import React, { useState } from 'react'
+import { useToggleListExpand } from '@/hooks/useToggleListExpand'
+import ShowMoreButton from '@/components/buttons/ShowMoreButton'
 
 const DetailUpdates = ({ updates }) => {
     if (!updates || updates.length === 0) return null
 
+    const {
+        isExpanded,
+        visibleItems,
+        toggleExpand
+    } = useToggleListExpand(updates, 2)
+
     return (
-        <div className="bg-blue-950 text-white rounded-xl p-4">
+        <div>
             <h2 className="text-lg font-semibold mb-4">Historial de actualizaciones</h2>
             <ul className="space-y-4 text-sm">
-                {updates.map((update, index) => (
-                    <li key={index} className="bg-blue-900 p-3 rounded-md">
+                {visibleItems.map((update, index) => (
+                    <li key={index} className="bg-gray-600 p-3 rounded-md">
                         <div className="flex justify-between text-xs text-gray-100 mb-1">
                             <span><strong>{update.user}</strong></span>
                             <span>{update.date}</span>
@@ -17,6 +26,11 @@ const DetailUpdates = ({ updates }) => {
                     </li>
                 ))}
             </ul>
+            {updates.length > 2 && (
+                <div className="mt-4">
+                    <ShowMoreButton onClick={toggleExpand} isExpanded={isExpanded} />
+                </div>
+            )}
         </div>
     )
 }
