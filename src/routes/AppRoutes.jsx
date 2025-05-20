@@ -10,6 +10,7 @@ import TracingPage from '@/pages/incidents/TracingPage';
 import AssignCases from '@/pages/incidents/AssignCases';
 import ManegeAccounts from '@/pages/accounts/ManageAccounts';
 import IncidentDetailPage from '@/pages/details/IncidentDetailPage';
+import RegisterPage from '@/pages/accounts/RegisterPage';
 
 const AppRoutes = () => {
   
@@ -24,9 +25,10 @@ const AppRoutes = () => {
       <Route path="/home/my-cases" element={<MyCases />} />
       <Route path="/home/news" element={<NewsPage />} />
       <Route path="/home/tracing" element={<TracingPage />} />
-      <Route path="/home/assing-cases" element={<AssignCases />} />
-      <Route path="/home/manage-users" element={<ManegeAccounts />} />
+      <Route path="/home/assing-cases" element={<AssignCases />} />   
       <Route path="/home/incident-detail/:id" element={<IncidentDetailPage />} />
+      <Route path="/accounts/manage-users" element={<ManegeAccounts />} />
+      <Route path="/accounts/register-user" element={<RegisterPage />} />
     </Routes>
   );
 };

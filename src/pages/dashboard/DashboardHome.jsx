@@ -52,7 +52,7 @@ const DashBoardHome = () => {
     const cardsConfig = [
         {
             title: 'Gestionar Usuarios',
-            to: '/home/manage-users',
+            to: '/accounts/manage-users',
             icon: UserCog,
             buttonText: 'Ir'
         },

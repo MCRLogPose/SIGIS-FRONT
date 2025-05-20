@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import IncidentFieldGroup from '@/components/forms/IncidentFieldGroup'
-import IncidentEvidenceUploader from '@/components/forms/IncidentEvidenceUploader'
-import IncidentFormActions from '@/components/forms/IncidentFormActions'
+import IncidentFieldGroup from '@/components/forms/incidents/IncidentFieldGroup'
+import IncidentEvidenceUploader from '@/components/forms/incidents/IncidentEvidenceUploader'
+import IncidentFormActions from '@/components/forms/incidents/IncidentFormActions'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
 

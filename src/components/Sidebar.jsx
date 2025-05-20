@@ -50,7 +50,7 @@ const Sidebar = () => {
             <div className="text-gray-400 text-sm uppercase mb-2 font-bold">Settings</div>
             <hr className="p-2 border-gray-400" />
             <nav className="flex flex-col space-y-4">
-                <Link to="/home/manage-users" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/accounts/manage-users" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <UserCog size={18} /> Gestionar Usuarios
                 </Link>
                 <Link to="/login" className="flex items-center gap-2 text-red-400 hover:text-red-300 font-medium text-gray-200">
