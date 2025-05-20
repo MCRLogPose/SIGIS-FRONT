@@ -46,58 +46,60 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">Registro de Usuario</h2>
-      <form onSubmit={handleSubmit}>
-        {step === 1 ? (
-          <StepOneForm formData={formData} onChange={handleChange} />
-        ) : (
-          <StepTwoForm formData={formData} onChange={handleChange} />
-        )}
-
-        <div className="mt-6 flex justify-between items-center">
-          {step > 1 && (
-            <GenericButton
-              type="button"
-              onClick={() => setStep(step - 1)}
-              variant="default"
-              icon={ArrowLeft}
-            >
-              Volver
-            </GenericButton>
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-t from-slate-500 to-slate-800 text-white">
+      <div className="max-w-2xl w-full p-6 bg-transparent border border-slate-500 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 text-center">Registro de Usuario</h2>
+        <form onSubmit={handleSubmit}>
+          {step === 1 ? (
+            <StepOneForm formData={formData} onChange={handleChange} />
+          ) : (
+            <StepTwoForm formData={formData} onChange={handleChange} />
           )}
 
-          <div className="ml-auto space-x-2 flex">
-            <GenericButton
-              type="button"
-              onClick={handleCancel}
-              variant="destructive"
-              icon={X}
-            >
-              Cancelar
-            </GenericButton>
-
-            {step === 1 ? (
+          <div className="mt-6 flex justify-between items-center">
+            {step > 1 && (
               <GenericButton
                 type="button"
-                onClick={() => setStep(step + 1)}
+                onClick={() => setStep(step - 1)}
                 variant="default"
-                icon={ArrowRight}
+                icon={ArrowLeft}
               >
-                Siguiente
-              </GenericButton>
-            ) : (
-              <GenericButton
-                type="submit"
-                variant="secondary"
-                icon={Check}
-              >
-                Crear Cuenta
+                Volver
               </GenericButton>
             )}
+
+            <div className="ml-auto space-x-2 flex">
+              <GenericButton
+                type="button"
+                onClick={handleCancel}
+                variant="destructive"
+                icon={X}
+              >
+                Cancelar
+              </GenericButton>
+
+              {step === 1 ? (
+                <GenericButton
+                  type="button"
+                  onClick={() => setStep(step + 1)}
+                  variant="default"
+                  icon={ArrowRight}
+                >
+                  Siguiente
+                </GenericButton>
+              ) : (
+                <GenericButton
+                  type="submit"
+                  variant="secondary"
+                  icon={Check}
+                >
+                  Crear Cuenta
+                </GenericButton>
+              )}
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }
