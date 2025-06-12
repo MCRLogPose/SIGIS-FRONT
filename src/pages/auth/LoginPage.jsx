@@ -1,12 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SygisLogo from '@/assets/logos/logo-sygis.png'
 import GoogleLogo from '@/assets/logos/logo-google.png'
 
 const LoginPage = () => {
-    return (
-        <div className="flex items-center justify-center h-screen h-14 bg-linear-to-t from-slate-500 to-slate-800">
-            <div className="bg-transparent border border-slate-500 rounded-lg shadow-lg p-12 w-full max-w-lg">
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Login failed');
+            }
+
+            const data = await response.json();
+            localStorage.setItem('token', data.token); 
+            console.log('Login success:', data);
+
+            window.location.href = '/dashboard'; 
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-center h-screen bg-gradient-to-t from-slate-500 to-slate-800">
+            <div className="bg-transparent border border-slate-500 rounded-lg shadow-lg p-12 w-full max-w-lg">
                 <div className="text-center mb-8">
                     <img
                         src={SygisLogo}
@@ -16,7 +47,7 @@ const LoginPage = () => {
                     <span className="mt-4 text-2xl font-bold text-white">SYGIS</span>
                 </div>
 
-                <form>
+                <form onSubmit={handleLogin}>
                     <div className="mb-5">
                         <label htmlFor="username" className="block text-white text-base font-semibold mb-2">
                             Username
@@ -24,6 +55,8 @@ const LoginPage = () => {
                         <input
                             type="text"
                             id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username"
                             className="shadow appearance-none border rounded w-full py-3 px-4 bg-transparent text-white text-base placeholder-gray-300 focus:outline-none focus:shadow-outline"
                         />
@@ -36,10 +69,14 @@ const LoginPage = () => {
                         <input
                             type="password"
                             id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="shadow appearance-none border rounded w-full py-3 px-4 bg-transparent text-white text-base placeholder-gray-300 focus:outline-none focus:shadow-outline"
                             placeholder="Password"
                         />
                     </div>
+
+                    {error && <p className="text-red-400 mb-4 text-sm">{error}</p>}
 
                     <button
                         type="submit"
@@ -70,8 +107,7 @@ const LoginPage = () => {
                 </form>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default LoginPage
+export default LoginPage;
