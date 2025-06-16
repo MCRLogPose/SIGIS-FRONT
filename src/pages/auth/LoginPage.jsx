@@ -1,38 +1,38 @@
-import React, { useState } from 'react'
-import SygisLogo from '@/assets/logos/logo-sygis.png'
-import GoogleLogo from '@/assets/logos/logo-google.png'
+// src/pages/LoginPage.jsx
+import React, { useState, useEffect } from 'react';
+import SygisLogo from '@/assets/logos/logo-sygis.png';
+import GoogleLogo from '@/assets/logos/logo-google.png';
+import { login } from '@/api/authService';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        localStorage.removeItem('token'); // Elimina cualquier sesión previa
+    }, []);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
 
-        try {
-            const response = await fetch('http://localhost:8080/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Login failed');
-            }
-
-            const data = await response.json();
-            localStorage.setItem('token', data.token); 
-            console.log('Login success:', data);
-
-            window.location.href = '/dashboard'; 
-        } catch (err) {
-            setError(err.message);
+        if (!username || !password) {
+            setError('Por favor ingrese usuario y contraseña.');
+            return;
         }
+
+        try {
+            const data = await login({ username, password });
+            localStorage.setItem('token', data.token);
+            console.log('Login success:', data);
+            window.location.href = '/home';
+        } catch (err) {
+            setError('Login failed, try again later.');
+            console.error('Login error:', err.response?.data || err.message);
+            setPassword(''); // Limpiar el campo de contraseña
+            setUsername(''); // Limpiar el campo de usuario
+        }   
     };
 
     return (
@@ -63,7 +63,7 @@ const LoginPage = () => {
                     </div>
 
                     <div className="mb-6">
-                        <label className="block text-white text-base font-semibold mb-2" htmlFor="password">
+                        <label htmlFor="password" className="block text-white text-base font-semibold mb-2">
                             Password
                         </label>
                         <input
@@ -71,8 +71,8 @@ const LoginPage = () => {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="shadow appearance-none border rounded w-full py-3 px-4 bg-transparent text-white text-base placeholder-gray-300 focus:outline-none focus:shadow-outline"
                             placeholder="Password"
+                            className="shadow appearance-none border rounded w-full py-3 px-4 bg-transparent text-white text-base placeholder-gray-300 focus:outline-none focus:shadow-outline"
                         />
                     </div>
 

@@ -1,3 +1,4 @@
+// src/routes/AppRoutes.jsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '@/pages/auth/LoginPage';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
@@ -11,24 +12,47 @@ import AssignCases from '@/pages/incidents/AssignCases';
 import ManegeAccounts from '@/pages/accounts/ManageAccounts';
 import IncidentDetailPage from '@/pages/details/IncidentDetailPage';
 import RegisterPage from '@/pages/accounts/RegisterPage';
+import PrivateRoute from '@/routes/PrivateRoute';
 
 const AppRoutes = () => {
-  
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/home" element={<DashboardHome />} />
-      <Route path="/home/view-incident-reports" element={<ViewIncidentReports />} />
-      <Route path="/home/create-incident" element={<CreateIncident />} />
-      <Route path="/home/record" element={<RecordIncidents />} />
-      <Route path="/home/my-cases" element={<MyCases />} />
-      <Route path="/home/news" element={<NewsPage />} />
-      <Route path="/home/tracing" element={<TracingPage />} />
-      <Route path="/home/assing-cases" element={<AssignCases />} />   
-      <Route path="/home/incident-detail/:id" element={<IncidentDetailPage />} />
-      <Route path="/accounts/manage-users" element={<ManegeAccounts />} />
-      <Route path="/accounts/register-user" element={<RegisterPage />} />
+
+      <Route path="/home" element={
+        <PrivateRoute><DashboardHome /></PrivateRoute>
+      } />
+      <Route path="/home/view-incident-reports" element={
+        <PrivateRoute><ViewIncidentReports /></PrivateRoute>
+      } />
+      <Route path="/home/create-incident" element={
+        <PrivateRoute><CreateIncident /></PrivateRoute>
+      } />
+      <Route path="/home/record" element={
+        <PrivateRoute><RecordIncidents /></PrivateRoute>
+      } />
+      <Route path="/home/my-cases" element={
+        <PrivateRoute><MyCases /></PrivateRoute>
+      } />
+      <Route path="/home/news" element={
+        <PrivateRoute><NewsPage /></PrivateRoute>
+      } />
+      <Route path="/home/tracing" element={
+        <PrivateRoute><TracingPage /></PrivateRoute>
+      } />
+      <Route path="/home/assing-cases" element={
+        <PrivateRoute><AssignCases /></PrivateRoute>
+      } />
+      <Route path="/home/incident-detail/:id" element={
+        <PrivateRoute><IncidentDetailPage /></PrivateRoute>
+      } />
+      <Route path="/accounts/manage-users" element={
+        <PrivateRoute><ManegeAccounts /></PrivateRoute>
+      } />
+      <Route path="/accounts/register-user" element={
+        <PrivateRoute><RegisterPage /></PrivateRoute>
+      } />
     </Routes>
   );
 };
