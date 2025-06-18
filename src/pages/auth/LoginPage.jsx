@@ -25,6 +25,11 @@ const LoginPage = () => {
         try {
             const data = await login({ username, password });
             localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify({
+                username: data.username,
+                rol: data.rol,
+                modulos: data.modulos, // opcional, si lo necesitas luego
+            }));
             console.log('Login success:', data);
             window.location.href = '/home';
         } catch (err) {
@@ -32,7 +37,7 @@ const LoginPage = () => {
             console.error('Login error:', err.response?.data || err.message);
             setPassword(''); // Limpiar el campo de contraseña
             setUsername(''); // Limpiar el campo de usuario
-        }   
+        }
     };
 
     return (
@@ -91,7 +96,9 @@ const LoginPage = () => {
                         <hr className="flex-grow border-gray-400" />
                     </div>
 
-                    <button className="relative w-full bg-white text-gray-700 py-3 rounded flex items-center justify-center shadow-sm hover:shadow-md transition cursor-pointer">
+                    <button
+                        onClick={() => window.location.href = '/accounts/register-user'}
+                        className="relative w-full bg-white text-gray-700 py-3 rounded flex items-center justify-center shadow-sm hover:shadow-md transition cursor-pointer">
                         <span className="absolute left-4">
                             <img src={GoogleLogo} alt="Google Logo" className="w-6 h-6" />
                         </span>

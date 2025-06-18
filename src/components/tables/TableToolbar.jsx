@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Download, Search, FilePlus, ChartNoAxesGantt, Table } from 'lucide-react'
+import { Download, Search, FilePlus, ChartNoAxesGantt } from 'lucide-react'
 
 const TableToolbar = ({ toCreate }) => {
   return (

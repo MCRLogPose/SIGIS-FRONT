@@ -1,37 +1,37 @@
-// src/components/form/StepOneForm.jsx
+// src/components/forms/accounts/StepOneForm.jsx
 import InputField from "./InputField";
 import SelectField from "./SelectField";
 
 const StepOneForm = ({ formData, onChange }) => {
   return (
     <>
-      <InputField label="Nombre" name="nombre" value={formData.nombre} onChange={onChange} placeholder="Ej. Juan" />
-      <InputField label="Primer Apellido" name="apellido1" value={formData.apellido1} onChange={onChange} />
-      <InputField label="Segundo Apellido" name="apellido2" value={formData.apellido2} onChange={onChange} />
+      <InputField label="Nombre" name="firstName" value={formData.firstName} onChange={onChange} placeholder="ej. Juan" />
+      <InputField label="Primer Apellido" name="lastName" value={formData.lastName} onChange={onChange} placeholder="ej. Pérez" />
+      <InputField label="Segundo Apellido" name="secondLastName" value={formData.secondLastName} onChange={onChange} placeholder="ej. Rivera"/>
       <SelectField
         label="Tipo de Documento"
-        name="tipoDocumento"
-        value={formData.sexo}
+        name="documentType"
+        value={formData.documentType}
         onChange={onChange}
         options={[
           { value: '', label: 'Seleccione' },
           { value: 'dni', label: 'DNI' },
           { value: 'passport', label: 'Pasaporte' },
-          { value: 'otro', label: 'Otro' }
+          { value: 'other', label: 'Otro' }
         ]}
       />
-      <InputField label="Número de Documento" name="documento" value={formData.documento} onChange={onChange} />
-      <InputField label="Teléfono" name="telefono" value={formData.telefono} onChange={onChange} />
+      <InputField label="Documento" name="documentNumber" value={formData.documentNumber} onChange={onChange} placeholder="ej. 77777777" />
+      <InputField label="Teléfono" name="phone" value={formData.phone} onChange={onChange} placeholder="ej. 999999999" />
       <SelectField
-        label="Sexo"
-        name="sexo"
-        value={formData.sexo}
+        label="Género"
+        name="gender"
+        value={formData.gender}
         onChange={onChange}
         options={[
           { value: '', label: 'Seleccione' },
-          { value: 'masculino', label: 'Masculino' },
-          { value: 'femenino', label: 'Femenino' },
-          { value: 'otro', label: 'Otro' }
+          { value: 'male', label: 'Masculino' },
+          { value: 'female', label: 'Femenino' },
+          { value: 'other', label: 'Otro' }
         ]}
       />
     </>

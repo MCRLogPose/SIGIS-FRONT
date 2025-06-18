@@ -51,7 +51,7 @@ const AppRoutes = () => {
         <PrivateRoute><ManegeAccounts /></PrivateRoute>
       } />
       <Route path="/accounts/register-user" element={
-        <PrivateRoute><RegisterPage /></PrivateRoute>
+        <RegisterPage />
       } />
     </Routes>
   );

@@ -7,7 +7,7 @@ import TableToolbar from '@/components/tables/TableToolbar';
 
 
 const ManageAccount = () => {
-    const pathCreate = '/home/create-incident'
+    const pathCreate = '/accounts/register-user'
     const columns = [
         { key: 'id', label: 'ID' },
         { key: 'nameuser', label: 'Nombre' },

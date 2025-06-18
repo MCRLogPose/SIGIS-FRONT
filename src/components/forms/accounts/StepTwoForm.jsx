@@ -1,59 +1,65 @@
-// src/components/form/StepTwoForm.jsx
+import { useEffect, useState } from "react";
 import InputField from "./InputField";
 import SelectField from "./SelectField";
+import useIsAdmin from "@/api/useIsAdmin";
 
 const StepTwoForm = ({ formData, onChange }) => {
-  const mostrarEspecialidad = formData.rol === "operador";
+  const isAdmin = useIsAdmin();
+  const showSpecialty = formData.rol === "operador";
 
   return (
     <>
       <InputField
         label="Correo Electrónico"
-        name="correo"
+        name="email"
         type="email"
-        value={formData.correo}
+        value={formData.email}
         onChange={onChange}
         placeholder="ejemplo@dominio.com"
       />
       <InputField
         label="Nombre de Usuario"
-        name="usuario"
-        value={formData.usuario}
+        name="username"
+        value={formData.username}
         onChange={onChange}
         placeholder="nombreusuario123"
       />
       <InputField
         label="Contraseña"
-        name="contrasena"
+        name="password"
         type="password"
-        value={formData.contrasena}
+        value={formData.password}
         onChange={onChange}
+        placeholder="tu_contraseña_segura"
       />
       <InputField
         label="Confirmar Contraseña"
-        name="confirmarContrasena"
+        name="confirmPassword"
         type="password"
-        value={formData.confirmarContrasena}
+        value={formData.confirmPassword}
         onChange={onChange}
-      />
-      <SelectField
-        label="Rol"
-        name="rol"
-        value={formData.rol}
-        onChange={onChange}
-        options={[
-          { value: "", label: "Seleccione un rol" },
-          { value: "reportador", label: "Reportador" },
-          { value: "administrador", label: "Administrador" },
-          { value: "operador", label: "Operador" },
-        ]}
+        placeholder="confirma_tu_contraseña_segura"
       />
 
-      {mostrarEspecialidad && (
+      {isAdmin && (
+        <SelectField
+          label="Rol"
+          name="rol"
+          value={formData.rol}
+          onChange={onChange}
+          options={[
+            { value: "", label: "Seleccione un rol" },
+            { value: "reportador", label: "Reportador" },
+            { value: "operador", label: "Operador" },
+          ]}
+        />
+      )}
+
+      {isAdmin && showSpecialty && (
         <SelectField
           label="Especialidad"
-          name="especialidad"
-          value={formData.especialidad}
+          name="specialty"
+          value={formData.specialty}
           onChange={onChange}
           options={[
             { value: "", label: "Seleccione una especialidad" },
@@ -65,6 +71,6 @@ const StepTwoForm = ({ formData, onChange }) => {
       )}
     </>
   );
-}
+};
 
-export default StepTwoForm
+export default StepTwoForm;
