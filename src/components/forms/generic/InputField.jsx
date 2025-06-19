@@ -1,8 +1,8 @@
 // src/components/form/InputField.jsx
-const InputField = ({ label, name, type = "text", value, onChange, placeholder }) => {
+const InputField = ({ label, name, type, value, onChange, placeholder }) => {
   return (
     <div className="mb-4">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-100">
+      <label htmlFor={name} className="block text-sm font-bold text-gray-100">
         {label}
       </label>
       <input

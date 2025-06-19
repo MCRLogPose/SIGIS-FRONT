@@ -4,10 +4,19 @@ import TableToolbar from '@/components/tables/TableToolbar';
 import TablePaginator from '@/components/tables/TablePaginator';
 import GenericTable from '@/components/tables/GenericTable';
 import { usePagination } from '@/hooks/usePagination';
-
+import IncidentModal from '@/components/modals/IncidentModal'
+import { useIncidentModal } from '@/hooks/useIncidentModal'
 
 const ViewIncidentReports = () => {
-    const pathCreate = '/home/create-incident'
+    const {
+        isModalOpen,
+        formData,
+        handleChange,
+        handleSubmit,
+        openModal,
+        closeModal
+    } = useIncidentModal()
+
     const columns = [
         { key: 'id', label: 'ID' },
         { key: 'title', label: 'Titulo' },
@@ -35,8 +44,8 @@ const ViewIncidentReports = () => {
         { id: '00005', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', completionDate: '31/12/2022', status: 'CULMINADO', category: 'SEGURIDAD', operators: 'Miguel12' },
         { id: '00006', title: 'Lorem Ipsum Dolor', description: 'Lorem Ipsum Dolor Sit Amet', location: 'A0302', issueDate: '31/12/2022', completionDate: '31/12/2022', status: 'CULMINADO', category: 'SEGURIDAD', operators: 'Miguel12' },
         //
-       // más filas...
-   ]
+        // más filas...
+    ]
 
     const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -54,7 +63,7 @@ const ViewIncidentReports = () => {
                 <p className="text-sm text-gray-500 mb-6">Casos o incidencias cuyo estado ya es culminado</p>
 
                 <div className="shadow-lg max-w">
-                    <TableToolbar toCreate={pathCreate}/>
+                    <TableToolbar onNewClick={openModal} />
                     <GenericTable columns={columns} data={paginatedData} />
                     <TablePaginator
                         currentPage={currentPage}
@@ -64,7 +73,15 @@ const ViewIncidentReports = () => {
                         onRowsPerPageChange={setRowsPerPage}
                     />
                 </div>
+                <IncidentModal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    formData={formData}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                />
             </div>
+
         </DashboardLayout>
     );
 }

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Download, Search, FilePlus, ChartNoAxesGantt } from 'lucide-react'
 
-const TableToolbar = ({ toCreate }) => {
+const TableToolbar = ({ onNewClick }) => {
   return (
     <div className="flex flex-wrap items-center justify-between mb-4">
       <div className="flex items-center gap-2 flex-grow">
@@ -15,9 +15,9 @@ const TableToolbar = ({ toCreate }) => {
         </button>
       </div>
       <div className="flex items-center gap-3">
-        <Link to={toCreate} className="flex items-center bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-500 text-sm cursor-pointer">
+        <button onClick={onNewClick} className="flex items-center bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-500 text-sm cursor-pointer">
           <FilePlus size={16} className="mr-1" /> Nuevo
-        </Link>
+        </button>
         <button className="p-2 hover:bg-gray-100 rounded cursor-pointer">
           <Download size={18} />
         </button>

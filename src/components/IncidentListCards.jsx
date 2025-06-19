@@ -3,9 +3,19 @@ import IncidentCard from '@/components/cards/IncidentCard'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import TableToolbar from '@/components/tables/TableToolbar'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
+import IncidentModal from '@/components/modals/IncidentModal'
+import { useIncidentModal } from '@/hooks/useIncidentModal'
 
 const IncidentListCards = ({ title, description, type }) => {
-    const pathCreate = '/home/create-incident'
+    const {
+            isModalOpen,
+            formData,
+            handleChange,
+            handleSubmit,
+            openModal,
+            closeModal
+        } = useIncidentModal()
+
     const pathSeeMore = '/home/incident-detail/:id'
     const [incidents, setIncidents] = useState([])
 
@@ -47,7 +57,7 @@ const IncidentListCards = ({ title, description, type }) => {
                 <h1 className="text-2xl font-bold">{title}</h1>
                 <p className="text-sm text-gray-500 mb-6">{description}</p>
 
-                <TableToolbar toCreate={pathCreate}/>
+                <TableToolbar onNewClick={openModal} />
 
                 <div className="flex flex-col gap-6 mt-4">
                     {incidents.map((incident) => (
@@ -64,6 +74,13 @@ const IncidentListCards = ({ title, description, type }) => {
                         />
                     ))}
                 </div>
+                <IncidentModal
+                                    isOpen={isModalOpen}
+                                    onClose={closeModal}
+                                    formData={formData}
+                                    onChange={handleChange}
+                                    onSubmit={handleSubmit}
+                                />
             </div>
         </DashboardLayout>
     )

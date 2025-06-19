@@ -8,10 +8,20 @@ import { usePagination } from '@/hooks/usePagination'
 import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
 import { useToggleListExpand } from '@/hooks/useToggleListExpand'
 import ShowMoreButton from '@/components/buttons/ShowMoreButton'
+import IncidentModal from '@/components/modals/IncidentModal'
+import { useIncidentModal } from '@/hooks/useIncidentModal'
 
 
 const TracingPage = () => {
-    const pathCreate = '/home/create-incident'
+    const {
+        isModalOpen,
+        formData,
+        handleChange,
+        handleSubmit,
+        openModal,
+        closeModal
+    } = useIncidentModal()
+
     const pathSeeMore = '/home/incident-detail/:id'
     const [genericIncidents, setGenericIncidents] = useState([])
 
@@ -108,7 +118,7 @@ const TracingPage = () => {
                     <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
                     <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
                     <div>
-                        <TableToolbar toCreate={pathCreate} />
+                        <TableToolbar onNewClick={openModal} />
                         <GenericTable columns={columns} data={paginatedData} />
                         <TablePaginator
                             currentPage={currentPage}
@@ -119,6 +129,13 @@ const TracingPage = () => {
                         />
                     </div>
                 </section>
+                <IncidentModal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    formData={formData}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                />
             </div>
         </DashboardLayout>
     )

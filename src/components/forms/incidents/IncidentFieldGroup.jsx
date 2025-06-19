@@ -1,57 +1,78 @@
 import React from 'react'
+import InputField from "@/components/forms/generic/InputField";
+import SelectField from "@/components/forms/generic/SelectField";
+import TextareaField from "@/components/forms/generic/TextareaField";
+import RadioGroupField from "@/components/forms/generic/RadioGroupField";
 
+///components/forms/incidents/IncidentFieldGroup.jsx
 const IncidentFieldGroup = ({ formData, onChange }) => {
-  return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <label className="block font-semibold mb-1">Título</label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => onChange('title', e.target.value)}
-          className="w-full border border-gray-400 rounded p-2"
-        />
-      </div>
+  const categoryOptions = [
+    { id: 1, label: 'Seguridad', value: 'security' },
+    { id: 2, label: 'Limpieza', value: 'cleaning' },
+    { id: 3, label: 'Tecnologia', value: 'technology' },
+    { id: 4, label: 'Otro', value: 'Other' },
+  ]
 
-      <div>
-        <label className="block font-semibold mb-1">Pabellón</label>
-        <div className="flex gap-4">
-          <label><input type="radio" name="pavilion" value="A" onChange={() => onChange('pavilion', 'A')} /> Torre A</label>
-          <label><input type="radio" name="pavilion" value="B" onChange={() => onChange('pavilion', 'B')} /> Torre B</label>
+  return (
+    <div className="flex flex-col gap-4 text-white">
+      <InputField
+        label="Título"
+        name="title"
+        value={formData.title}
+        onChange={(e) => onChange('title', e.target.value)}
+      />
+
+      <div className="flex gap-4">
+        <div className="flex-1">
+          <RadioGroupField
+            label="Pabellón"
+            name="pavilion"
+            value={formData.pavilion}
+            onChange={(val) => onChange('pavilion', val)}
+            options={[
+              { label: 'Torre A', value: 'A' },
+              { label: 'Torre B', value: 'B' },
+            ]}
+          />
+        </div>
+
+        <div className="flex-1">
+          <InputField
+            label="Piso"
+            name="floor"
+            type="number"
+            value={formData.floor}
+            onChange={(e) => onChange('floor', e.target.value)}
+          />
+        </div>
+
+        <div className='flex-1'>
+          <SelectField
+            label="Categoría"
+            name="categoriaId"
+            value={formData.categoriaId}
+            onChange={(e) => onChange('categoriaId', e.target.value)}
+            options={categoryOptions.map(opt => ({
+              label: opt.label,
+              value: opt.id,
+            }))}
+          />
         </div>
       </div>
 
-      <div>
-        <label className="block font-semibold mb-1">Piso</label>
-        <input
-          type="number"
-          min={-2}
-          max={8}
-          value={formData.floor}
-          onChange={(e) => onChange('floor', e.target.value)}
-          className="w-full border border-gray-400 rounded p-2"
-        />
-      </div>
+      <InputField
+        label="Referencia"
+        name="reference"
+        value={formData.reference}
+        onChange={(e) => onChange('reference', e.target.value)}
+      />
 
-      <div>
-        <label className="block font-semibold mb-1">Referencia</label>
-        <input
-          type="text"
-          value={formData.reference}
-          onChange={(e) => onChange('reference', e.target.value)}
-          className="w-full border border-gray-400 rounded p-2"
-        />
-      </div>
-
-      <div className="md:col-span-2">
-        <label className="block font-semibold mb-1">Descripción</label>
-        <textarea
-          value={formData.description}
-          onChange={(e) => onChange('description', e.target.value)}
-          rows={4}
-          className="w-full border border-gray-400 rounded p-2"
-        />
-      </div>
+      <TextareaField
+        label="Descripción"
+        name="description"
+        value={formData.description}
+        onChange={(e) => onChange('description', e.target.value)}
+      />
     </div>
   )
 }

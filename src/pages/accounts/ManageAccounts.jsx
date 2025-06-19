@@ -1,12 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import TablePaginator from '@/components/tables/TablePaginator';
 import GenericTable from '@/components/tables/GenericTable';
 import { usePagination } from '@/hooks/usePagination';
 import TableToolbar from '@/components/tables/TableToolbar';
+import { useNavigate } from 'react-router-dom'
 
 
 const ManageAccount = () => {
+    const navigate = useNavigate()
+
+    const handleRedirect = () => {
+        navigate('/accounts/register-user')
+    }
+
     const pathCreate = '/accounts/register-user'
     const columns = [
         { key: 'id', label: 'ID' },
@@ -29,7 +36,7 @@ const ManageAccount = () => {
     ]
 
     const data = [
-        { id: '00001', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'ADMIN' , status: 'INACTIVA' },
+        { id: '00001', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'ADMIN', status: 'INACTIVA' },
         { id: '00002', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'REPORTER', status: 'ACTIVA' },
         { id: '00003', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'ADMIN', status: 'INACTIVA' },
         { id: '00004', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'OPERATOR', status: 'ACTIVA' },
@@ -54,7 +61,7 @@ const ManageAccount = () => {
                 <p className="text-sm text-gray-500 mb-6">Casos o incidencias cuyo estado ya es culminado</p>
 
                 <div className="shadow-lg max-w">
-                    <TableToolbar toCreate={pathCreate}/>
+                    <TableToolbar onNewClick={handleRedirect} />
                     <GenericTable columns={columns} data={paginatedData} />
                     <TablePaginator
                         currentPage={currentPage}

@@ -26,8 +26,8 @@ const CreateIncident = () => {
 
   return (
     <DashboardLayout>
-      <div>
-        <div className="max-w-6xl mx-auto p-8 md:ml-14">
+      <div className="min-h-screen w-full bg-gray-700 flex items-center justify-center">
+        <div className="max-w-6xl mx-auto p-8 md:ml-14 bg-white rounded-lg shadow-md">
           <h1 className="text-4xl font-bold text-center mb-2">NUEVA INCIDENCIA</h1>
           <p className="text-center text-lg text-gray-500 mb-15">Describa y detalle la incidencia</p>
 
@@ -38,9 +38,7 @@ const CreateIncident = () => {
 
           <IncidentFormActions onSubmit={handleSubmit} />
         </div>
-        <img src={ImageDashboardOptions} alt="Dashboard Options" className="absolute bottom-80 right-0 w-[350px] h-auto" />
       </div>
-
     </DashboardLayout>
   )
 }
