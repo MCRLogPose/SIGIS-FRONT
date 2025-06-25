@@ -1,8 +1,29 @@
 import { Link } from 'react-router-dom';
 import { LayoutDashboard, FolderOpen, Clock, Megaphone, LogOut, UserCog, BookOpenCheck, Replace, Archive, User } from 'lucide-react';
 import LogoSygis from '@/assets/logos/logo-sygis.png';
+import axios from 'axios';
+import { use, useEffect } from 'react';
 
 const Sidebar = () => {
+
+    const getIncident = () => {
+        const token = localStorage.getItem('token');
+        return axios.get('http://localhost:8080/api/incidencias', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    }
+
+    useEffect(() => {
+        getIncident()
+            .then(response => {
+                console.log('Data fetched successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
     return (
         <aside className="w-64 h-screen bg-gray-800 text-white flex flex-col p-6 overflow-y-auto">
             {/* Logo and App Name */}

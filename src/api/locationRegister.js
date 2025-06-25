@@ -9,7 +9,7 @@ export const createLocation = async (formData) => {
       piso: parseInt(formData.floor, 10),
     }
 
-    const response = await axios.post('http://localhost:8080/ubicacion', requestBody)
+    const response = await axios.post('http://localhost:8080/api/ubicacion', requestBody)
     return response.data // Contiene el ID de la ubicación creada
   } catch (error) {
     console.error('Error creating location:', error)
