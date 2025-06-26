@@ -49,9 +49,9 @@ const IncidentFieldGroup = ({ formData, onChange }) => {
         <div className='flex-1'>
           <SelectField
             label="Categoría"
-            name="categoriaId"
-            value={formData.categoriaId}
-            onChange={(e) => onChange('categoriaId', e.target.value)}
+            name="categoryId"
+            value={formData.categoryId}
+            onChange={(e) => onChange('categoryId', e.target.value)}
             options={categoryOptions.map(opt => ({
               label: opt.label,
               value: opt.id,

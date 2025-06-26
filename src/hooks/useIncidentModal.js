@@ -14,7 +14,7 @@ export const useIncidentModal = () => {
     reference: '',
     description: '',
     evidence: null,
-    categoriaId: '', // matches backend naming
+    categoryId: '', // matches backend naming
   })
 
   const handleChange = (field, value) => {
@@ -22,7 +22,7 @@ export const useIncidentModal = () => {
   }
 
   const handleSubmit = async () => {
-    const requiredFields = ['title', 'pavilion', 'floor', 'reference', 'description', 'evidence', 'categoriaId']
+    const requiredFields = ['title', 'pavilion', 'floor', 'reference', 'description', 'evidence', 'categoryId']
     const fieldLabels = {
       title: 'Título',
       pavilion: 'Pabellón',
@@ -30,7 +30,7 @@ export const useIncidentModal = () => {
       reference: 'Referencia',
       description: 'Descripción',
       evidence: 'Evidencia',
-      categoriaId: 'Categoría',
+      categoryId: 'Categoría',
     }
 
     const missingFields = validateIncidentForm(formData, requiredFields)
@@ -39,11 +39,11 @@ export const useIncidentModal = () => {
       return
     }
     try {
-      // Step 1: Create location and get ID
+      console.log('Form data before API call:', formData)
       const locationResponse = await createLocation({
-        referencia: formData.reference,
-        pabellon: formData.pavilion,
-        piso: formData.floor,
+        reference: formData.reference,
+        pavilion: formData.pavilion,
+        floor: formData.floor,
       })
 
       const locationId = locationResponse.id
@@ -52,14 +52,14 @@ export const useIncidentModal = () => {
       // Step 2: Prepare incident data
       const incidentData = {
         title: formData.title,
-        descripcion: formData.description,
-        fechaEmision: new Date().toISOString(),
-        prioridad: 'Alta',
-        imagen: formData.evidence,
-        fechaAccept: '',
-        estado: 'Pendiente',
-        categoriaId: Number(formData.categoriaId),
-        ubicacionId: locationId,
+        description: formData.description,
+        dateEmision: new Date().toISOString(),
+        priority: 'Alta',
+        image: formData.evidence,
+        dateAccept: '',
+        state: 'Pendiente',
+        categoryId: Number(formData.categoryId),
+        locationId: locationId,
       }
 
       // Step 3: Submit incident

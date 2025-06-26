@@ -8,7 +8,7 @@ const Sidebar = () => {
 
     const getIncident = () => {
         const token = localStorage.getItem('token');
-        return axios.get('http://localhost:8080/api/incidencias', {
+        return axios.get('http://localhost:8080/api/incidents', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
