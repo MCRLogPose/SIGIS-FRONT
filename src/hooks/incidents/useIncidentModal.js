@@ -1,6 +1,8 @@
+// src/hooks/incidents/useIncidentModal.js
+
 import { useState } from 'react'
-import { createLocation } from '@/api/locationRegister'
-import { createIncident } from '@/api/incidenciaRegister'
+import { createLocation } from '@/api/service/locationService'
+import { createIncident } from '@/api/service/incidentService'
 import { validateIncidentForm } from '@/utils/validation'
 import { showMissingFieldsAlert, showSuccessAlert, showErrorAlert } from '@/utils/alerts'
 

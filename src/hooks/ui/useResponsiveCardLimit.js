@@ -1,3 +1,5 @@
+// src/hooks/ui/useResponsiveCardLimit.js
+
 import { useEffect, useState } from 'react'
 
 const useResponsiveCardLimit = (containerRef) => {

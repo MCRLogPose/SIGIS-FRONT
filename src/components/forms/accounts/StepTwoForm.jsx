@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+// src/components/forms/accounts/StepTwoForm.jsx
+
 import InputField from "@/components/forms/generic/InputField";
 import SelectField from "@/components/forms/generic/SelectField";
-import useIsAdmin from "@/api/useIsAdmin";
+import useIsAdmin from "@/hooks/auth/useIsAdmin";
 
 const StepTwoForm = ({ formData, onChange }) => {
   const isAdmin = useIsAdmin();

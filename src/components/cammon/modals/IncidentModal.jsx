@@ -1,10 +1,10 @@
-import React from 'react'
+// src/components/cammon/modals/IncidentModal.jsx
+
 import IncidentFieldGroup from '@/components/forms/incidents/IncidentFieldGroup'
 import IncidentEvidenceUploader from '@/components/forms/incidents/IncidentEvidenceUploader'
-import GenericButton from '@/components/buttons/GenericButton'
+import GenericButton from '@/components/cammon/buttons/GenericButton'
 import { X, Send } from 'lucide-react'
 
-//src/components/modals/IncidentModal.jsx
 const IncidentModal = ({ isOpen, onClose, formData, onChange, onSubmit }) => {
   if (!isOpen) return null
 

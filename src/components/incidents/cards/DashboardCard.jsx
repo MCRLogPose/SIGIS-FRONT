@@ -1,3 +1,5 @@
+// src/components/incidents/cards/DashboardCard.jsx
+
 import { Link } from 'react-router-dom';
 
 const DashboardCard = ({ title, to, image, icon: Icon, buttonText }) => {

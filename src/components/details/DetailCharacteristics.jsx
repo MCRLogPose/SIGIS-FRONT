@@ -1,4 +1,4 @@
-import React from 'react'
+//src/components/details/DetailCharacteristics.jsx
 
 const DetailCharacteristics = ({ incident }) => {
     if (!incident) {

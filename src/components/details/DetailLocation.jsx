@@ -1,4 +1,4 @@
-import React from 'react'
+// src/components/details/DetailLocation.jsx
 
 const DetailLocation = ({ location, floor, building, reference }) => {
     return (

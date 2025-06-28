@@ -1,4 +1,5 @@
 // src/components/form/InputField.jsx
+
 const InputField = ({ label, name, type, value, onChange, placeholder }) => {
   return (
     <div className="mb-4">

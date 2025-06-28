@@ -1,8 +1,9 @@
-// src/pages/LoginPage.jsx
+// src/pages/auth/LoginPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import SygisLogo from '@/assets/logos/logo-sygis.png';
 import GoogleLogo from '@/assets/logos/logo-google.png';
-import { login } from '@/api/authService';
+import { login } from '@/api/service/authService';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');

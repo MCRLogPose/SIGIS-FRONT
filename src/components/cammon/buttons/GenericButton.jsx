@@ -1,6 +1,4 @@
-import React from 'react'
-
-//src/components/buttons/GenericButton.jsx
+//src/components/cammon/buttons/GenericButton.jsx
 import clsx from 'clsx'
 
 const GenericButton = ({

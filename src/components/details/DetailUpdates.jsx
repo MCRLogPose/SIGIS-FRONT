@@ -1,7 +1,7 @@
 // File: src/components/details/DetailUpdates.jsx
-import React, { useState } from 'react'
-import { useToggleListExpand } from '@/hooks/useToggleListExpand'
-import ShowMoreButton from '@/components/buttons/ShowMoreButton'
+
+import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
+import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
 
 const DetailUpdates = ({ updates }) => {
     if (!updates || updates.length === 0) return null

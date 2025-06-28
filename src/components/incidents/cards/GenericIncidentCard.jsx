@@ -1,3 +1,4 @@
+// src/components/incidents/cards/GenericIncidentCard.jsx
 
 import { ArrowRight, BadgeCheck, BadgeX, Calendar, ContactRound, MapPin, PersonStanding } from 'lucide-react'
 import { Link } from 'react-router-dom'

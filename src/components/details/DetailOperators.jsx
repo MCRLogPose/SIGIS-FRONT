@@ -1,7 +1,9 @@
+// src/components/details/DetailOperators.jsx
+
 import { React, useState } from 'react';
-import TablePaginator from '@/components/tables/TablePaginator';
-import GenericTable from '@/components/tables/GenericTable';
-import { usePagination } from '@/hooks/usePagination';
+import TablePaginator from '@/components/cammon/tables/TablePaginator';
+import GenericTable from '@/components/cammon/tables/GenericTable';
+import { usePagination } from '@/hooks/pagination/usePagination';
 
 const DetailOperators = ({ operators }) => {
     if (!operators || operators.length === 0) return null

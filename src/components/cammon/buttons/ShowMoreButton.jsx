@@ -1,5 +1,6 @@
+// src/components/cammon/buttons/ShowMoreButton.jsx
 import { ArrowBigDownDash } from 'lucide-react'
-import React from 'react'
+
 const ShowMoreButton = ({ onClick, isExpanded }) => {
   return (
     <div className="mt-4 flex justify-center bg-gray-100 p-4 rounded-lg bg-transparent">

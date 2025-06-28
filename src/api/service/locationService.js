@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-//src/api/locationRegister.js
+// src/api/service/locationService.js
 export const createLocation = async (formData) => {
   try {
     const token = localStorage.getItem('token')

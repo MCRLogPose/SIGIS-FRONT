@@ -1,4 +1,4 @@
-import React from 'react'
+//src/components/details/DetailHeader.jsx
 
 const DetailHeader = ({ title, description }) => {
     return (

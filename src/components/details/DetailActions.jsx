@@ -1,13 +1,7 @@
-import React from 'react'
-import GenericButton from '@/components/buttons/GenericButton'
-import {
-  ArrowLeft,
-  BadgeCheck,
-  BadgeX,
-  CheckCircle2,
-  Send,
-  RefreshCw
-} from 'lucide-react'
+// src/components/details/DetailActions.jsx
+
+import GenericButton from '@/components/cammon/buttons/GenericButton'
+import { ArrowLeft, BadgeCheck, BadgeX, CheckCircle2, Send, RefreshCw } from 'lucide-react'
 
 const DetailActions = ({
   showBackButton = true,

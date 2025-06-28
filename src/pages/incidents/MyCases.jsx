@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+// src/pages/incidents/MyCases.jsx
+
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import IncidentListCards from '@/components/IncidentListCards'
+import IncidentListCards from '@/components/incidents/IncidentListCards'
 
 const imageUrl = [ImageDashboardOptions]
 

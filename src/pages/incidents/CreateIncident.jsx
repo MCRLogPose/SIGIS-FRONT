@@ -1,3 +1,5 @@
+// src/pages/incidents/CreateIncident.jsx
+
 import React, { useState } from 'react'
 import IncidentFieldGroup from '@/components/forms/incidents/IncidentFieldGroup'
 import IncidentEvidenceUploader from '@/components/forms/incidents/IncidentEvidenceUploader'

@@ -1,3 +1,5 @@
+// src/hooks/pagination/usePagination.js
+
 import { useState, useMemo, useEffect } from 'react'
 
 export const usePagination = (data = [], rowsPerPage = 3) => {

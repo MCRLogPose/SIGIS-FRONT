@@ -1,10 +1,10 @@
-import React from 'react'
+// src/components/forms/incidents/IncidentFieldGroup.jsx
+
 import InputField from "@/components/forms/generic/InputField";
 import SelectField from "@/components/forms/generic/SelectField";
 import TextareaField from "@/components/forms/generic/TextareaField";
 import RadioGroupField from "@/components/forms/generic/RadioGroupField";
 
-///components/forms/incidents/IncidentFieldGroup.jsx
 const IncidentFieldGroup = ({ formData, onChange }) => {
   const categoryOptions = [
     { id: 1, label: 'Seguridad', value: 'security' },

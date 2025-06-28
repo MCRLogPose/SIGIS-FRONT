@@ -1,4 +1,5 @@
-import React from 'react'
+// src/components/forms/incidents/IncidentFormActions.jsx
+
 import { useNavigate } from 'react-router-dom'
 
 const IncidentFormActions = ({ onSubmit }) => {

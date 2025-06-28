@@ -1,11 +1,13 @@
+// src/pages/incidents/ViewIncidentReports.jsx
+
 import { React, useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import TableToolbar from '@/components/tables/TableToolbar';
-import TablePaginator from '@/components/tables/TablePaginator';
-import GenericTable from '@/components/tables/GenericTable';
-import { usePagination } from '@/hooks/usePagination';
-import IncidentModal from '@/components/modals/IncidentModal'
-import { useIncidentModal } from '@/hooks/useIncidentModal'
+import TableToolbar from '@/components/cammon/tables/TableToolbar';
+import TablePaginator from '@/components/cammon/tables/TablePaginator';
+import GenericTable from '@/components/cammon/tables/GenericTable';
+import { usePagination } from '@/hooks/pagination/usePagination';
+import IncidentModal from '@/components/cammon/modals/IncidentModal'
+import { useIncidentModal } from '@/hooks/incidents/useIncidentModal'
 
 const ViewIncidentReports = () => {
     const {

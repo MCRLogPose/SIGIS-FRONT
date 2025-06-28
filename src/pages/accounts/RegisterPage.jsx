@@ -1,8 +1,9 @@
-// src/pages/RegisterPage.jsx
+// src/pages/accounts/RegisterPage.jsx
+
 import { useState } from "react";
 import StepOneForm from "@/components/forms/accounts/StepOneForm";
 import StepTwoForm from "@/components/forms/accounts/StepTwoForm";
-import GenericButton from "@/components/buttons/GenericButton";
+import GenericButton from "@/components/cammon/buttons/GenericButton";
 import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 
 const RegisterPage = () => {

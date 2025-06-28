@@ -1,4 +1,4 @@
-import React from 'react'
+// src/components/details/DetailStatus.jsx
 
 const statusSteps = ['PENDIENTE', 'EN PROCESO', 'CULMINADO']
 

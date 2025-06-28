@@ -1,4 +1,5 @@
-import React from 'react'
+// src/components/details/IncidentDetailSection.jsx
+
 import DetailHeader from './DetailHeader'
 import DetailCharacteristics from './DetailCharacteristics'
 import DetailStatus from './DetailStatus'

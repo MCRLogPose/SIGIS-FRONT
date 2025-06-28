@@ -1,10 +1,12 @@
+// src/components/incidents/IncidentListCards.jsx
+
 import React, { useState, useEffect } from 'react'
-import IncidentCard from '@/components/cards/IncidentCard'
+import IncidentCard from '@/components/incidents/cards/IncidentCard'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import TableToolbar from '@/components/tables/TableToolbar'
+import TableToolbar from '@/components/cammon/tables/TableToolbar'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import IncidentModal from '@/components/modals/IncidentModal'
-import { useIncidentModal } from '@/hooks/useIncidentModal'
+import IncidentModal from '@/components/cammon/modals/IncidentModal'
+import { useIncidentModal } from '@/hooks/incidents/useIncidentModal'
 
 const IncidentListCards = ({ title, description, type }) => {
     const {

@@ -1,3 +1,5 @@
+// src/components/incidents/cards/NewIncidentCard.jsx
+
 import { ArrowRight, BadgeCheck } from "lucide-react"
 import { Link } from "react-router-dom"
 

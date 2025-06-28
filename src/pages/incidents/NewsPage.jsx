@@ -1,11 +1,13 @@
+// src/pages/incidents/NewsPage.jsx
+
 import React, { useEffect, useRef, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import NewIncidentCard from '@/components/cards/NewIncidentCard'
-import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
+import NewIncidentCard from '@/components/incidents/cards/NewIncidentCard'
+import GenericIncidentCard from '@/components/incidents/cards/GenericIncidentCard'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import useResponsiveCardLimit from '@/hooks/useResponsiveCardLimit'
-import { useToggleListExpand } from '@/hooks/useToggleListExpand'
-import ShowMoreButton from '@/components/buttons/ShowMoreButton'
+import useResponsiveCardLimit from '@/hooks/ui/useResponsiveCardLimit'
+import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
+import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
 
 const NewsPage = () => {
     const pathSeeMore = '/home/incident-detail/:id'

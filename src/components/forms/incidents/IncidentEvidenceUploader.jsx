@@ -1,7 +1,7 @@
-import { Trash2 } from 'lucide-react'
-import React from 'react'
-
 //src/components/forms/incidents/IncidentEvidenceUploader.jsx
+
+import { Trash2 } from 'lucide-react'
+
 const IncidentEvidenceUploader = ({ evidence, onChange }) => {
     const handleRemove = () => {
         onChange(null)

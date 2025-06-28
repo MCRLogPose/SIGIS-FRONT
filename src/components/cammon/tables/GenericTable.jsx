@@ -1,4 +1,5 @@
-import React from 'react'
+//src/components/cammon/tables/GenericTable.jsx
+
 const GenericTable = ({ columns, data }) => {
     return (
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">

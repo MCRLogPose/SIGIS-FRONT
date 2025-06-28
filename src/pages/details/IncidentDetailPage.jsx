@@ -1,4 +1,5 @@
-import React from 'react'
+// src/pages/details/IncidentDetailPage.jsx
+
 import { useParams } from 'react-router-dom'
 import IncidentDetailSection from '@/components/details/IncidentDetailSection'
 import DashboardLayout from '@/layouts/DashboardLayout'

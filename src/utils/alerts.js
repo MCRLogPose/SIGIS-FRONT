@@ -1,3 +1,5 @@
+// src/utils/alerts.js
+
 import Swal from 'sweetalert2'
 
 export const showMissingFieldsAlert = (missingFields, fieldLabels) => {

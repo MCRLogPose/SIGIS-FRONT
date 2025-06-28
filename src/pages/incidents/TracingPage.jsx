@@ -1,15 +1,17 @@
+// src/pages/incidents/TracingPage.jsx
+
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import TablePaginator from '@/components/tables/TablePaginator';
-import GenericTable from '@/components/tables/GenericTable'
-import TableToolbar from '@/components/tables/TableToolbar'
-import { usePagination } from '@/hooks/usePagination'
-import GenericIncidentCard from '@/components/cards/GenericIncidentCard'
-import { useToggleListExpand } from '@/hooks/useToggleListExpand'
-import ShowMoreButton from '@/components/buttons/ShowMoreButton'
-import IncidentModal from '@/components/modals/IncidentModal'
-import { useIncidentModal } from '@/hooks/useIncidentModal'
+import TablePaginator from '@/components/cammon/tables/TablePaginator';
+import GenericTable from '@/components/cammon/tables/GenericTable'
+import TableToolbar from '@/components/cammon/tables/TableToolbar'
+import { usePagination } from '@/hooks/pagination/usePagination'
+import GenericIncidentCard from '@/components/incidents/cards/GenericIncidentCard'
+import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
+import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
+import IncidentModal from '@/components/cammon/modals/IncidentModal'
+import { useIncidentModal } from '@/hooks/incidents/useIncidentModal'
 
 
 const TracingPage = () => {

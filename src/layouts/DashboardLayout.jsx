@@ -1,4 +1,6 @@
-import Sidebar from '@/components/Sidebar';
+// src/layouts/DashboardLayout.jsx
+
+import Sidebar from '@/components/layout/Sidebar';
 
 const DashboardLayout = ({ children }) => {
   return (

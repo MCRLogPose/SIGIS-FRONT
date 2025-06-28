@@ -1,6 +1,6 @@
-// hooks/useIsAdmin.js
+// src/hooks/auth/useIsAdmin.js
+
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 const useIsAdmin = () => {
   const [isAdmin, setIsAdmin] = useState(false);

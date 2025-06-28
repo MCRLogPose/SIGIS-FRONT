@@ -1,9 +1,11 @@
+// src/pages/accounts/ManageAccounts.jsx
+
 import React, { useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import TablePaginator from '@/components/tables/TablePaginator';
-import GenericTable from '@/components/tables/GenericTable';
-import { usePagination } from '@/hooks/usePagination';
-import TableToolbar from '@/components/tables/TableToolbar';
+import TablePaginator from '@/components/cammon/tables/TablePaginator';
+import GenericTable from '@/components/cammon/tables/GenericTable';
+import { usePagination } from '@/hooks/pagination/usePagination';
+import TableToolbar from '@/components/cammon/tables/TableToolbar';
 import { useNavigate } from 'react-router-dom'
 
 

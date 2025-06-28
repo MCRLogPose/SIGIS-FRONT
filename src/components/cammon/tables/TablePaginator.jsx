@@ -1,4 +1,5 @@
-import React from 'react'
+// src/components/cammon/tables/TablePaginator.jsx
+
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
 const TablePaginator = ({
