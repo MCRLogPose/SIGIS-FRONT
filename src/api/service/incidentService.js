@@ -1,6 +1,8 @@
-import axios from 'axios'
-
 // src/api/service/incidentService.js
+
+import axios from 'axios'
+import { IncidentRoutes } from '../routes'
+
 export const createIncident = async (incidentData, token) => {
   const formData = new FormData()
 
@@ -23,3 +25,15 @@ export const createIncident = async (incidentData, token) => {
 
   return response.data
 }
+
+export const getAllIncidents = () =>
+  axios.get(IncidentRoutes.LIST_ALL);
+
+export const getIncidentsCompleted = () =>
+  axios.get(IncidentRoutes.COMPLETED);
+
+export const getIncidentsCulminadas = () =>
+  axios.get(IncidentRoutes.CULMINADAS);
+
+export const getIncidentsUsers = () =>
+  axios.get(IncidentRoutes.USERS);

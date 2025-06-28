@@ -1,5 +1,6 @@
 //src/components/cammon/buttons/GenericButton.jsx
 import clsx from 'clsx'
+import { Link } from 'react-router-dom';
 
 const GenericButton = ({
   children,
@@ -7,13 +8,33 @@ const GenericButton = ({
   onClick,
   variant = 'default',
   className = '',
+  to,
   ...props
 }) => {
-  const baseStyles = 'px-4 py-2 rounded font-medium transition-colors flex items-center gap-2'
+  const baseStyles = 'px-4 py-2 rounded font-medium transition-colors flex items-center gap-2 justify-center'
   const variants = {
     default: 'bg-black text-white hover:bg-gray-400 cursor-pointer',
     secondary: 'bg-green-800 text-white hover:bg-green-700 cursor-pointer',
     destructive: 'bg-red-800 text-white hover:bg-red-700 cursor-pointer',
+  }
+
+  const content = (
+    <>
+      {Icon && <Icon className="w-4 h-4" />}
+      {children}
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link
+        to={to}
+        className={clsx(baseStyles, variants[variant], className)}
+        {...props}
+      >
+        {content}
+      </Link>
+    );
   }
 
   return (

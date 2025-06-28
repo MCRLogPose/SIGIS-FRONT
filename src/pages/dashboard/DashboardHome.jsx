@@ -1,15 +1,29 @@
 // src/pages/dashboard/DashboardHome.jsx
 
+import { useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import DashboardCard from '@/components/incidents/cards/DashboardCard';
 import { Pickaxe, Clock, FolderOpen, Megaphone, UserCog, BookOpenCheck, Replace, UserPen, Archive } from 'lucide-react';
 import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png';
+import IncidentModal from '@/components/cammon/modals/IncidentModal';
+import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
+
 
 const DashBoardHome = () => {
+
+    const {
+        isModalOpen,
+        formData,
+        handleChange,
+        handleSubmit,
+        openModal,
+        closeModal
+    } = useIncidentModal();
+
     const cards = [
         {
             title: 'Nueva Incidencia',
-            to: '/home/create-incident',
+            onClick: openModal,
             icon: Pickaxe,
             buttonText: 'Crear'
         },
@@ -64,7 +78,7 @@ const DashBoardHome = () => {
             icon: UserPen,
             buttonText: 'Ir'
         }
-    ]
+    ];
 
     return (
         <DashboardLayout>
@@ -78,6 +92,7 @@ const DashBoardHome = () => {
                             key={idx}
                             title={card.title}
                             to={card.to}
+                            onClick={card.onClick}
                             icon={card.icon}
                             buttonText={card.buttonText}
                             image={ImageDashboardOptions}
@@ -85,18 +100,20 @@ const DashBoardHome = () => {
                     ))}
                 </div>
             </div>
-            
+
             <br className="my-8" />
 
             <div className="mx-auto p-4">
                 <h1 className="text-2xl font-bold">AJUSTES</h1>
                 <p className="text-sm text-gray-500 mb-6">Configuraciones y gestiòn de cuentas</p>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {cardsConfig.map((card, idx) => (
                         <DashboardCard
                             key={idx}
                             title={card.title}
                             to={card.to}
+                            onClick={card.onClick}
                             icon={card.icon}
                             buttonText={card.buttonText}
                             image={ImageDashboardOptions}
@@ -104,6 +121,15 @@ const DashBoardHome = () => {
                     ))}
                 </div>
             </div>
+
+            <IncidentModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                formData={formData}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+            />
+
         </DashboardLayout>
     );
 };

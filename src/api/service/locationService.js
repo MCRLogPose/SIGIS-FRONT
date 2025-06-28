@@ -1,6 +1,8 @@
-import axios from 'axios'
-
 // src/api/service/locationService.js
+
+import axios from 'axios'
+import { LocationRoutes } from '../routes';
+
 export const createLocation = async (formData) => {
   try {
     const token = localStorage.getItem('token')
@@ -10,7 +12,7 @@ export const createLocation = async (formData) => {
       floor: parseInt(formData.floor, 10),
     }
 
-    const response = await axios.post('http://localhost:8080/api/location', requestBody, {
+    const response = await axios.post(LocationRoutes.CREATE, requestBody, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
