@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '@/pages/auth/LoginPage';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
 import ViewIncidentReports from '@/pages/incidents/ViewIncidentReports';
-import CreateIncident from '@/pages/incidents/CreateIncident';
 import RecordIncidents from '@/pages/incidents/RecordIncident';
 import MyCases from '@/pages/incidents/MyCases';
 import NewsPage from '@/pages/incidents/NewsPage';
@@ -29,12 +28,6 @@ const AppRoutes = () => {
       <Route path="/home/view-incident-reports" element={
           <PrivateRoute>
             <ViewIncidentReports />
-          </PrivateRoute>
-        }
-      />
-      <Route path="/home/create-incident" element={
-          <PrivateRoute>
-            <CreateIncident />
           </PrivateRoute>
         }
       />

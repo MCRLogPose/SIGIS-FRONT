@@ -1,57 +1,37 @@
-// src/components/incidents/IncidentListCards.jsx
-
-import React, { useState, useEffect } from 'react'
-import IncidentCard from '@/components/incidents/cards/IncidentCard'
-import DashboardLayout from '@/layouts/DashboardLayout'
-import TableToolbar from '@/components/cammon/tables/TableToolbar'
-import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import IncidentModal from '@/components/cammon/modals/IncidentModal'
-import { useIncidentModal } from '@/hooks/incidents/useIncidentModal'
+import React, { useState, useEffect } from 'react';
+import { getIncidentsByType } from '@/api/service/incidentService';
+import IncidentCard from '@/components/incidents/cards/IncidentCard';
+import DashboardLayout from '@/layouts/DashboardLayout';
+import TableToolbar from '@/components/cammon/tables/TableToolbar';
+import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png';
+import IncidentModal from '@/components/cammon/modals/IncidentModal';
+import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
 
 const IncidentListCards = ({ title, description, type }) => {
     const {
-            isModalOpen,
-            formData,
-            handleChange,
-            handleSubmit,
-            openModal,
-            closeModal
-        } = useIncidentModal()
+        isModalOpen,
+        formData,
+        handleChange,
+        handleSubmit,
+        openModal,
+        closeModal
+    } = useIncidentModal();
 
-    const pathSeeMore = '/home/incident-detail/:id'
-    const [incidents, setIncidents] = useState([])
+    const pathSeeMore = '/home/incident-detail/:id';
+    const [incidents, setIncidents] = useState([]);
 
     useEffect(() => {
-        // Aquí podrías hacer un fetch a la API filtrando por el tipo (activos o culminados)
-        // Por ahora simulamos la carga
-        const allIncidents = [
-            {
-                id: 1,
-                title: 'Caño roto, baño de hombres',
-                description: 'Se reparó el caño, sin embargo se dispone de material para culminarlo...',
-                date: '06/01/2021',
-                pavilion: 'Torre B',
-                floor: 3,
-                reporter: 'Juan Segarra',
-                imageUrl: ImageDashboardOptions,
-                status: 'activo'
-            },
-            {
-                id: 2,
-                title: 'Fuga eléctrica',
-                description: 'Revisión de cables eléctricos por cortocircuito.',
-                date: '05/12/2020',
-                pavilion: 'Torre A',
-                floor: 2,
-                reporter: 'Ana Torres',
-                imageUrl: ImageDashboardOptions,
-                status: 'culminado'
+        const fetchIncidents = async () => {
+            try {
+                const data = await getIncidentsByType(type);
+                setIncidents(data);
+            } catch (error) {
+                console.error('Error al obtener incidencias:', error);
             }
-        ]
+        };
 
-        const filtered = allIncidents.filter(incident => incident.status === type)
-        setIncidents(filtered)
-    }, [type])
+        fetchIncidents();
+    }, [type]);
 
     return (
         <DashboardLayout>
@@ -63,29 +43,25 @@ const IncidentListCards = ({ title, description, type }) => {
 
                 <div className="flex flex-col gap-6 mt-4">
                     {incidents.map((incident) => (
-                        <IncidentCard 
+                        <IncidentCard
                             key={incident.id}
-                            title={incident.title}
-                            description={incident.description}
-                            date={incident.date}
-                            reporter={incident.reporter}
-                            pavilion={incident.pavilion}
-                            floor={incident.floor}
-                            imageUrl={incident.imageUrl}
+                            incident={incident}
                             toSeeMore={pathSeeMore.replace(':id', incident.id)}
                         />
+
                     ))}
                 </div>
+
                 <IncidentModal
-                                    isOpen={isModalOpen}
-                                    onClose={closeModal}
-                                    formData={formData}
-                                    onChange={handleChange}
-                                    onSubmit={handleSubmit}
-                                />
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    formData={formData}
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                />
             </div>
         </DashboardLayout>
-    )
-}
+    );
+};
 
-export default IncidentListCards
+export default IncidentListCards;
