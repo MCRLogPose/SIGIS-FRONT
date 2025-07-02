@@ -12,9 +12,16 @@ import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
 import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
 import IncidentModal from '@/components/cammon/modals/IncidentModal'
 import { useIncidentModal } from '@/hooks/incidents/useIncidentModal'
+import { useNavigate } from 'react-router-dom';
 
 
 const TracingPage = () => {
+    const navigate = useNavigate()
+
+    const handleRowDoubleClick = (incident) => {
+        navigate(`/home/incident-detail/${incident.id}`)
+    }
+
     const {
         isModalOpen,
         formData,
@@ -121,7 +128,7 @@ const TracingPage = () => {
                     <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
                     <div>
                         <TableToolbar onNewClick={openModal} />
-                        <GenericTable columns={columns} data={paginatedData} />
+                        <GenericTable columns={columns} data={paginatedData} onRowDoubleClick={handleRowDoubleClick}/>
                         <TablePaginator
                             currentPage={currentPage}
                             totalPages={totalPages}

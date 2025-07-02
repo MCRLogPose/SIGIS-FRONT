@@ -59,7 +59,7 @@ const DashBoardHome = () => {
         },
         {
             title: 'Reportes de Incidencias',
-            to: '/home/view-incident-reports',
+            to: '/home/incident-reports',
             icon: Archive,
             buttonText: 'Ir'
         }

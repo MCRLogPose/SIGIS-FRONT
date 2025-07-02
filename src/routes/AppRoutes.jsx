@@ -3,7 +3,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '@/pages/auth/LoginPage';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
-import ViewIncidentReports from '@/pages/incidents/ViewIncidentReports';
+import IncidentReports from '@/pages/incidents/IncidentReports';
 import RecordIncidents from '@/pages/incidents/RecordIncident';
 import MyCases from '@/pages/incidents/MyCases';
 import NewsPage from '@/pages/incidents/NewsPage';
@@ -25,9 +25,9 @@ const AppRoutes = () => {
           </PrivateRoute>
         }
       />
-      <Route path="/home/view-incident-reports" element={
+      <Route path="/home/incident-reports" element={
           <PrivateRoute>
-            <ViewIncidentReports />
+            <IncidentReports />
           </PrivateRoute>
         }
       />

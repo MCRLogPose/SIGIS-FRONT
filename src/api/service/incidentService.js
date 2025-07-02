@@ -25,7 +25,10 @@ export const createIncident = async (incidentData) => {
 };
 
 // Obtener todas las incidencias
-export const getAllIncidents = () => api.get(IncidentRoutes.LIST_ALL);
+export const getAllIncidents = async () => {
+  const response = await api.get(IncidentRoutes.LIST_ALL);
+  return response.data; // Aquí extraes los datos reales
+};
 
 // obtener incidencias filtradas por estado (cliente)
 export const getIncidentsByState = async (state) => {
@@ -33,21 +36,40 @@ export const getIncidentsByState = async (state) => {
   return response.data.filter((incident) => incident.state === state);
 };
 
-// Alias semánticos
-export const getPendingIncidents = () => getIncidentsByState('Pendiente');
-export const getCompletedIncidents = () => getIncidentsByState('Completed');
+// obtener incidencias de prioridad alta
+export const getPriorityIncidents = async (priority) => {
+  const response = await api.get(IncidentRoutes.LIST_ALL);
+  return response.data.filter((incident) => incident.priority === priority);
+};
+
+//por prioridad personalizado
+export const getIncidentsByPriority = (priority) => {
+  switch (priority) {
+    case 'Alta':
+      return getPriorityIncidents('Alta');
+    case 'Media':
+      return getPriorityIncidents('Media');
+    case 'Baja':
+      return getPriorityIncidents('Baja');
+    default:
+      return getAllIncidents();
+  }
+};
 
 // Por tipo personalizado
 export const getIncidentsByType = (type) => {
   switch (type) {
     case 'Pendiente':
-      return getPendingIncidents();
-    case 'Completed':
-      return getCompletedIncidents();
+      return getIncidentsByState('Pendiente');
+    case 'Completado':
+      return getIncidentsByState('Completado');
+    case 'Culminadas':
+      return getIncidentsByState('Culminadas');
     default:
       return getIncidentsByState(type);
   }
 };
+
 
 // Endpoints específicos del backend (sin filtro en frontend)
 export const getIncidentsCompleted = () => api.get(IncidentRoutes.COMPLETED);

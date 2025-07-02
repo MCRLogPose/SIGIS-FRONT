@@ -21,7 +21,7 @@ const Sidebar = () => {
                 <Link to="/home" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <LayoutDashboard size={18} /> Resumen General
                 </Link>
-                <Link to="/home/view-incident-reports" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
+                <Link to="/home/incident-reports" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">
                     <Archive size={18} /> Reportes
                 </Link>
                 <Link to="/home/record" className="flex items-center gap-2 hover:text-blue-300 font-medium text-gray-200">

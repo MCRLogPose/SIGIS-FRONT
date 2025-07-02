@@ -48,7 +48,7 @@ const IncidentDetailSection = ({ incident }) => {
 
   return (
 
-    <div className="p-6 space-y-6 bg-gray-100 rounded-lg shadow-md">
+    <div className="p-6 space-y-6 bg-gray-950 rounded-lg shadow-md text-gray-200">
       <div className="flex items-center justify-center mb-4 border-b-2 border-blue-950">
         <h1 className="text-2xl font-bold text-center mb-4">Detalles de la Incidencia</h1>
       </div>
@@ -72,7 +72,7 @@ const IncidentDetailSection = ({ incident }) => {
       {/* Header e imagen al costado */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 aling-items-center  ">
-          <div className="rounded-xl p-4 border-2">
+          <div className="rounded-xl p-4 border-2 border-blue-950">
             <DetailHeader
               title={incident.title}
               description={incident.description}
@@ -83,10 +83,10 @@ const IncidentDetailSection = ({ incident }) => {
 
           {/* Segunda fila: Estado + Ubicación */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <div className='border-2 rounded-xl p-4'>
+            <div className='border-2 rounded-xl p-4 border-blue-950'>
               <DetailStatus status={incident.status} />
             </div>
-            <div className='border-2 rounded-xl p-2'>
+            <div className='border-2 rounded-xl p-2 border-blue-950'>
               <DetailLocation location={incident.location} floor={incident.floor} building={incident.building} reference={incident.reference} />
             </div>
           </div>
@@ -106,10 +106,10 @@ const IncidentDetailSection = ({ incident }) => {
       {/* Tercera fila: Tabla de operadores + actualizaciones */}
       {isAssigned && (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-2 border-2 rounded-xl p-4">
+          <div className="lg:col-span-2 border-2 rounded-xl p-4 border-blue-950">
             <DetailOperators operators={incident.operators} />
           </div>
-          <div className="lg:col-span-2 border-2 rounded-xl p-4">
+          <div className="lg:col-span-2 border-2 rounded-xl p-4 border-blue-950">
             {/* Actualizaciones */}
             <DetailUpdates updates={incident.updates} />
           </div>

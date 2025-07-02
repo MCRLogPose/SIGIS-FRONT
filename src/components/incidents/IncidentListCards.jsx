@@ -3,7 +3,6 @@ import { getIncidentsByType } from '@/api/service/incidentService';
 import IncidentCard from '@/components/incidents/cards/IncidentCard';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import TableToolbar from '@/components/cammon/tables/TableToolbar';
-import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png';
 import IncidentModal from '@/components/cammon/modals/IncidentModal';
 import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
 
