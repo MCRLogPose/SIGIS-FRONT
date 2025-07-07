@@ -4,114 +4,122 @@ import React, { useEffect, useRef, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import NewIncidentCard from '@/components/incidents/cards/NewIncidentCard'
 import GenericIncidentCard from '@/components/incidents/cards/GenericIncidentCard'
-import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
+import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
 import useResponsiveCardLimit from '@/hooks/ui/useResponsiveCardLimit'
 import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
-import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
+import { getAllIncidents } from '@/api/service/incidentService'
+import { getGroupedAssignments } from '@/api/service/assignmentService'
+import { useAuth } from '@/context/AuthContext'
 
 const NewsPage = () => {
-    const pathSeeMore = '/home/incident-detail/:id'
-    const [newIncidents, setNewIncidents] = useState([])
-    const [genericIncidents, setGenericIncidents] = useState([])
+  const { user } = useAuth()
+  const currentUserId = user?.id
 
-    const gridContainerRef = useRef(null)
-    const maxCards = useResponsiveCardLimit(gridContainerRef)
-    const { isExpanded, visibleItems, toggleExpand } = useToggleListExpand(newIncidents, maxCards)
+  const [newIncidents, setNewIncidents] = useState([])
+  const [assignedIncidents, setAssignedIncidents] = useState([])
 
-    const visibleIncidents = isExpanded ? visibleItems : visibleItems.slice(0, maxCards)
+  const gridContainerRef = useRef(null)
+  const maxCards = useResponsiveCardLimit(gridContainerRef)
 
-    const {
-        isExpanded: isGenericExpanded,
-        visibleItems: visibleGenericItems,
-        toggleExpand: toggleGenericExpand
-    } = useToggleListExpand(genericIncidents, 3)
-    const visibleGenericIncidents = isGenericExpanded
-        ? visibleGenericItems
-        : visibleGenericItems.slice(0, 3)
+  const {
+    isExpanded,
+    visibleItems,
+    toggleExpand
+  } = useToggleListExpand(newIncidents, maxCards)
 
-    useEffect(() => {
-        // Simulación de datos
-        setNewIncidents([
-            {
-                id: 1,
-                title: 'Silla rota A00304',
-                description: 'Se registra una computadora en mal estado',
-                date: '06 / 01 / 2021',
-                location: 'A0304',
-                imageUrl: ImageDashboardOptions
-            },
-            {
-                id: 2,
-                title: 'Silla rota A00304',
-                description: 'Se registra una computadora en mal estado',
-                date: '06 / 01 / 2021',
-                location: 'A0304',
-                imageUrl: ImageDashboardOptions
-            },
+  const {
+    isExpanded: isAssignedExpanded,
+    visibleItems: visibleAssignedItems,
+    toggleExpand: toggleAssignedExpand
+  } = useToggleListExpand(assignedIncidents, 3)
 
-            // más casos...
+  const visibleNewIncidents = isExpanded
+    ? visibleItems
+    : visibleItems.slice(0, maxCards)
+
+  const visibleAssignedIncidents = isAssignedExpanded
+    ? visibleAssignedItems
+    : visibleAssignedItems.slice(0, 3)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [incidents, assignments] = await Promise.all([
+          getAllIncidents(),
+          getGroupedAssignments()
         ])
 
-        setGenericIncidents([
-            {
-                id: 2,
-                title: 'Caño roto, baño de hombres',
-                description: 'Se reparo el caño, sin embargo se dispone de material para culminarlo',
-                date: '06 / 01 / 2021',
-                administrator: 'Juan Segarra',
-                location: 'A0302',
-                category: 'SEGURIDAD',
-                reporter: 'U222231',
-                imageUrl: ImageDashboardOptions
-            },
-            // más casos...
-        ])
-    }, [])
+        const assignedIncidenceIds = assignments
+          .filter(a => a.assigned.some(op => op.userId === currentUserId))
+          .map(a => a.incidencyId)
 
-    return (
-        <DashboardLayout>
-            <div className="p-6 space-y-8">
-                <section>
-                    <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Incidencias generadas por los usuarios</p>
-                    <div
-                        ref={gridContainerRef}
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6"
-                    >
-                        {visibleIncidents.map((incident) => (
-                            <NewIncidentCard
-                                key={incident.id}
-                                incident={incident}
-                                imageUrl={incident.imageUrl}
-                                toSeeMore={pathSeeMore.replace(':id', incident.id)} />
-                        ))}
-                    </div>
+        const newList = incidents.filter(i =>
+          !assignments.some(a => a.incidencyId === i.id)
+        )
 
-                    <ShowMoreButton onClick={toggleExpand} isExpanded={isExpanded} />
+        const assignedList = incidents.filter(i =>
+          assignedIncidenceIds.includes(i.id)
+        )
 
+        setNewIncidents(newList)
+        setAssignedIncidents(assignedList)
 
-                </section>
+      } catch (error) {
+        console.error('Error al obtener incidencias:', error)
+      }
+    }
 
-                <section>
-                    <h2 className="text-2xl font-bold">ASIGNACIONES DE INCIDENCIAS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Incidencias asignadas por los administradores</p>
-                    <div className="space-y-4">
-                        {visibleGenericIncidents.map((incident) => (
-                            <GenericIncidentCard
-                                key={incident.id}
-                                incident={incident}
-                                imageUrl={incident.imageUrl}
-                                buttonTitle1="ACEPTAR"
-                                buttonTitle2="RECHAZAR"
-                                toSeeMore={pathSeeMore.replace(':id', incident.id)}
-                            />
-                        ))}
-                        <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />
-                    </div>
-                </section>
-            </div>
-        </DashboardLayout>
-    )
+    if (currentUserId) {
+      fetchData()
+    }
+  }, [currentUserId])
+
+  const pathSeeMore = '/home/incident-detail/:id'
+
+  return (
+    <DashboardLayout>
+      <div className="p-6 space-y-8">
+        {/* Incidencias nuevas */}
+        <section>
+          <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
+          <p className="text-sm text-gray-500 mb-4">Incidencias sin asignación</p>
+          <div
+            ref={gridContainerRef}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6"
+          >
+            {visibleNewIncidents.map(incident => (
+              <NewIncidentCard
+                key={incident.id}
+                incident={incident}
+                imageUrl={incident.image}
+                toSeeMore={pathSeeMore.replace(':id', incident.id)}
+              />
+            ))}
+          </div>
+          <ShowMoreButton onClick={toggleExpand} isExpanded={isExpanded} />
+        </section>
+
+        {/* Incidencias asignadas */}
+        <section>
+          <h2 className="text-2xl font-bold">ASIGNACIONES DE INCIDENCIAS</h2>
+          <p className="text-sm text-gray-500 mb-4">Incidencias delegadas a ti</p>
+          <div className="space-y-4">
+            {visibleAssignedIncidents.map(incident => (
+              <GenericIncidentCard
+                key={incident.id}
+                incident={incident}
+                imageUrl={incident.image}
+                buttonTitle1="ACEPTAR"
+                buttonTitle2="RECHAZAR"
+                toSeeMore={pathSeeMore.replace(':id', incident.id)}
+              />
+            ))}
+            <ShowMoreButton onClick={toggleAssignedExpand} isExpanded={isAssignedExpanded} />
+          </div>
+        </section>
+      </div>
+    </DashboardLayout>
+  )
 }
 
 export default NewsPage

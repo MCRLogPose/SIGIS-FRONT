@@ -22,7 +22,7 @@ const IncidentListCards = ({ title, description, type }) => {
     useEffect(() => {
         const fetchIncidents = async () => {
             try {
-                const data = await getIncidentsByType(type);
+                const data = await getIncidentsByType(type)
                 setIncidents(data);
             } catch (error) {
                 console.error('Error al obtener incidencias:', error);
@@ -45,7 +45,7 @@ const IncidentListCards = ({ title, description, type }) => {
                         <IncidentCard
                             key={incident.id}
                             incident={incident}
-                            toSeeMore={pathSeeMore.replace(':id', incident.id)}
+                            toSeeMore={pathSeeMore.replace(':id', incident.id)}  
                         />
 
                     ))}

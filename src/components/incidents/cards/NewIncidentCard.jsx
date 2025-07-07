@@ -1,33 +1,51 @@
 // src/components/incidents/cards/NewIncidentCard.jsx
 
-import { ArrowRight, BadgeCheck } from "lucide-react"
+import { ArrowRight, BadgeCheck, Calendar } from "lucide-react"
 import { Link } from "react-router-dom"
+import DefaultImage from '@/assets/bg-dashboard/bg-dashboard-options.png';
+import GenericButton from '@/components/cammon/buttons/GenericButton';
 
 const NewIncidentCard = ({ incident, imageUrl, toSeeMore }) => {
-    return (
-      <div className="bg-white shadow-md rounded-xl overflow-hidden">
-        <div className="w-full h-40 overflow-hidden">
-          <img src={imageUrl} alt="Incidente" className="w-full h-full object-contain rounded mb-3" />
-        </div>
-        <div className="p-4 space-y-2">
-          <h3 className="text-sm font-bold">{incident.title}</h3>
-          <p className="text-sm text-gray-600 line-clamp-2">{incident.description}</p>
-          <div className="flex items-center justify-between text-xs text-gray-500">
-            <span>{incident.date}</span>
-            <span className="flex items-center gap-1">
-              📍 {incident.location}
-            </span>
-          </div>
-          <Link to={toSeeMore} className="mt-2 w-full text-black text-sm py-1 rounded cursor-pointer flex items-center justify-center gap-2">
-            <ArrowRight /> VER MÀS
-          </Link>
-          <button className="mt-2 w-full bg-gray-700 text-white text-sm py-1 rounded hover:bg-gray-800 cursor-pointer flex items-center justify-center gap-2">
-            <BadgeCheck /> ACEPTAR
-          </button>
-        </div>
+  const { title, description, dateEmision, image, priority, location } = incident
+  const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'http://localhost:8080/images/'
+  const fullImageUrl = image ? `${IMAGE_BASE_URL}${image}` : null;
+  const displayImage = fullImageUrl || DefaultImage;
+  return (
+    <div className="bg-white shadow-md rounded-xl overflow-hidden">
+      <div className="w-full h-40 overflow-hidden">
+        <img src={displayImage} alt="Incidente" className="w-full h-full object-contain rounded mb-3" />
       </div>
-    )
-  }
-  
-  export default NewIncidentCard
-  
+      <div className="p-4 space-y-2">
+        <h3 className="text-sm font-bold">{title}</h3>
+        <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
+        <div className="flex items-center justify-between text-xs text-gray-500">
+          <span>{new Date(dateEmision).toLocaleDateString()}</span>
+          <span className="flex items-center gap-1">
+            <Calendar size={14} /> {location.pavilion || 'Sin prioridad'} - {location.floor ?? 'N/A'}
+          </span>
+        </div>
+
+        <GenericButton
+          to={toSeeMore}
+          icon={ArrowRight}
+          className="mt-2 w-full text-black text-sm py-1 rounded"
+          variant="default"
+        >
+          VER MÀS
+        </GenericButton>
+        <GenericButton
+          icon={BadgeCheck}
+          className="mt-2 w-full text-sm py-1 rounded"
+          variant="secondary"
+          onClick={() => {
+            // Acción para aceptar incidente
+          }}
+        >
+          ACEPTAR
+        </GenericButton>
+      </div>
+    </div>
+  )
+}
+
+export default NewIncidentCard

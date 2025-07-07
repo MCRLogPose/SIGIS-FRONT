@@ -77,7 +77,7 @@ const TracingPage = () => {
                 </span>
             )
         },
-        { key: 'category', label: 'Categoría' },
+        { key: 'category', label: 'Categoría', render: (value) => value?.typeCategory || 'Sin categoría'},
         { key: 'operators', label: 'Operarios' },
         // más columnas según la vista
     ]

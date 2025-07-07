@@ -7,6 +7,7 @@ import RadioGroupField from "@/components/forms/generic/RadioGroupField";
 
 const IncidentFieldGroup = ({ formData, onChange }) => {
   const categoryOptions = [
+    { id: 0, label: 'Seleccione', value: 'none' },
     { id: 1, label: 'Seguridad', value: 'security' },
     { id: 2, label: 'Limpieza', value: 'cleaning' },
     { id: 3, label: 'Tecnologia', value: 'technology' },

@@ -13,14 +13,13 @@ const formatIncident = (incident) => ({
     id: incident.id || '',
     title: incident.title || '',
     description: incident.description || '',
-    issueDate: incident.dateEmision ? new Date(incident.dateEmision).toLocaleDateString() : '',
+    issueDate: incident.dateEmision ? new Date(incident.dateEmision).toLocaleDateString() : '---',
     priority: incident.priority ? incident.priority.toUpperCase() : '',
-    aceptanceDate: incident.dateAccept ? new Date(incident.dateAccept).toLocaleDateString() : '',
-    completionDate: incident.dateCompletion ? new Date(incident.dateCompletion).toLocaleDateString() : '',
+    aceptanceDate: incident.dateAccept ? new Date(incident.dateAccept).toLocaleDateString() : '---',
     status: incident.state ? (incident.state === 'Pendiente' ? 'ACTIVA' : incident.state.toUpperCase()) : '',
-    category: incident.categoryId || '',
-    operators: incident.userId || '',
-    // Agrega más campos si es necesario
+    category: incident.category?.typeCategory || 'Sin categoría',
+    operators: incident.user?.nombre || 'Sin operador',
+    location: `${incident.location?.pavilion || 'N/A'} - Piso ${incident.location?.floor ?? 'N/A'}`,
 });
 
 const ViewIncidentReports = () => {
@@ -52,7 +51,6 @@ const ViewIncidentReports = () => {
             )
         },
         { key: 'aceptanceDate', label: 'Fecha de Aceptación' },
-        { key: 'completionDate', label: 'Fecha de Finalizaciòn' },
         {
             key: 'status', label: 'Estado', render: (value) => (
                 <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ACTIVA' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
@@ -62,6 +60,7 @@ const ViewIncidentReports = () => {
         },
         { key: 'category', label: 'Categoría' },
         { key: 'operators', label: 'Operarios' },
+        { key: 'location', label: 'Ubicación' },
     ];
 
     const [incidents, setIncidents] = useState([]);
@@ -70,9 +69,7 @@ const ViewIncidentReports = () => {
     useEffect(() => {
         const fetchIncidents = async () => {
             try {
-                const apiData = await getAllIncidents(); // Cambia 'Completado' por el tipo que necesites
-
-                // Si la API devuelve un array:
+                const apiData = await getAllIncidents();
                 const formatted = Array.isArray(apiData)
                     ? apiData.map(formatIncident)
                     : [formatIncident(apiData)];
@@ -84,7 +81,6 @@ const ViewIncidentReports = () => {
         fetchIncidents();
     }, []);
 
-    // Paginación usando incidents
     const {
         currentPage,
         totalPages,

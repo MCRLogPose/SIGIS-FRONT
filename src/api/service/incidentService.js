@@ -61,17 +61,52 @@ export const getIncidentsByType = (type) => {
   switch (type) {
     case 'Pendiente':
       return getIncidentsByState('Pendiente');
+    case 'Asignado':
+      return getIncidentsByState('Asignado');
     case 'Completado':
-      return getIncidentsByState('Completado');
+      return getIncidentsCompleted();
     case 'Culminadas':
-      return getIncidentsByState('Culminadas');
+      return getIncidentsCulminadas();
     default:
       return getIncidentsByState(type);
   }
 };
 
+// Obtener todas las incidencias
+export const getIncidentsCompleted = async () => {
+  const response = await api.get(IncidentRoutes.COMPLETED);
+  return response.data; // Aquí extraes los datos reales
+};
 
-// Endpoints específicos del backend (sin filtro en frontend)
-export const getIncidentsCompleted = () => api.get(IncidentRoutes.COMPLETED);
-export const getIncidentsCulminadas = () => api.get(IncidentRoutes.CULMINADAS);
-export const getIncidentsUsers = () => api.get(IncidentRoutes.USERS);
+// Obtener todas las incidencias culminadas
+export const getIncidentsCulminadas = async () => {
+  const response = await api.get(IncidentRoutes.CULMINADAS);
+  return response.data; // Aquí extraes los datos reales
+};
+
+
+export const getIncidentsUsers = async () => {
+  const response = await api.get(IncidentRoutes.USERS);
+  return response.data;
+}
+
+// Obtener usuarios por tipo de rol (usa 'rol' en lugar de 'role')
+export const getUsersByRole = async (role) => {
+  const response = await api.get(IncidentRoutes.USERS);
+  return response.data.filter((user) => user.rol === role);
+};
+
+// Obtener operarios
+export const getOperators = async () => {
+  return getUsersByRole('Operador'); // debe coincidir exactamente con el valor del backend
+};
+
+// Obtener administradores
+export const getAdmins = async () => {
+  return getUsersByRole('Admin');
+};
+
+// Obtener usuarios
+export const getUsers = async () => {
+  return getUsersByRole('Usuario');
+};

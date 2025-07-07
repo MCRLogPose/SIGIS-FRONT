@@ -17,6 +17,8 @@ const DetailCharacteristics = ({ incident }) => {
         category
     } = incident
 
+    console.log(incident)
+
     return (
         <div className="p-4 space-y-2 text-sm">
             <h2 className="text-lg font-semibold mb-2">Características</h2>
@@ -29,7 +31,8 @@ const DetailCharacteristics = ({ incident }) => {
                 {updateDate && <div>ACTUALIZACIÓN: {updateDate}</div>}
                 {endDate && <div>CULMINADO: {endDate}</div>}
                 {phone && <div>TELÉFONO REPORTADOR: {phone}</div>}
-                <div>CATEGORÍA: {category}</div>
+                <div>CATEGORÍA: {category?.typeCategory || 'Sin categoría'}</div>
+                
             </div>
         </div>
     )

@@ -7,7 +7,7 @@ const useIsAdmin = () => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser?.rol === 'admin') {
+    if (storedUser?.rol === 'usuario') {
       setIsAdmin(true);
     }
   }, []);
