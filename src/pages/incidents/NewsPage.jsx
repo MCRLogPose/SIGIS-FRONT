@@ -14,6 +14,7 @@ import { useAuth } from '@/context/AuthContext'
 const NewsPage = () => {
   const { user } = useAuth()
   const currentUserId = user?.id
+  console.log('Current User ID:', currentUserId)
 
   const [newIncidents, setNewIncidents] = useState([])
   const [assignedIncidents, setAssignedIncidents] = useState([])

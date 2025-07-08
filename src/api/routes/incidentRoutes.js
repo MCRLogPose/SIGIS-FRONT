@@ -8,4 +8,6 @@ export const IncidentRoutes = {
     COMPLETED: `${API_BASE}/incidents/completed`, // GET
     CULMINADAS: `${API_BASE}/incidents/culminadas`, // GET
     USERS: `${API_BASE}/incidents/users`, // GET (usuarios usados en incidencias)
+    OPERATORS: `${API_BASE}/incidents/operarios`, // GET operarios
+    LIST_ALL_ME: `${API_BASE}/incidents/me`,               // GET incidencias propias (usuario logueado)
 };

@@ -31,8 +31,14 @@ export const getAllIncidents = async () => {
 };
 
 // obtener incidencias filtradas por estado (cliente)
-export const getIncidentsByState = async (state) => {
+export const getAllIncidentsByState = async (state) => {
   const response = await api.get(IncidentRoutes.LIST_ALL);
+  return response.data.filter((incident) => incident.state === state);
+};
+
+//obtener incidencias de usuario logueado filtradas por estado
+export const getMeIncidentsByState = async (state) => {
+  const response = await api.get(IncidentRoutes.LIST_ALL_ME);
   return response.data.filter((incident) => incident.state === state);
 };
 
@@ -40,36 +46,6 @@ export const getIncidentsByState = async (state) => {
 export const getPriorityIncidents = async (priority) => {
   const response = await api.get(IncidentRoutes.LIST_ALL);
   return response.data.filter((incident) => incident.priority === priority);
-};
-
-//por prioridad personalizado
-export const getIncidentsByPriority = (priority) => {
-  switch (priority) {
-    case 'Alta':
-      return getPriorityIncidents('Alta');
-    case 'Media':
-      return getPriorityIncidents('Media');
-    case 'Baja':
-      return getPriorityIncidents('Baja');
-    default:
-      return getAllIncidents();
-  }
-};
-
-// Por tipo personalizado
-export const getIncidentsByType = (type) => {
-  switch (type) {
-    case 'Pendiente':
-      return getIncidentsByState('Pendiente');
-    case 'Asignado':
-      return getIncidentsByState('Asignado');
-    case 'Completado':
-      return getIncidentsCompleted();
-    case 'Culminadas':
-      return getIncidentsCulminadas();
-    default:
-      return getIncidentsByState(type);
-  }
 };
 
 // Obtener todas las incidencias
@@ -98,7 +74,8 @@ export const getUsersByRole = async (role) => {
 
 // Obtener operarios
 export const getOperators = async () => {
-  return getUsersByRole('Operador'); // debe coincidir exactamente con el valor del backend
+  const response = await api.get(IncidentRoutes.OPERATORS);
+  return response.data;
 };
 
 // Obtener administradores

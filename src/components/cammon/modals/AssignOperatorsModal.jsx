@@ -2,7 +2,7 @@
 import React from 'react';
 import GenericTable from '@/components/cammon/tables/GenericTable';
 import GenericButton from '@/components/cammon/buttons/GenericButton';
-import { XCircle, UserCheck } from 'lucide-react';
+import { XCircle, UserCheck, BadgeAlert, User } from 'lucide-react';
 
 const AssignOperatorsModal = ({
   isOpen,
@@ -26,14 +26,14 @@ const AssignOperatorsModal = ({
         />
       ),
     },
-    { key: 'username', label: 'Usuario' },
-    { key: 'correo', label: 'Correo' },
+    { key: 'nombre', label: 'Nombre' },
+    { key: 'apellidos', label: 'Apellidos' },
     { key: 'rol', label: 'Rol' },
   ];
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-4xl">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/10 backdrop-blur-sm text-white">
+      <div className="bg-gray-900 p-6 rounded shadow-md w-full max-w-[100vh] max-h-[80vh] flex flex-col">
         <h2 className="text-xl font-bold mb-4">Seleccionar Operadores</h2>
 
         <GenericTable columns={columns} data={operators} />
@@ -44,9 +44,10 @@ const AssignOperatorsModal = ({
             {selectedOperators.map((op) => (
               <span
                 key={op.id}
-                className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
               >
-                {op.username || op.nombre}
+                <User />
+                {op.nombre} {op.apellidos}
               </span>
             ))}
           </div>

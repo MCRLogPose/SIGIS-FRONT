@@ -1,12 +1,13 @@
 // src/pages/accounts/ManageAccounts.jsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import TablePaginator from '@/components/cammon/tables/TablePaginator';
 import GenericTable from '@/components/cammon/tables/GenericTable';
 import { usePagination } from '@/hooks/pagination/usePagination';
 import TableToolbar from '@/components/cammon/tables/TableToolbar';
 import { useNavigate } from 'react-router-dom'
+import { getUsers } from '../../api/service/incidentService';
 
 
 const ManageAccount = () => {
@@ -37,24 +38,26 @@ const ManageAccount = () => {
         // más columnas según la vista
     ]
 
-    const data = [
-        { id: '00001', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'ADMIN', status: 'INACTIVA' },
-        { id: '00002', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'REPORTER', status: 'ACTIVA' },
-        { id: '00003', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'ADMIN', status: 'INACTIVA' },
-        { id: '00004', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'OPERATOR', status: 'ACTIVA' },
-        { id: '00005', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'ADMIN', status: 'ACTIVA' },
-        { id: '00006', nameuser: 'Edwin Manuel', fullname: 'Cruz Rivera', cedula: '71257332', phone: '987654321', email: 'man@gmail.com', username: 'M122322', role: 'OPERATOR', status: 'INACTIVA' },
-        // más filas...
-    ]
+    const [tableIncidents, setTableUsers] = useState([]);
 
-    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const { currentPage, totalPages, paginatedData, setCurrentPage } = usePagination(
+        tableIncidents,
+        rowsPerPage
+    );
 
-    const {
-        currentPage,
-        totalPages,
-        paginatedData,
-        setCurrentPage
-    } = usePagination(data, rowsPerPage)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userData = await getUsers();
+                setTableUsers(userData);
+            } catch (error) {
+                console.error('Error al cargar incidencias:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <DashboardLayout>
@@ -64,7 +67,9 @@ const ManageAccount = () => {
 
                 <div className="shadow-lg max-w">
                     <TableToolbar onNewClick={handleRedirect} />
-                    <GenericTable columns={columns} data={paginatedData} />
+                    <GenericTable columns={columns}
+                        data={paginatedData}
+                         />
                     <TablePaginator
                         currentPage={currentPage}
                         totalPages={totalPages}

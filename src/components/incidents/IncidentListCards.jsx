@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getIncidentsByType } from '@/api/service/incidentService';
 import IncidentCard from '@/components/incidents/cards/IncidentCard';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import TableToolbar from '@/components/cammon/tables/TableToolbar';
 import IncidentModal from '@/components/cammon/modals/IncidentModal';
 import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
+import { getMeIncidentsByState } from '@/api/service/incidentService';
 
 const IncidentListCards = ({ title, description, type }) => {
     const {
@@ -22,7 +22,7 @@ const IncidentListCards = ({ title, description, type }) => {
     useEffect(() => {
         const fetchIncidents = async () => {
             try {
-                const data = await getIncidentsByType(type)
+                const data = await getMeIncidentsByState(type)
                 setIncidents(data);
             } catch (error) {
                 console.error('Error al obtener incidencias:', error);

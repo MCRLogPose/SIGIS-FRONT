@@ -16,7 +16,7 @@ import AssignOperatorsModal from '@/components/cammon/modals/AssignOperatorsModa
 import { usePagination } from '@/hooks/pagination/usePagination';
 import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand';
 import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
-import { getIncidentsByState, getOperators, getUsersByRole, getIncidentsUsers } from '@/api/service/incidentService';
+import { getAllIncidentsByState, getOperators } from '@/api/service/incidentService';
 
 const AssignCases = () => {
   const navigate = useNavigate();
@@ -114,7 +114,7 @@ const AssignCases = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const pending = await getIncidentsByState('Pendiente');
+        const pending = await getAllIncidentsByState('Pendiente');
         const priority = pending.filter((i) => i.priority === 'Alta');
 
         setGenericIncidents(priority);
@@ -189,7 +189,7 @@ const AssignCases = () => {
           onClose={closeAssignModal}
           operators={operators}
           selectedOperators={selectedOperators}
-          onToggleSelect={toggleOperatorSelect}
+          onToggleOperator={toggleOperatorSelect}
           onConfirm={confirmAssignOperators}
         />
       </div>
