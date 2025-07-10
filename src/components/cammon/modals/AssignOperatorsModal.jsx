@@ -3,6 +3,7 @@ import React from 'react';
 import GenericTable from '@/components/cammon/tables/GenericTable';
 import GenericButton from '@/components/cammon/buttons/GenericButton';
 import { XCircle, UserCheck, BadgeAlert, User } from 'lucide-react';
+import { showConfirmationAlert } from '@/utils/alerts'
 
 const AssignOperatorsModal = ({
   isOpen,
@@ -57,7 +58,15 @@ const AssignOperatorsModal = ({
           <GenericButton variant="destructive" icon={XCircle} onClick={onClose}>
             Cancelar
           </GenericButton>
-          <GenericButton variant="secondary" icon={UserCheck} onClick={onConfirm}>
+          <GenericButton 
+            variant="secondary"
+            icon={UserCheck}
+            onClick={async () => {
+              const confirmed = await showConfirmationAlert('¿Estás seguro de asignar estos operadores?');
+              if (confirmed.isConfirmed) {
+                onConfirm();
+              }
+            }}>
             Asignar
           </GenericButton>
         </div>

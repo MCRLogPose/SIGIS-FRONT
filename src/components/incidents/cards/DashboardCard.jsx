@@ -1,6 +1,5 @@
 // src/components/incidents/cards/DashboardCard.jsx
 
-import { Link } from 'react-router-dom';
 import GenericButton from '@/components/cammon/buttons/GenericButton';
 
 const DashboardCard = ({ title, to, onClick, image, icon: Icon, buttonText }) => {

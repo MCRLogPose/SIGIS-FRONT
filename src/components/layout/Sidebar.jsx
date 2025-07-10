@@ -6,13 +6,15 @@ import LogoSygis from '@/assets/logos/logo-sygis.png';
 import useIsAdmin from "@/hooks/auth/useIsAdmin";
 import useIsOperario from "@/hooks/auth/useIsOperario";
 import { useAuth } from '@/context/AuthContext'
+import { showConfirmationAlert } from '@/utils/alerts'
+import GenericButton from '@/components/cammon/buttons/GenericButton';
 
 const Sidebar = () => {
     const isAdmin = useIsAdmin();
     const isOperario = useIsOperario();
     const { user } = useAuth()
     const currentUserName = user?.username
-    
+
     return (
         <aside className="w-64 h-screen bg-gray-800 text-white flex flex-col p-6 overflow-y-auto">
             {/* Logo and App Name */}
@@ -76,9 +78,18 @@ const Sidebar = () => {
                         <UserCog size={18} /> Gestionar Usuarios
                     </Link>
                 )}
-                <Link to="/login" className="flex items-center gap-2 text-red-400 hover:text-red-300 font-medium text-gray-200">
+
+                <button
+                    className="flex items-center gap-2 text-red-400 hover:text-red-300 font-medium text-gray-200"
+                    onClick={async () => {
+                        const confirmed = await showConfirmationAlert('¿Estás seguro de salir?');
+                        if (confirmed.isConfirmed) {
+                            window.location.href = '/login';
+                        }
+                    }}
+                >
                     <LogOut size={18} /> Salir
-                </Link>
+                </button>
             </nav>
 
             <br className="my-10" />

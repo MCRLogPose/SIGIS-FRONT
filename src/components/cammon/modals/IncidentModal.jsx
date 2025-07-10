@@ -4,6 +4,7 @@ import IncidentFieldGroup from '@/components/forms/incidents/IncidentFieldGroup'
 import IncidentEvidenceUploader from '@/components/forms/incidents/IncidentEvidenceUploader'
 import GenericButton from '@/components/cammon/buttons/GenericButton'
 import { X, Send } from 'lucide-react'
+import { showConfirmationAlert } from '@/utils/alerts'
 
 const IncidentModal = ({ isOpen, onClose, formData, onChange, onSubmit }) => {
   if (!isOpen) return null
@@ -33,10 +34,24 @@ const IncidentModal = ({ isOpen, onClose, formData, onChange, onSubmit }) => {
         </div>
 
         <div className="mt-6 flex justify-end gap-2">
-          <GenericButton onClick={onClose} variant="secondary" icon={X}>
+          <GenericButton
+            variant="secondary"
+            icon={X}
+            onClick={onClose}
+          >
             Cancelar
           </GenericButton>
-          <GenericButton onClick={onSubmit} variant="default" icon={Send}>
+          <GenericButton
+            variant="default"
+            icon={Send}
+            onClick={async () => {
+              const confirmed = await showConfirmationAlert('¿Estás seguro de enviar la incidencia?')
+              if (confirmed.isConfirmed) {
+                onSubmit()
+              }
+
+            }}
+          >
             Enviar
           </GenericButton>
         </div>

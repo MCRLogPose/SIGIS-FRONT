@@ -9,6 +9,6 @@ export const AssignmentRoutes = {
   GROUPED_BY_INCIDENCE: `${API_BASE}/grouped`,                        // GET - asignaciones agrupadas por incidencia
   GET_BY_INCIDENCE: (id) => `${API_BASE}/incidence/${id}`,            // GET - agrupadas por ID de incidencia
   GET_BY_ID: (id) => `${API_BASE}/incidencia/${id}`,                  // GET - usando servicio principal
-  UPDATE_RESPONSE: (id) => `${API_BASE}/assignment/${id}/response`,   // PUT - actualizar respuesta
-  MARK_CULMINATED: (id) => `${API_BASE}/assignment/${id}/culminated`, // PUT - marcar como culminada
+  UPDATE_RESPONSE: (id) => `${API_BASE}/assignment/${id}/response`,   // PUT - actualizar respuesta estado = en proseso
+  MARK_CULMINATED: (id) => `${API_BASE}/assignment/${id}/culminated`, // PUT - marcar como estado = culminada
 };

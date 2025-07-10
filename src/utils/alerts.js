@@ -42,3 +42,18 @@ export const showErrorAlert = (message = 'Ocurrió un error') => {
     confirmButtonText: 'Aceptar'
   })
 }
+
+export const showConfirmationAlert = (message = '¿Estás seguro de continuar?', options = {}) => {
+  return Swal.fire({
+    title: 'Confirmación',
+    text: message,
+    icon: 'question',
+    background: '#1f2937',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+    ...options
+  })
+}

@@ -1,6 +1,6 @@
 // src/hooks/incidents/useIncidentModal.js
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createLocation } from '@/api/service/locationService'
 import { createIncident } from '@/api/service/incidentService'
 import { validateIncidentForm } from '@/utils/validation'
@@ -22,6 +22,20 @@ export const useIncidentModal = () => {
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setFormData({
+        title: '',
+        pavilion: '',
+        floor: '',
+        reference: '',
+        description: '',
+        evidence: null,
+        categoryId: '',
+      });
+    }
+  }, [isModalOpen]);
 
   const handleSubmit = async () => {
     const requiredFields = ['title', 'pavilion', 'floor', 'reference', 'description', 'evidence', 'categoryId']
