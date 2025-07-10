@@ -36,10 +36,22 @@ export const getAllIncidentsByState = async (state) => {
   return response.data.filter((incident) => incident.state === state);
 };
 
+// obtener incidencias excluyendo ciertos estados
+export const getAllIncidentsExcludingStates = async (excludedStates = []) => {
+  const response = await api.get(IncidentRoutes.LIST_ALL);
+  return response.data.filter((incident) => !excludedStates.includes(incident.state));
+};
+
 //obtener incidencias de usuario logueado filtradas por estado
 export const getMeIncidentsByState = async (state) => {
   const response = await api.get(IncidentRoutes.LIST_ALL_ME);
   return response.data.filter((incident) => incident.state === state);
+};
+
+//obtener incidencias de usuario logueado excluyendo ciertos estados
+export const getMeIncidentsExcludingStates = async (excludedStates = []) => {
+  const response = await api.get(IncidentRoutes.LIST_ALL_ME);
+  return response.data.filter((incident) => !excludedStates.includes(incident.state));
 };
 
 // obtener incidencias de prioridad alta
@@ -80,10 +92,10 @@ export const getOperators = async () => {
 
 // Obtener administradores
 export const getAdmins = async () => {
-  return getUsersByRole('Admin');
+  return getUsersByRole('admin');
 };
 
 // Obtener usuarios
 export const getUsers = async () => {
-  return getUsersByRole('Usuario');
+  return getUsersByRole('usuario');
 };

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import DefaultImage from '@/assets/bg-dashboard/bg-dashboard-options.png';
 import GenericButton from '@/components/cammon/buttons/GenericButton';
 
-const NewIncidentCard = ({ incident, imageUrl, toSeeMore }) => {
+const NewIncidentCard = ({ incident, toSeeMore, onAccept }) => {
   const { title, description, dateEmision, image, priority, location } = incident
   const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'http://localhost:8080/images/'
   const fullImageUrl = image ? `${IMAGE_BASE_URL}${image}` : null;
@@ -38,7 +38,9 @@ const NewIncidentCard = ({ incident, imageUrl, toSeeMore }) => {
           className="mt-2 w-full text-sm py-1 rounded"
           variant="secondary"
           onClick={() => {
-            // Acción para aceptar incidente
+            if (onAccept) {
+              onAccept();
+            }
           }}
         >
           ACEPTAR

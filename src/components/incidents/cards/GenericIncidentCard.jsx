@@ -1,6 +1,6 @@
 // src/components/incidents/cards/GenericIncidentCard.jsx
 
-import { Calendar, ContactRound, MapPin, PersonStanding,  BadgeCheck, BadgeX, ArrowRight, TriangleAlert, WaypointsIcon, User } from "lucide-react";
+import { Calendar, ContactRound, MapPin, PersonStanding, BadgeCheck, BadgeX, ArrowRight, TriangleAlert, WaypointsIcon, User } from "lucide-react";
 import DefaultImage from '@/assets/bg-dashboard/bg-dashboard-options.png';
 import GenericButton from '@/components/cammon/buttons/GenericButton';
 import { } from "lucide-react";
@@ -74,12 +74,17 @@ const GenericIncidentCard = ({
 
         {/* Botones */}
         <div className='flex items-center gap-4 mt-4 text-sm text-gray-500'>
-          <GenericButton icon={BadgeCheck} variant="secondary" onClick={onButton1Click}>
-            {buttonTitle1}
-          </GenericButton>
-          <GenericButton icon={BadgeX} variant="destructive" onClick={onButton2Click}>
-            {buttonTitle2}
-          </GenericButton>
+          {(buttonTitle1) && (
+            <GenericButton icon={BadgeCheck} variant="secondary" onClick={onButton1Click}>
+              {buttonTitle1}
+            </GenericButton>
+          )}
+
+          {(buttonTitle2) && (
+            <GenericButton icon={BadgeX} variant="destructive" onClick={onButton2Click}>
+              {buttonTitle2}
+            </GenericButton>
+          )}
           <GenericButton icon={ArrowRight} to={toSeeMore}>
             Ver más
           </GenericButton>

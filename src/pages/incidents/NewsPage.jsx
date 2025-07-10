@@ -10,11 +10,11 @@ import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
 import { getAllIncidents } from '@/api/service/incidentService'
 import { getGroupedAssignments } from '@/api/service/assignmentService'
 import { useAuth } from '@/context/AuthContext'
+import { createAssignment } from '@/api/service/assignmentService'
 
 const NewsPage = () => {
   const { user } = useAuth()
   const currentUserId = user?.id
-  console.log('Current User ID:', currentUserId)
 
   const [newIncidents, setNewIncidents] = useState([])
   const [assignedIncidents, setAssignedIncidents] = useState([])
@@ -77,6 +77,24 @@ const NewsPage = () => {
 
   const pathSeeMore = '/home/incident-detail/:id'
 
+  const handleAcceptIncident = async (incidentId) => {
+    try {
+      await createAssignment({
+        userId: currentUserId,
+        incidencyId: incidentId
+      });
+
+      // Remover de nuevas y mover a asignadas
+      const accepted = newIncidents.find(i => i.id === incidentId);
+      setNewIncidents(prev => prev.filter(i => i.id !== incidentId));
+      setAssignedIncidents(prev => [...prev, accepted]);
+    } catch (error) {
+      console.error('Error al aceptar la incidencia:', error);
+    }
+  };
+
+
+
   return (
     <DashboardLayout>
       <div className="p-6 space-y-8">
@@ -92,8 +110,8 @@ const NewsPage = () => {
               <NewIncidentCard
                 key={incident.id}
                 incident={incident}
-                imageUrl={incident.image}
                 toSeeMore={pathSeeMore.replace(':id', incident.id)}
+                onAccept={() => handleAcceptIncident(incident.id)}
               />
             ))}
           </div>
@@ -110,8 +128,7 @@ const NewsPage = () => {
                 key={incident.id}
                 incident={incident}
                 imageUrl={incident.image}
-                buttonTitle1="ACEPTAR"
-                buttonTitle2="RECHAZAR"
+                buttonTitle1="ACTUALIZAR"
                 toSeeMore={pathSeeMore.replace(':id', incident.id)}
               />
             ))}

@@ -5,6 +5,7 @@ import TableToolbar from '@/components/cammon/tables/TableToolbar';
 import IncidentModal from '@/components/cammon/modals/IncidentModal';
 import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
 import { getMeIncidentsByState } from '@/api/service/incidentService';
+import { getMeIncidentsExcludingStates } from '../../api/service/incidentService';
 
 const IncidentListCards = ({ title, description, type }) => {
     const {
@@ -22,7 +23,12 @@ const IncidentListCards = ({ title, description, type }) => {
     useEffect(() => {
         const fetchIncidents = async () => {
             try {
-                const data = await getMeIncidentsByState(type)
+                let data;
+                if (type == null) {
+                    data = await getMeIncidentsExcludingStates(['Completado']); // Llama la API sin parámetro
+                } else {
+                    data = await getMeIncidentsByState(type); // Llama la API con parámetro
+                }
                 setIncidents(data);
             } catch (error) {
                 console.error('Error al obtener incidencias:', error);

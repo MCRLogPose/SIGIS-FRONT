@@ -20,13 +20,12 @@ const ManageAccount = () => {
     const pathCreate = '/accounts/register-user'
     const columns = [
         { key: 'id', label: 'ID' },
-        { key: 'nameuser', label: 'Nombre' },
-        { key: 'fullname', label: 'Apellidos' },
-        { key: 'cedula', label: 'Cédula' },
-        { key: 'phone', label: 'Teléfono' },
-        { key: 'email', label: 'Correo' },
-        { key: 'username', label: 'Usuario' },
-        { key: 'role', label: 'Rol' },
+        { key: 'nombre', label: 'Nombre' },
+        { key: 'apellidos', label: 'Apellidos' },
+        { key: 'dni', label: 'Dni' },
+        { key: 'telefono', label: 'Teléfono' },
+        { key: 'correo', label: 'Correo' },
+        { key: 'rol', label: 'Rol' },
         {
             key: 'status', label: 'Estado', render: (value) => (
                 <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ACTIVA' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
@@ -61,22 +60,43 @@ const ManageAccount = () => {
 
     return (
         <DashboardLayout>
-            <div className="max-w-1lg mx-auto p-4">
-                <h1 className="text-2xl font-bold">Gestionar cuentas</h1>
-                <p className="text-sm text-gray-500 mb-6">Casos o incidencias cuyo estado ya es culminado</p>
+            <div className="max-w-1lg mx-auto p-4 space-y-20">
+                <div>
+                    <h1 className="text-2xl font-bold">Cuentas de Usuario</h1>
+                    <p className="text-sm text-gray-500 mb-6">Cuentas genericas de usuarios comunes</p>
 
-                <div className="shadow-lg max-w">
-                    <TableToolbar onNewClick={handleRedirect} />
-                    <GenericTable columns={columns}
-                        data={paginatedData}
-                         />
-                    <TablePaginator
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={setCurrentPage}
-                        rowsPerPage={rowsPerPage}
-                        onRowsPerPageChange={setRowsPerPage}
-                    />
+                    <div className="shadow-lg max-w">
+                        <TableToolbar onNewClick={handleRedirect} />
+                        <GenericTable columns={columns}
+                            data={paginatedData}
+                        />
+                        <TablePaginator
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                            rowsPerPage={rowsPerPage}
+                            onRowsPerPageChange={setRowsPerPage}
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <h1 className="text-2xl font-bold">Cuentas de Operarios</h1>
+                    <p className="text-sm text-gray-500 mb-6">Cuentas para operarios dentro de la universidad</p>
+
+                    <div className="shadow-lg max-w">
+                        <TableToolbar onNewClick={handleRedirect} />
+                        <GenericTable columns={columns}
+                            data={paginatedData}
+                        />
+                        <TablePaginator
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={setCurrentPage}
+                            rowsPerPage={rowsPerPage}
+                            onRowsPerPageChange={setRowsPerPage}
+                        />
+                    </div>
                 </div>
             </div>
         </DashboardLayout>

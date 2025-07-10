@@ -10,7 +10,6 @@ const MyCases = () => {
         <IncidentListCards
             title="MIS CASOS"
             description="Historial de casos realizados en vigencia y sin resolver."
-            type="Pendiente"
         />  
     );
 }
