@@ -10,7 +10,7 @@ const ActiveIncidents = () => {
         <IncidentListCards
             title="MI HISTORIAL"
             description="Historial de casos realizados culminados."
-            type="Completado"
+            type="culminado"
         />  
     );
 }

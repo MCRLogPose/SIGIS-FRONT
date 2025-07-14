@@ -35,7 +35,7 @@ const IncidentCard = ({ incident, toSeeMore }) => {
               <PersonStanding size={14} /> {category?.typeCategory || 'Sin categoría'}
             </div>
             <div className="flex items-center gap-1">
-              <MapPin /> {location.pavilion || 'Sin prioridad'} - {location.floor ?? 'N/A'}
+              <MapPin /> {location?.pavilion || 'Sin prioridad'} - {location?.floor ?? 'N/A'}
             </div>
           </div>
 

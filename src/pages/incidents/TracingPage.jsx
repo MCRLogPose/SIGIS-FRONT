@@ -1,153 +1,170 @@
-// src/pages/incidents/TracingPage.jsx
-
-import React, { useEffect, useState } from 'react'
-import DashboardLayout from '@/layouts/DashboardLayout'
-import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
-import TablePaginator from '@/components/cammon/tables/TablePaginator';
-import GenericTable from '@/components/cammon/tables/GenericTable'
-import TableToolbar from '@/components/cammon/tables/TableToolbar'
-import { usePagination } from '@/hooks/pagination/usePagination'
-import GenericIncidentCard from '@/components/incidents/cards/GenericIncidentCard'
-import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
-import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
-import IncidentModal from '@/components/cammon/modals/IncidentModal'
-import { useIncidentModal } from '@/hooks/incidents/useIncidentModal'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import DashboardLayout from '@/layouts/DashboardLayout';
+import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png';
+import TablePaginator from '@/components/cammon/tables/TablePaginator';
+import GenericTable from '@/components/cammon/tables/GenericTable';
+import TableToolbar from '@/components/cammon/tables/TableToolbar';
+import GenericIncidentCard from '@/components/incidents/cards/GenericIncidentCard';
+import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton';
+import IncidentModal from '@/components/cammon/modals/IncidentModal';
+import AssignmentResponseModal from '@/components/cammon/modals/AssignmentResponseModal';
+
+import { usePagination } from '@/hooks/pagination/usePagination';
+import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand';
+import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
+import { useAssignmentActions } from '@/hooks/incidents/useAssignmentActions';
+import { useAuth } from '@/context/AuthContext';
+import { useIncidentsWithAssignments } from '@/hooks/incidents/useIncidentsWithAssignment';
 
 const TracingPage = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const currentUserId = user?.id;
 
-    const handleRowDoubleClick = (incident) => {
-        navigate(`/home/incident-detail/${incident.id}`)
-    }
+  const {
+    isModalOpen,
+    formData,
+    handleChange,
+    handleSubmit,
+    openModal,
+    closeModal,
+  } = useIncidentModal();
 
-    const {
-        isModalOpen,
-        formData,
-        handleChange,
-        handleSubmit,
-        openModal,
-        closeModal
-    } = useIncidentModal()
+  const { incidents, refreshIncidents } = useIncidentsWithAssignments("en proceso");
 
-    const pathSeeMore = '/home/incident-detail/:id'
-    const [genericIncidents, setGenericIncidents] = useState([])
+  const genericIncidents = incidents.filter(i => i.priority === 'ALTA');
 
-    const {
-        isExpanded: isGenericExpanded,
-        visibleItems: visibleGenericItems,
-        toggleExpand: toggleGenericExpand
-    } = useToggleListExpand(genericIncidents, 2)
-    const visibleGenericIncidents = isGenericExpanded
-        ? visibleGenericItems
-        : visibleGenericItems.slice(0, 2)
+  const {
+    isExpanded: isGenericExpanded,
+    visibleItems: visibleGenericItems,
+    toggleExpand: toggleGenericExpand,
+  } = useToggleListExpand(genericIncidents, 2);
 
+  const {
+    handleAccept,
+    openRejectModal,
+    closeRejectModal,
+    isResponseModalOpen,
+    responseText,
+    setResponseText,
+    handleRejectSubmit,
+  } = useAssignmentActions(currentUserId, refreshIncidents);
 
-    useEffect(() => {
-        setGenericIncidents([
-            {
-                id: 2,
-                title: 'Caño roto, baño de hombres',
-                description: 'Se reparo el caño, sin embargo se dispone de material para culminarlo',
-                date: '06 / 01 / 2021',
-                administrator: 'Juan Segarra',
-                location: 'A0302',
-                category: 'SEGURIDAD',
-                reporter: 'U222231',
-                imageUrl: ImageDashboardOptions
-            },
-            // más casos...
-        ])
-    }, [])
+  const visibleGeneric = isGenericExpanded
+    ? visibleGenericItems
+    : visibleGenericItems.slice(0, 2);
 
-    const columns = [
-        { key: 'id', label: 'ID' },
-        { key: 'title', label: 'Titulo' },
-        { key: 'location', label: 'Ubicación' },
-        { key: 'issueDate', label: 'Fecha de Emisión' },
-        { key: 'acceptanceDate', label: 'Fecha de Aceptación' },
-        { key: 'completionDate', label: 'Fecha de Finalizaciòn' },
-        { key: 'observation', label: 'Observación' },
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { currentPage, totalPages, paginatedData, setCurrentPage } = usePagination(
+    incidents,
+    rowsPerPage
+  );
 
-        {
-            key: 'status', label: 'Estado', render: (value) => (
-                <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ACTIVA' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                    {value}
-                </span>
-            )
-        },
-        { key: 'category', label: 'Categoría', render: (value) => value?.typeCategory || 'Sin categoría'},
-        { key: 'operators', label: 'Operarios' },
-        // más columnas según la vista
-    ]
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'title', label: 'Título' },
+    { key: 'description', label: 'Descripción' },
+    { key: 'issueDate', label: 'Fecha de Emisión' },
+    {
+      key: 'priority',
+      label: 'Prioridad',
+      render: (value) => (
+        <span className={`text-xs font-medium px-2 py-1 rounded ${
+          value === 'ALTA' ? 'bg-red-100 text-red-800' :
+          value === 'MEDIA' ? 'bg-yellow-100 text-yellow-800' :
+          'bg-green-100 text-green-800'}`}>
+          {value}
+        </span>
+      ),
+    },
+    { key: 'aceptanceDate', label: 'Fecha de Aceptación' },
+    {
+      key: 'status',
+      label: 'Estado',
+      render: (value) => (
+        <span className={`text-xs font-medium px-2 py-1 rounded ${
+          value === 'PENDIENTE' ? 'bg-yellow-100 text-yellow-800' :
+          'bg-green-100 text-green-800'}`}>
+          {value}
+        </span>
+      ),
+    },
+    { key: 'category', label: 'Categoría' },
+    { key: 'usuario', label: 'Usuario' },
+    { key: 'location', label: 'Ubicación' },
+  ];
 
-    const data = [
-        { id: '00001', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        { id: '00002', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        { id: '00003', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        { id: '00004', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        { id: '00005', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        { id: '00006', title: 'Lorem Ipsum Dolor', location: 'A0302', issueDate: '31/12/2022', acceptanceDate: '31/12/2022', completionDate: '31/12/2022', observation: 'Lorem Ipsum Dolor Sit Amet', status: 'EN PROCESO', category: 'SEGURIDAD', operators: 'Miguel12' },
-        //
-        // más filas...
-    ]
+  const handleRowDoubleClick = (incident) => {
+    navigate(`/home/incident-detail/${incident.id}?type=incidence`);
+  };
 
-    const [rowsPerPage, setRowsPerPage] = useState(5)
+  return (
+    <DashboardLayout>
+      <div className="p-6 space-y-8">
+        <section>
+          <h2 className="text-2xl font-bold">INCIDENCIAS CON MAYOR PRIORIDAD - POR CULMINAR</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Incidencias por asignar a operarios de alta prioridad
+          </p>
+          <div className="space-y-4">
+            {visibleGeneric.map((incident) => (
+              <GenericIncidentCard
+                key={incident.id}
+                incident={incident}
+                imageUrl={incident.imageUrl || ImageDashboardOptions}
+                buttonTitle1="ACEPTAR"
+                buttonTitle2="RECHAZAR"
+                toSeeMore={`/home/incident-detail/${incident.id}?type=incidence`}
+                onButton1Click={() => handleAccept(incident.assignmentId)}
+                onButton2Click={() => openRejectModal(incident.assignmentId)}
+              />
+            ))}
+            <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />
+          </div>
+        </section>
 
-    const {
-        currentPage,
-        totalPages,
-        paginatedData,
-        setCurrentPage
-    } = usePagination(data, rowsPerPage)
+        <section>
+          <h2 className="text-2xl font-bold">INCIDENCIAS GENERALES - POR CULMINAR</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Incidencias completadas - Solicitudes de aceptación
+          </p>
+          <div>
+            <TableToolbar onNewClick={openModal} />
+            <GenericTable
+              columns={columns}
+              data={paginatedData}
+              onRowDoubleClick={handleRowDoubleClick}
+            />
+            <TablePaginator
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={setRowsPerPage}
+            />
+          </div>
+        </section>
 
-    return (
-        <DashboardLayout>
-            <div className="p-6 space-y-8">
-                <section>
-                    <h2 className="text-2xl font-bold">ACTUALIZACIONES DE CASOS ACTIVOS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Solicitudes de asignacion por parte de los administradores</p>
-                    <div className="space-y-4">
-                        {visibleGenericIncidents.map((incident) => (
-                            <GenericIncidentCard
-                                key={incident.id}
-                                incident={incident}
-                                imageUrl={incident.imageUrl}
-                                buttonTitle1="APROBAR"
-                                buttonTitle2="MANTENER"
-                                toSeeMore={pathSeeMore.replace(':id', incident.id)}
-                            />
-                        ))}
-                    </div>
-                    <ShowMoreButton onClick={toggleGenericExpand} isExpanded={isGenericExpanded} />
-                </section>
+        <IncidentModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          formData={formData}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+        />
 
-                <section>
-                    <h2 className="text-2xl font-bold">INCIDENCIAS NUEVAS</h2>
-                    <p className="text-sm text-gray-500 mb-4">Incidencias por parte de los usuarios</p>
-                    <div>
-                        <TableToolbar onNewClick={openModal} />
-                        <GenericTable columns={columns} data={paginatedData} onRowDoubleClick={handleRowDoubleClick}/>
-                        <TablePaginator
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                            rowsPerPage={rowsPerPage}
-                            onRowsPerPageChange={setRowsPerPage}
-                        />
-                    </div>
-                </section>
-                <IncidentModal
-                    isOpen={isModalOpen}
-                    onClose={closeModal}
-                    formData={formData}
-                    onChange={handleChange}
-                    onSubmit={handleSubmit}
-                />
-            </div>
-        </DashboardLayout>
-    )
-}
+        <AssignmentResponseModal
+          isOpen={isResponseModalOpen}
+          onClose={closeRejectModal}
+          responseText={responseText}
+          setResponseText={setResponseText}
+          onSubmit={handleRejectSubmit}
+        />
+      </div>
+    </DashboardLayout>
+  );
+};
 
-export default TracingPage
+export default TracingPage;

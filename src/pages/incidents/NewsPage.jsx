@@ -1,23 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import NewIncidentCard from '@/components/incidents/cards/NewIncidentCard'
 import GenericIncidentCard from '@/components/incidents/cards/GenericIncidentCard'
 import ShowMoreButton from '@/components/cammon/buttons/ShowMoreButton'
+import AssignmentResponseModal from '@/components/cammon/modals/AssignmentResponseModal'
+
 import useResponsiveCardLimit from '@/hooks/ui/useResponsiveCardLimit'
 import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand'
-import { getAllIncidents } from '@/api/service/incidentService'
-import { getGroupedAssignments } from '@/api/service/assignmentService'
 import { useAuth } from '@/context/AuthContext'
 import { createAssignment, updateAssignmentResponse } from '@/api/service/assignmentService'
-import AssignmentResponseModal from '@/components/cammon/modals/AssignmentResponseModal'
+import { useNewsIncidents } from '@/hooks/incidents/useNewsIncidents'
 import { showErrorAlert, showSuccessAlert } from '@/utils/alerts'
 
 const NewsPage = () => {
   const { user } = useAuth()
   const currentUserId = user?.id
 
-  const [newIncidents, setNewIncidents] = useState([])
-  const [assignedIncidents, setAssignedIncidents] = useState([])
+  const [responseText, setResponseText] = useState('');
+
+  const {
+    newIncidents,
+    assignedIncidents,
+    setNewIncidents,
+    setAssignedIncidents,
+    fetchIncidentsData,
+    loading
+  } = useNewsIncidents(currentUserId)
 
   const [isResponseModalOpen, setIsResponseModalOpen] = useState(false)
   const [currentAssignmentId, setCurrentAssignmentId] = useState(null)
@@ -45,59 +53,10 @@ const NewsPage = () => {
     ? visibleAssignedItems
     : visibleAssignedItems.slice(0, 3)
 
-  const pathSeeMore = '/home/incident-detail/:id'
-
-  const fetchData = async () => {
-    try {
-      const [incidents, assignments] = await Promise.all([
-        getAllIncidents(),
-        getGroupedAssignments()
-      ])
-
-      // Mapear assignmentId por incidencia asignada al operador actual
-      const assignmentMap = new Map()
-      assignments.forEach(group => {
-        const match = group.assigned.find(op => op.userId === currentUserId)
-        if (match) {
-          assignmentMap.set(group.incidencyId, match.assignmentId)
-        }
-      })
-
-      // Incidencias nuevas: sin ninguna asignación
-      const newList = incidents.filter(i =>
-        !assignments.some(a => a.incidencyId === i.id)
-      )
-
-      // Incidencias asignadas al operador actual
-      const assignedList = incidents
-        .filter(i => assignmentMap.has(i.id))
-        .map(i => ({
-          ...i,
-          assignmentId: assignmentMap.get(i.id)
-        }))
-        .filter(i => i.state !== 'Completado')
-
-      setNewIncidents(newList)
-      setAssignedIncidents(assignedList)
-    } catch (error) {
-      console.error('Error al obtener incidencias:', error)
-    }
-  }
-
-  useEffect(() => {
-    if (currentUserId) {
-      fetchData()
-    }
-  }, [currentUserId])
-
   const handleAcceptIncident = async (incidentId) => {
     try {
-      await createAssignment({
-        userId: currentUserId,
-        incidencyId: incidentId
-      })
+      await createAssignment({ userId: currentUserId, incidencyId: incidentId })
 
-      // Remover de nuevas y mover a asignadas
       const accepted = newIncidents.find(i => i.id === incidentId)
       setNewIncidents(prev => prev.filter(i => i.id !== incidentId))
       setAssignedIncidents(prev => [...prev, accepted])
@@ -117,6 +76,7 @@ const NewsPage = () => {
   const closeResponseModal = () => {
     setIsResponseModalOpen(false)
     setCurrentAssignmentId(null)
+    setResponseText('')
   }
 
   const handleResponseSubmit = async (responseText) => {
@@ -126,10 +86,15 @@ const NewsPage = () => {
     }
 
     try {
+      if (!responseText?.trim()) {
+        showErrorAlert('La respuesta no puede estar vacía.');
+        return;
+      }
+
       await updateAssignmentResponse(currentAssignmentId, responseText)
       showSuccessAlert('Respuesta actualizada exitosamente.')
       closeResponseModal()
-      fetchData()
+      fetchIncidentsData()
     } catch (error) {
       console.error('Error actualizando respuesta:', error)
       showErrorAlert('Error al actualizar la respuesta.')
@@ -151,7 +116,7 @@ const NewsPage = () => {
               <NewIncidentCard
                 key={incident.id}
                 incident={incident}
-                toSeeMore={pathSeeMore.replace(':id', incident.id)}
+                toSeeMore={`/home/incident-detail/${incident.id}?type=incidence`}
                 onAccept={() => handleAcceptIncident(incident.id)}
               />
             ))}
@@ -171,7 +136,7 @@ const NewsPage = () => {
                 imageUrl={incident.image}
                 buttonTitle1={incident.state !== 'en proceso' ? 'ACTUALIZAR' : null}
                 onButton1Click={() => openResponseModal(incident.assignmentId)}
-                toSeeMore={pathSeeMore.replace(':id', incident.id)}
+                toSeeMore={`/home/incident-detail/${incident.id}?type=incidence`}
               />
             ))}
             <ShowMoreButton onClick={toggleAssignedExpand} isExpanded={isAssignedExpanded} />
@@ -183,6 +148,8 @@ const NewsPage = () => {
           isOpen={isResponseModalOpen}
           onClose={closeResponseModal}
           onSubmit={handleResponseSubmit}
+          responseText={responseText}
+          setResponseText={setResponseText}
         />
       </div>
     </DashboardLayout>

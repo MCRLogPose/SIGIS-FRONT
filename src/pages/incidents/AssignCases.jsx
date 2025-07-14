@@ -1,6 +1,4 @@
-// src/pages/incidents/AssignCases.jsx
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import DashboardLayout from '@/layouts/DashboardLayout';
@@ -16,10 +14,17 @@ import AssignOperatorsModal from '@/components/cammon/modals/AssignOperatorsModa
 import { usePagination } from '@/hooks/pagination/usePagination';
 import { useToggleListExpand } from '@/hooks/ui/useToggleListExpand';
 import { useIncidentModal } from '@/hooks/incidents/useIncidentModal';
-import { getAllIncidentsByState, getOperators } from '@/api/service/incidentService';
+import { useIncidentsByState } from '@/hooks/incidents/useIncidentsByState';
+import { useOperatorAssignment } from '@/hooks/incidents/useOperatorAssignment';
+import AssignmentResponseModal from '@/components/cammon/modals/AssignmentResponseModal';
+
 
 const AssignCases = () => {
   const navigate = useNavigate();
+
+  const handleRowDoubleClick = (incident) => {
+    navigate(`/home/incident-detail/${incident.id}?type=incidence`);
+  };
 
   const {
     isModalOpen,
@@ -30,41 +35,22 @@ const AssignCases = () => {
     closeModal,
   } = useIncidentModal();
 
-  const [genericIncidents, setGenericIncidents] = useState([]);
-  const [tableIncidents, setTableIncidents] = useState([]);
+  const { genericIncidents, tableIncidents, refreshIncidents } = useIncidentsByState("Pendiente");
 
-  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
-  const [operators, setOperators] = useState([]);
-  const [selectedOperators, setSelectedOperators] = useState([]);
-
-  const openAssignModal = async () => {
-    setIsAssignModalOpen(true);
-    if (operators.length === 0) {
-      try {
-        const response = await getOperators();
-        setOperators(response);
-      } catch (error) {
-        console.error('Error cargando operadores:', error);
-      }
-    }
-  };
-
-  const closeAssignModal = () => {
-    setIsAssignModalOpen(false);
-    setSelectedOperators([]);
-  };
-
-  const toggleOperatorSelect = (operator) => {
-    setSelectedOperators((prev) => {
-      const exists = prev.some((op) => op.id === operator.id);
-      return exists ? prev.filter((op) => op.id !== operator.id) : [...prev, operator];
-    });
-  };
-
-  const confirmAssignOperators = () => {
-    console.log('Asignar operadores:', selectedOperators);
-    closeAssignModal();
-  };
+  const {
+    operators,
+    selectedOperators,
+    isAssignModalOpen,
+    openAssignModal,
+    closeAssignModal,
+    toggleOperatorSelect,
+    confirmAssignOperators,
+    isResponseModalOpen,
+    openResponseModal,
+    closeResponseModal,
+    responseText,
+    setResponseText
+  } = useOperatorAssignment(refreshIncidents);
 
   const {
     isExpanded: isGenericExpanded,
@@ -82,50 +68,41 @@ const AssignCases = () => {
     { key: 'description', label: 'Descripción' },
     { key: 'issueDate', label: 'Fecha de Emisión' },
     {
-      key: 'priority', label: 'Prioridad', render: (value) => (
-        <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ALTA' ? 'bg-red-100 text-red-800' : value === 'MEDIA' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+      key: 'priority',
+      label: 'Prioridad',
+      render: (value) => (
+        <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ALTA'
+          ? 'bg-red-100 text-red-800'
+          : value === 'MEDIA'
+            ? 'bg-yellow-100 text-yellow-800'
+            : 'bg-green-100 text-green-800'
+          }`}>
           {value}
         </span>
       )
     },
     { key: 'aceptanceDate', label: 'Fecha de Aceptación' },
-    { key: 'completionDate', label: 'Fecha de Finalizaciòn' },
     {
-      key: 'status', label: 'Estado', render: (value) => (
-        <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'ACTIVA' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+      key: 'status',
+      label: 'Estado',
+      render: (value) => (
+        <span className={`text-xs font-medium px-2 py-1 rounded ${value === 'PENDIENTE'
+          ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
+          }`}>
           {value}
         </span>
       )
     },
-    { key: 'category', label: 'Categoría', render: (value) => value?.typeCategory || 'Sin categoría' },
-    { key: 'operators', label: 'Operarios'},
+    { key: 'category', label: 'Categoría' },
+    { key: 'usuario', label: 'Usuario' },
+    { key: 'location', label: 'Ubicación' },
   ];
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const { currentPage, totalPages, paginatedData, setCurrentPage } = usePagination(
     tableIncidents,
     rowsPerPage
   );
-
-  const handleRowDoubleClick = (incident) => {
-    navigate(`/home/incident-detail/${incident.id}`);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const pending = await getAllIncidentsByState('Pendiente');
-        const priority = pending.filter((i) => i.priority === 'Alta');
-
-        setGenericIncidents(priority);
-        setTableIncidents(pending);
-      } catch (error) {
-        console.error('Error al cargar incidencias:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <DashboardLayout>
@@ -143,8 +120,8 @@ const AssignCases = () => {
                 imageUrl={incident.imageUrl || ImageDashboardOptions}
                 buttonTitle1="DELEGAR"
                 buttonTitle2="RECHAZAR"
-                toSeeMore={`/home/incident-detail/${incident.id}`}
-                onButton1Click={openAssignModal}
+                toSeeMore={`/home/incident-detail/${incident.id}?type=incidence`}
+                onButton1Click={() => openAssignModal(incident.id)}
               />
             ))}
             <ShowMoreButton
@@ -190,8 +167,18 @@ const AssignCases = () => {
           operators={operators}
           selectedOperators={selectedOperators}
           onToggleOperator={toggleOperatorSelect}
-          onConfirm={confirmAssignOperators}
+          onConfirm={openResponseModal}
         />
+
+        <AssignmentResponseModal
+          isOpen={isResponseModalOpen}
+          onClose={closeResponseModal}
+          onSubmit={confirmAssignOperators}
+          responseText={responseText}
+          setResponseText={setResponseText}
+        />  
+
+
       </div>
     </DashboardLayout>
   );

@@ -15,13 +15,13 @@ const GenericIncidentCard = ({
   const {
     title,
     description,
-    dateEmision,
+    issueDate,
     priority,
-    state,
+    status,
     image,
     category,
     location,
-    user,
+    usuario,
   } = incident;
 
   const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'http://localhost:8080/images/';
@@ -43,7 +43,7 @@ const GenericIncidentCard = ({
         <div className='flex items-center gap-4 mt-2 text-sm text-gray-500'>
           <div className='flex items-center gap-1'>
             <Calendar />
-            {dateEmision ? new Date(dateEmision).toLocaleDateString() : 'Sin fecha'}
+            {issueDate || 'Sin fecha'}
           </div>
           <div className='flex items-center gap-1'>
             <TriangleAlert />
@@ -51,7 +51,7 @@ const GenericIncidentCard = ({
           </div>
           <div className='flex items-center gap-1'>
             <MapPin />
-            {location.pavilion || 'Sin prioridad'} - {location.floor ?? 'N/A'}
+            {location}
           </div>
         </div>
 
@@ -59,15 +59,15 @@ const GenericIncidentCard = ({
         <div className='flex items-center gap-4 mt-2 text-sm text-gray-500'>
           <div className='flex items-center gap-1'>
             <WaypointsIcon />
-            {state || 'Sin estado'}
+            {status || 'Sin estado'}
           </div>
           <div className='flex items-center gap-1'>
             <PersonStanding />
-            {category?.typeCategory || 'Sin categoría'}
+            {category || 'Sin categoría'}
           </div>
           <div className='flex items-center gap-1'>
             <User />
-            {user?.nombre || 'Unknown User'}
+            {usuario || 'Unknown User'}
           </div>
         </div>
 

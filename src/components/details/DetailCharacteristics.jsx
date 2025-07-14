@@ -7,31 +7,27 @@ const DetailCharacteristics = ({ incident }) => {
 
     const {
         id,
-        reporter,
-        administrator,
+        user,
         emissionDate,
         acceptanceDate,
-        updateDate,
-        endDate,
+        administrator,
         phone,
-        category
+        category,
+        updates
     } = incident
-
-    console.log(incident)
 
     return (
         <div className="p-4 space-y-2 text-sm">
             <h2 className="text-lg font-semibold mb-2">Características</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>ID: {id?.toString().padStart(5, '0')}</div>
-                <div>REPORTADOR: {reporter}</div>
+                {user && <div>REPORTADOR: {user?.nombre} {user?.apellidos}</div>}
                 {administrator && <div>ADMINISTRADOR: {administrator}</div>}
-                {emissionDate && <div>EMISIÓN: {emissionDate}</div>}
+                {emissionDate && <div>EMISIÓN: {new Date(emissionDate).toLocaleDateString()}</div>}
                 {acceptanceDate && <div>ACEPTACIÓN: {acceptanceDate}</div>}
-                {updateDate && <div>ACTUALIZACIÓN: {updateDate}</div>}
-                {endDate && <div>CULMINADO: {endDate}</div>}
+                {updates && <div>ACTUALIZACIÓN: {new Date(updates?.date).toLocaleDateString()}</div>}
                 {phone && <div>TELÉFONO REPORTADOR: {phone}</div>}
-                <div>CATEGORÍA: {category?.typeCategory || 'Sin categoría'}</div>
+                {category &&<div>CATEGORÍA: {category || 'Sin categoría'}</div>}
                 
             </div>
         </div>

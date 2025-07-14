@@ -25,7 +25,7 @@ const IncidentListCards = ({ title, description, type }) => {
             try {
                 let data;
                 if (type == null) {
-                    data = await getMeIncidentsExcludingStates(['Completado']); // Llama la API sin parámetro
+                    data = await getMeIncidentsExcludingStates(['culminado']); // Llama la API sin parámetro
                 } else {
                     data = await getMeIncidentsByState(type); // Llama la API con parámetro
                 }

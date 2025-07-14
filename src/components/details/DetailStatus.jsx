@@ -1,6 +1,6 @@
 // src/components/details/DetailStatus.jsx
 
-const statusSteps = ['PENDIENTE', 'EN PROCESO', 'CULMINADO']
+const statusSteps = ['Pendiente', 'asignado','en proceso', 'culminado']
 
 const getStepIndex = (status) => statusSteps.indexOf(status)
 
@@ -18,7 +18,7 @@ const DetailStatus = ({ status }) => {
                                 index <= activeStep ? 'bg-lime-600 border-lime-600' : 'border-gray-500'
                             }`}
                         />
-                        <span className="text-xs mt-1">{step}</span>
+                        <span className="text-xs mt-1">{step.toUpperCase()}</span>
                         {index < statusSteps.length && (
                             <div
                                 className={`h-1 w-full ${

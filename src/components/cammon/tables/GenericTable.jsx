@@ -42,7 +42,11 @@ const GenericTable = ({
                 </td>
               )}
               {columns.map((col) => (
-                <td key={col.key} className="px-4 py-2">
+                <td
+                  key={col.key}
+                  className="px-4 py-2 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+                  title={row[col.key]}
+                >
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </td>
               ))}

@@ -7,7 +7,7 @@ import GenericTable from '@/components/cammon/tables/GenericTable';
 import { usePagination } from '@/hooks/pagination/usePagination';
 import TableToolbar from '@/components/cammon/tables/TableToolbar';
 import { useNavigate } from 'react-router-dom'
-import { getUsers } from '../../api/service/incidentService';
+import { getUsers } from '@/api/service/incidentService';
 
 
 const ManageAccount = () => {

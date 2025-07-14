@@ -6,7 +6,7 @@ import GenericButton from '@/components/cammon/buttons/GenericButton';
 import { showConfirmationAlert } from '@/utils/alerts'
 
 const NewIncidentCard = ({ incident, toSeeMore, onAccept }) => {
-  const { title, description, dateEmision, image, priority, location } = incident
+  const { title, description, issueDate, image, priority, location } = incident
   const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'http://localhost:8080/images/'
   const fullImageUrl = image ? `${IMAGE_BASE_URL}${image}` : null;
   const displayImage = fullImageUrl || DefaultImage;
@@ -31,9 +31,9 @@ const NewIncidentCard = ({ incident, toSeeMore, onAccept }) => {
           {description}
         </p>
         <div className="flex items-center justify-between text-xs text-gray-500">
-          <span>{new Date(dateEmision).toLocaleDateString()}</span>
+          <span>{new Date(issueDate).toLocaleDateString()}</span>
           <span className="flex items-center gap-1">
-            <Calendar size={14} /> {location.pavilion || 'Sin prioridad'} - {location.floor ?? 'N/A'}
+            <Calendar size={14} /> {location?.pavilion || 'Sin prioridad'} - {location?.floor ?? 'N/A'}
           </span>
         </div>
 

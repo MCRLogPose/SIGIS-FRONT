@@ -1,84 +1,111 @@
-// src/pages/details/IncidentDetailPage.jsx
-
-import { useParams } from 'react-router-dom'
-import IncidentDetailSection from '@/components/details/IncidentDetailSection'
+import { useParams, useLocation } from 'react-router-dom'
+import { getIncidentsByID } from '@/api/service/incidentService';
+import { getIncidenceAssignments } from '@/api/service/assignmentService';
+import { useEffect, useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout'
-import ImageDashboardOptions from '@/assets/bg-dashboard/bg-dashboard-options.png'
+import IncidentDetailSection from '@/components/details/IncidentDetailSection'
 
-// Dummy de prueba
-const dummyIncidents = [
-    {
-        id: 2,
-        title: 'Silla rota',
-        description: 'Se reporta silla inestable en aula A001',
-        location: 'A001',
-        floor: '1',
-        building: 'A',
-        reference: 'Cerca de la ventana',
-        reporter: 'U22222',
-        phone: '987654321',
-        category: 'MOBILIARIO',
-        imageUrl: ImageDashboardOptions,
-        administrator: 'Juan Torres',
-        operator: 'Carlos Pérez',
-        status: 'EN PROCESO',
-        emissionDate: '2024-10-10',
-        acceptanceDate: '2024-10-11',
-        updateDate: '2024-10-13',
-        endDate: '2024-10-14',
-        assignedDate: '2024-10-12',
-        updates: [
-            { date: '2024-10-12', user: 'Juan Torres', comment: 'Incidencia asignada a Carlos Pérez' },
-            { date: '2024-10-13', user: 'Carlos Pérez', comment: 'Reparación en curso' },
-            { date: '2024-10-14', user: 'Carlos Pérez', comment: 'Reparación completada' },
-            { date: '2024-10-15', user: 'Juan Torres', comment: 'Incidencia cerrada' },
+// IncidentDetailPage.jsx
+const normalizeIncidentData = (data, type) => {
+    if (type === 'assignment') {
+        const assignment = data;
+        const inc = assignment.incidency;
 
-        ],
-        operators: [
-            {
-                id: '0001',
-                name: 'Carlos',
-                fullName: 'Carlos Pérez',
-                username: 'OP1234',
-                specialty: 'Reparación'
+        return {
+            id: inc.id,
+            title: inc.title,
+            description: inc.description,
+            imageUrl: inc.image,
+            status: inc.state,
+            emissionDate: inc.dateEmision,
+            acceptanceDate: inc.dateAccept,
+            user: inc.user,
+            category: inc.category?.typeCategory || 'Sin categoría',
+            location: {
+                pavilion: inc.location?.pavilion ?? 'N/A',
+                floor: inc.location?.floor ?? 'N/A',
+                reference: inc.location?.reference ?? '',
             },
-            {
-                id: '0002',
-                name: 'Ana',
-                fullName: 'Ana Gómez',
-                username: 'OP5678',
-                specialty: 'Mantenimiento'
+            operators: assignment.users?.map((u) => ({
+                fullName: `${u.nombre} ${u.apellidos}`,
+                username: u.username,
+                specialty: u.especialidad || 'Sin especialidad',
+            })) || [],
+            administrator: assignment.users?.find(u => u.rol === 'admin')?.nombre,
+            updates: assignment.history?.map((h) => ({
+                date: h.createdAt,
+                user: h.username,
+                comment: h.response,
+            })) || [],
+        };
+    } else {
+        return {
+            id: data.id,
+            title: data.title,
+            description: data.description,
+            imageUrl: data.image,
+            status: data.state,
+            emissionDate: data.dateEmision,
+            acceptanceDate: data.dateAccept,
+            user: data.user,
+            category: data.category?.typeCategory || 'Sin categoría',
+            location: {
+                pavilion: data.location?.pavilion ?? 'N/A',
+                floor: data.location?.floor ?? 'N/A',
+                reference: data.location?.reference ?? '',
             },
-            {
-                id: '0003',
-                name: 'Luis',
-                fullName: 'Luis Martínez',
-                username: 'OP9101',
-                specialty: 'Electricidad'
-            },
-            {
-                id: '0004',
-                name: 'María',
-                fullName: 'María López',
-                username: 'OP1121',
-                specialty: 'Plomería'
-            },
-        ]
-    },
-    // Puedes agregar más objetos aquí para simular diferentes casos
-]
+            operators: [],
+            administrator: null,
+            updates: [],
+        };
+    }
+};
+
+
 
 const IncidentDetailPage = () => {
-    const { id } = useParams()
-    const incident = dummyIncidents.find((i) => i.id === parseInt(id))
+    const { id } = useParams();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const type = queryParams.get('type'); // 'incidence' o 'assignment'
 
-    if (!incident) return <p className="p-4 text-red-500">Incidencia no encontrada</p>
+    console.log("El tipo recibido en URL es:", type);
+
+    const [incident, setIncident] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchIncident = async () => {
+            try {
+                let rawData;
+                if (type === 'incidence') {
+                    const [res] = await getIncidentsByID(Number(id));
+                    rawData = res;
+                } else {
+                    rawData = await getIncidenceAssignments(id);
+                }
+
+                const normalized = normalizeIncidentData(rawData, type);
+                setIncident(normalized);
+            } catch (error) {
+                console.error('Error al cargar la incidencia', error);
+            } finally{
+                setLoading(false);
+            }
+        };
+
+        fetchIncident();
+    }, [id, type]);
+
+
+    if (loading) return <p className="p-4">Cargando...</p>;
+    if (!incident) return <p className="p-4 text-red-500">Incidencia no encontrada</p>;
 
     return (
         <DashboardLayout>
             <IncidentDetailSection incident={incident} />
         </DashboardLayout>
-    )
-}
+    );
+};
 
-export default IncidentDetailPage
+export default IncidentDetailPage;

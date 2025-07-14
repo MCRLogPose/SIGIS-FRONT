@@ -36,6 +36,12 @@ export const getAllIncidentsByState = async (state) => {
   return response.data.filter((incident) => incident.state === state);
 };
 
+// obtener incidencias filtradas por id
+export const getIncidentsByID = async(idIncidence) => {
+  const response = await api.get(IncidentRoutes.LIST_ALL);
+  return response.data.filter((incident) => incident.id === idIncidence);
+};
+
 // obtener incidencias excluyendo ciertos estados
 export const getAllIncidentsExcludingStates = async (excludedStates = []) => {
   const response = await api.get(IncidentRoutes.LIST_ALL);
