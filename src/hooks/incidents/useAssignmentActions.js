@@ -48,7 +48,7 @@ export const useAssignmentActions = (currentUserId, refreshCallback) => {
 
       await createAssignmentHistory({
         response: responseText,
-        state: "en proceso",
+        state: "asignado",
         assignmentId: assignmentId,
         userId: currentUserId
       });

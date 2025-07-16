@@ -43,7 +43,7 @@ const IncidentDetailSection = ({ incident }) => {
   }
 
   // Verifica si el incidente tiene un operador y un administrador asignados
-  const isAssigned = incident.operator && incident.administrator
+  const isAssigned = !(incident.status === "Pendiente" && (!incident.operators || incident.operators.length === 0));
   console.log("es asignado", isAssigned);
 
   const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'http://localhost:8080/images/';
@@ -99,7 +99,6 @@ const IncidentDetailSection = ({ incident }) => {
             src={displayImage}
             alt="Incidencia"
             className="rounded-xl object-cover w-full h-full"
-            style={{ width: '100%', height: '100%' }}
           />
         </div>
       </div>
@@ -111,17 +110,7 @@ const IncidentDetailSection = ({ incident }) => {
         <div className="rounded-xl p-4 flex items-center justify-center min-w-0 lg:w-1/3 w-full">
           <DetailActions
             showBackButton
-            showApproveButton={isAssigned}
-            showRejectButton={!isAssigned}
-            showAcceptButton={isAssigned}
-            showDelegateButton={!isAssigned}
-            showKeepButton={isAssigned}
             onBack={handleBack}
-            onApprove={handleApprove}
-            onReject={handleReject}
-            onAccept={handleAccept}
-            onDelegate={handleDelegate}
-            onKeep={handleKeep}
           />
 
         </div>

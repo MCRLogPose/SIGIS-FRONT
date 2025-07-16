@@ -55,7 +55,6 @@ export const useIncidentModal = () => {
       return
     }
     try {
-      console.log('Form data before API call:', formData)
       const locationResponse = await createLocation({
         reference: formData.reference,
         pavilion: formData.pavilion,

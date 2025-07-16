@@ -28,7 +28,7 @@ const normalizeIncidentData = (data, type) => {
             },
             operators: assignment.users?.map((u) => ({
                 fullName: `${u.nombre} ${u.apellidos}`,
-                username: u.username,
+                correo: u.correo,
                 specialty: u.especialidad || 'Sin especialidad',
             })) || [],
             administrator: assignment.users?.find(u => u.rol === 'admin')?.nombre,
@@ -61,15 +61,12 @@ const normalizeIncidentData = (data, type) => {
     }
 };
 
-
-
 const IncidentDetailPage = () => {
     const { id } = useParams();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const type = queryParams.get('type'); // 'incidence' o 'assignment'
-
-    console.log("El tipo recibido en URL es:", type);
+    console.log('Tipo de incidencia:', type);
 
     const [incident, setIncident] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -78,11 +75,16 @@ const IncidentDetailPage = () => {
         const fetchIncident = async () => {
             try {
                 let rawData;
+                console.log("type = incidence : ", type === 'incidence');
+                console.log("type = assignment : ", type === 'assignment');
                 if (type === 'incidence') {
+                    console.log("llegue aquí incidences");
                     const [res] = await getIncidentsByID(Number(id));
                     rawData = res;
-                } else {
-                    rawData = await getIncidenceAssignments(id);
+                }
+                if(type === 'assignment') {
+                    console.log("llegue aquí asignments");
+                    rawData = await getIncidenceAssignments(Number(id));
                 }
 
                 const normalized = normalizeIncidentData(rawData, type);

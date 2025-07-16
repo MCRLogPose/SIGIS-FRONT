@@ -1,6 +1,6 @@
 // src/components/incidents/cards/GenericIncidentCard.jsx
 
-import { Calendar, ContactRound, MapPin, PersonStanding, BadgeCheck, BadgeX, ArrowRight, TriangleAlert, WaypointsIcon, User } from "lucide-react";
+import { Calendar, MapPin, PersonStanding, BadgeCheck, BadgeX, ArrowRight, TriangleAlert, WaypointsIcon, User } from "lucide-react";
 import DefaultImage from '@/assets/bg-dashboard/bg-dashboard-options.png';
 import GenericButton from '@/components/cammon/buttons/GenericButton';
 

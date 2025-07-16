@@ -11,6 +11,7 @@ import { useAuth } from '@/context/AuthContext'
 import { createAssignment, updateAssignmentResponse } from '@/api/service/assignmentService'
 import { useNewsIncidents } from '@/hooks/incidents/useNewsIncidents'
 import { showErrorAlert, showSuccessAlert } from '@/utils/alerts'
+import { createAssignmentHistory } from '@/api/service/historyService'
 
 const NewsPage = () => {
   const { user } = useAuth()
@@ -92,6 +93,13 @@ const NewsPage = () => {
       }
 
       await updateAssignmentResponse(currentAssignmentId, responseText)
+      await createAssignmentHistory({
+        response: responseText,
+        state: "en proceso",
+        assignmentId: currentAssignmentId,
+        userId: currentUserId,
+      });
+
       showSuccessAlert('Respuesta actualizada exitosamente.')
       closeResponseModal()
       fetchIncidentsData()
@@ -133,10 +141,9 @@ const NewsPage = () => {
               <GenericIncidentCard
                 key={incident.id}
                 incident={incident}
-                imageUrl={incident.image}
                 buttonTitle1={incident.state !== 'en proceso' ? 'ACTUALIZAR' : null}
                 onButton1Click={() => openResponseModal(incident.assignmentId)}
-                toSeeMore={`/home/incident-detail/${incident.id}?type=incidence`}
+                toSeeMore={`/home/incident-detail/${incident.id}?type=assignment`}
               />
             ))}
             <ShowMoreButton onClick={toggleAssignedExpand} isExpanded={isAssignedExpanded} />

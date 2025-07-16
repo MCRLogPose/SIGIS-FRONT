@@ -8,6 +8,7 @@ import { usePagination } from '@/hooks/pagination/usePagination';
 import TableToolbar from '@/components/cammon/tables/TableToolbar';
 import { useNavigate } from 'react-router-dom'
 import { getUsers } from '@/api/service/incidentService';
+import { getOperators } from '../../api/service/incidentService';
 
 
 const ManageAccount = () => {
@@ -37,18 +38,28 @@ const ManageAccount = () => {
         // más columnas según la vista
     ]
 
-    const [tableIncidents, setTableUsers] = useState([]);
+    const [tableUsers, setTableUsers] = useState([]);
+    const [tableOperators, setTableOperators] = useState([]);
 
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-    const { currentPage, totalPages, paginatedData, setCurrentPage } = usePagination(
-        tableIncidents,
-        rowsPerPage
+    const [rowsPerPageUsers, setRowsPerPageUsers] = useState(5);
+    const [rowsPerPageOperators, setRowsPerPageOperators] = useState(5);
+
+    const { currentPageUsers, totalPagesUsers, paginatedData: paginatedUsersData, setCurrentPageUsers } = usePagination(
+        tableUsers,
+        rowsPerPageUsers
     );
+    const { currentPageOperators, totalPagesOperators, paginatedData: paginatedOperatorsData, setCurrentPageOperators } = usePagination(
+        tableOperators,
+        rowsPerPageOperators
+    );
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const userData = await getUsers();
+                const operatorsData = await getOperators();
+                setTableOperators(operatorsData);
                 setTableUsers(userData);
             } catch (error) {
                 console.error('Error al cargar incidencias:', error);
@@ -68,14 +79,14 @@ const ManageAccount = () => {
                     <div className="shadow-lg max-w">
                         <TableToolbar onNewClick={handleRedirect} />
                         <GenericTable columns={columns}
-                            data={paginatedData}
+                            data={paginatedUsersData}
                         />
                         <TablePaginator
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                            rowsPerPage={rowsPerPage}
-                            onRowsPerPageChange={setRowsPerPage}
+                            currentPage={currentPageUsers}
+                            totalPages={totalPagesUsers}
+                            onPageChange={setCurrentPageUsers}
+                            rowsPerPage={rowsPerPageUsers}
+                            onRowsPerPageChange={setRowsPerPageUsers}
                         />
                     </div>
                 </div>
@@ -87,16 +98,17 @@ const ManageAccount = () => {
                     <div className="shadow-lg max-w">
                         <TableToolbar onNewClick={handleRedirect} />
                         <GenericTable columns={columns}
-                            data={paginatedData}
+                            data={paginatedOperatorsData}
                         />
                         <TablePaginator
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                            rowsPerPage={rowsPerPage}
-                            onRowsPerPageChange={setRowsPerPage}
+                            currentPage={currentPageOperators}
+                            totalPages={totalPagesOperators}
+                            onPageChange={setCurrentPageOperators}
+                            rowsPerPage={rowsPerPageOperators}
+                            onRowsPerPageChange={setRowsPerPageOperators}
                         />
                     </div>
+                    
                 </div>
             </div>
         </DashboardLayout>

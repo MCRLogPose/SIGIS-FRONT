@@ -20,7 +20,7 @@ const DetailUpdates = ({ updates }) => {
                     <li key={index} className="bg-gray-600 p-3 rounded-md">
                         <div className="flex justify-between text-xs text-gray-100 mb-1">
                             <span><strong>{update.user}</strong></span>
-                            <span>{update.date}</span>
+                            <span>{new Date(update.date).toLocaleDateString()}</span>
                         </div>
                         <p className="text-white">{update.comment}</p>
                     </li>

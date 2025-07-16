@@ -10,9 +10,8 @@ const DetailOperators = ({ operators }) => {
 
     const columns = [
         { key: 'id', label: 'ID' },
-        { key: 'name', label: 'Nombre' },
         { key: 'fullName', label: 'Nombre completo' },
-        { key: 'username', label: 'Usuario' },
+        { key: 'correo', label: 'correo' },
         { key: 'specialty', label: 'Especialidad' },
     ]
 

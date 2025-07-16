@@ -97,7 +97,7 @@ const TracingPage = () => {
   ];
 
   const handleRowDoubleClick = (incident) => {
-    navigate(`/home/incident-detail/${incident.id}?type=incidence`);
+    navigate(`/home/incident-detail/${incident.id}?type=assignment`);
   };
 
   return (
@@ -116,7 +116,7 @@ const TracingPage = () => {
                 imageUrl={incident.imageUrl || ImageDashboardOptions}
                 buttonTitle1="ACEPTAR"
                 buttonTitle2="RECHAZAR"
-                toSeeMore={`/home/incident-detail/${incident.id}?type=incidence`}
+                toSeeMore={`/home/incident-detail/${incident.id}?type=assignment`}
                 onButton1Click={() => handleAccept(incident.assignmentId)}
                 onButton2Click={() => openRejectModal(incident.assignmentId)}
               />

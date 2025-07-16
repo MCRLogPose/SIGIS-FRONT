@@ -60,8 +60,6 @@ export const useOperatorAssignment = (refreshIncidents) => {
       response: String(responseText)
     };
 
-    console.log('Payload a enviar:', groupRequest);
-
     try {
       await assignUsersToIncidency(groupRequest);
       await showSuccessAlert('Operadores asignados correctamente.');

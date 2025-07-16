@@ -28,7 +28,6 @@ export const useIncidentsByState = (state) => {
         ? pending.map(formatIncident)
         : [formatIncident(pending)];
       const priority = formattedPending.filter((i) => i.priority === 'ALTA');
-      console.log(priority);
       setGenericIncidents(priority);
       setTableIncidents(formattedPending);
     } catch (error) {

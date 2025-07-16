@@ -17,7 +17,6 @@ const IncidentListCards = ({ title, description, type }) => {
         closeModal
     } = useIncidentModal();
 
-    const pathSeeMore = '/home/incident-detail/:id';
     const [incidents, setIncidents] = useState([]);
 
     useEffect(() => {
@@ -26,6 +25,7 @@ const IncidentListCards = ({ title, description, type }) => {
                 let data;
                 if (type == null) {
                     data = await getMeIncidentsExcludingStates(['culminado']); // Llama la API sin parámetro
+
                 } else {
                     data = await getMeIncidentsByState(type); // Llama la API con parámetro
                 }
@@ -37,6 +37,8 @@ const IncidentListCards = ({ title, description, type }) => {
 
         fetchIncidents();
     }, [type]);
+
+    const typeCard = type != null ? 'assignment' : 'incidence'; //se puede mejorar mas adelante por que es un poco redundante y ambiguo 
 
     return (
         <DashboardLayout>
@@ -51,9 +53,8 @@ const IncidentListCards = ({ title, description, type }) => {
                         <IncidentCard
                             key={incident.id}
                             incident={incident}
-                            toSeeMore={pathSeeMore.replace(':id', incident.id)}  
+                            toSeeMore={`/home/incident-detail/${incident.id}?type=${typeCard}`}
                         />
-
                     ))}
                 </div>
 

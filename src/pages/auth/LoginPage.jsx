@@ -31,7 +31,6 @@ const LoginPage = () => {
                 rol: data.rol,
                 modulos: data.modulos, // opcional, si lo necesitas luego
             }));
-            console.log('Login success:', data);
             window.location.href = '/home';
         } catch (err) {
             setError('Login failed, try again later.');
