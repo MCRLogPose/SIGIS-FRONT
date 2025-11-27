@@ -24,9 +24,6 @@ const LoginPage = () => {
         }
 
         try {
-            if(username==="root" && password==="root"){
-                window.location.href = '/home';
-            }
             const data = await login({ username, password });
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify({
